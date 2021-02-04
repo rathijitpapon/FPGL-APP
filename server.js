@@ -8,7 +8,7 @@ const app = express();
 app.use(express.static(__dirname + '/fpgl-app'));
 
 app.get('/*', function(req,res) {
-    
+
 res.sendFile(path.join(__dirname+'/fpgl-app/index.html'));
 });
 
