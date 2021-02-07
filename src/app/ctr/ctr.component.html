@@ -1,0 +1,59 @@
+<div class="container ctr">
+    <div class="row">
+        <div class="col-md-6">
+            <form [formGroup]="form" (ngSubmit)="fetchData(form.value)">
+                <div class="form-group">
+                    <label for="">Limit</label>
+                    <input formControlName="limit" type="number" class="form-control">
+                    <div *ngIf="limit.touched && limit.invalid" class="alert alert-danger">
+                        <div *ngIf="limit.errors?.required">Limit field is required.</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="">Offset</label>
+                    <input formControlName="offset" type="number" class="form-control">
+                    <div *ngIf="offset.touched && offset.invalid" class="alert alert-danger">
+                        <div *ngIf="offset.errors?.required">Offset field is required.</div>
+                    </div>
+                </div>
+            
+                <div class="text-center">
+                    <button class="btn btn-primary" [disabled]="form.invalid">Fetch Data</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <app-zippy title="Applications">
+                    <ul class="list-group">
+                        <li *ngFor="let app of selectedApps" class="list-group-item">{{ app.name }}</li>
+                    </ul>
+                    <div *ngFor="let app of apps" class="checkbox">
+                        <input (click)="selectApps(app.id)" type="checkbox">
+                        {{ app.c1 }}
+                    </div>
+                </app-zippy>
+            </div>
+
+            <div class="form-group">
+                <app-zippy title="Versions">
+                    <ul class="list-group">
+                        <li *ngFor="let version of selectedVersions" class="list-group-item">{{ version.name }}</li>
+                    </ul>
+                    <div *ngFor="let version of versions" class="checkbox">
+                        <input (click)="selectVersions(version.id)" type="checkbox">
+                        {{ version.app_version }}
+                    </div>
+                </app-zippy>
+            </div>
+
+            <div class="text-center">
+                <button 
+                    class="btn btn-primary" 
+                    [disabled]="this.selectedApps.length <= 0 || this.selectedVersions.length <= 0"
+                >Show Graph</button>
+            </div>
+        </div>
+    </div>
+</div>

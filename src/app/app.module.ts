@@ -8,21 +8,50 @@ import {MaterialModule} from './material/material.module';
 import { NavComponent } from './nav/nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { HomepageComponent } from './homepage/homepage.component';
+import { RouterModule } from '@angular/router';
+import { CtrComponent } from './ctr/ctr.component';
+import { ContactComponent } from './contact/contact.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CtrService } from './services/ctr-service.service';
+import { HttpClientModule } from '@angular/common/http';
+import { ZippyComponent } from './zippy/zippy.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
-    HomepageComponent
+    HomepageComponent,
+    CtrComponent,
+    ContactComponent,
+    ZippyComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
     MaterialModule,
     LayoutModule,
+    RouterModule.forRoot([
+      {
+        path: '', component: HomepageComponent
+      },
+      {
+        path: 'ctr', component: CtrComponent
+      },
+      {
+        path: 'contact', component: ContactComponent
+      },
+      {
+        path: '**', component: HomepageComponent
+      }
+    ])
   ],
-  providers: [],
+  providers: [
+    CtrService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
