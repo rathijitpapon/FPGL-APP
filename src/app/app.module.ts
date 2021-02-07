@@ -15,6 +15,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CtrService } from './services/ctr-service.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ZippyComponent } from './zippy/zippy.component';
+import { ChartsModule } from 'ng2-charts';
+import { BarChartComponent } from './bar-chart/bar-chart.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { ZippyComponent } from './zippy/zippy.component';
     HomepageComponent,
     CtrComponent,
     ContactComponent,
-    ZippyComponent
+    ZippyComponent,
+    BarChartComponent
   ],
   imports: [
     BrowserModule,
@@ -34,6 +37,7 @@ import { ZippyComponent } from './zippy/zippy.component';
     HttpClientModule,
     MaterialModule,
     LayoutModule,
+    ChartsModule,
     RouterModule.forRoot([
       {
         path: '', component: HomepageComponent

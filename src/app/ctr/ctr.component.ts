@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { CtrService } from '../services/ctr-service.service';
 
 @Component({
@@ -14,6 +15,8 @@ export class CtrComponent implements OnInit {
 
   selectedApps: any[] = [];
   selectedVersions: any[] = [];
+
+  ctrBarData: any[] = [];
 
   constructor(fb: FormBuilder, private service: CtrService) {
     this.form = fb.group({
@@ -63,19 +66,65 @@ export class CtrComponent implements OnInit {
     this.service.getData(data.limit, data.offset)
       .subscribe((response: any) => {
         let id = 0;
-        for (const version of response.v) {
-          version.id = id++;
-          this.versions.push(version);
+        const willShow = [];
+        for (const app of response.c1) {
+          willShow.push(app.c1);
+          app.id = id++;
+          this.apps.push(app);
         }
 
         id = 0;
-        for (const app of response.c1) {
-          app.id = id++;
-          this.apps.push(app);
+        for (const version of response.v) {
+          version.id = id++;
+          this.versions.push(version);
+
+          const ctr = this.calculateCTR(version, willShow);
+          this.ctrBarData.push(ctr);
         }
       }, (error: any) => {
         console.log(error);
       });
+  }
+
+  showGraph(): void {
+    const willShow = [];
+    for (const app of this.selectedApps){
+      willShow.push(app.name);
+    }
+
+    this.ctrBarData = [];
+    for (const v of this.selectedVersions) {
+      const version = this.versions[v.id];
+
+      const ctr = this.calculateCTR(version, willShow);
+      this.ctrBarData.push(ctr);
+    }
+  }
+
+  calculateCTR(version: any, willShow: any[]): any {
+    const ctr: any = {
+      barChartLabels: [],
+    };
+    const ctrValues = [];
+
+    for (const promo of version.cross_promos) {
+      if (!willShow.includes(promo.c1)){
+        continue;
+      }
+
+      const value = (promo.total_install_clicked / (promo.total_ad_start + 0.0000001) ) * 100;
+
+      ctrValues.push(value);
+      ctr.barChartLabels.push(promo.c1);
+    }
+
+    const barChartData: ChartDataSets[] = [{
+      data: ctrValues,
+      label: version.app_version
+    }];
+    ctr.chartData = barChartData;
+
+    return ctr;
   }
 
   get limit(): any  {
@@ -85,13 +134,5 @@ export class CtrComponent implements OnInit {
   get offset(): any {
     return this.form.get('offset');
   }
-
-  // get apps(): any {
-  //   return this.form.get('apps');
-  // }
-
-  // get versions(): any {
-  //   return this.form.get('versions');
-  // }
 
 }
