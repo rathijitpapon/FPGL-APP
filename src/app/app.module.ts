@@ -13,11 +13,12 @@ import { CtrComponent } from './ctr/ctr.component';
 import { ContactComponent } from './contact/contact.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CtrService } from './services/ctr-service.service';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { ZippyComponent } from './zippy/zippy.component';
 import { ChartsModule } from 'ng2-charts';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
-import {InterceptorService} from './loader/interceptor.service';
+import { GamesComponent } from './games/games.component';
+import { GameLatestCtrComponent } from './game-latest-ctr/game-latest-ctr.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,9 @@ import {InterceptorService} from './loader/interceptor.service';
     CtrComponent,
     ContactComponent,
     ZippyComponent,
-    BarChartComponent
+    BarChartComponent,
+    GamesComponent,
+    GameLatestCtrComponent
   ],
   imports: [
     BrowserModule,
@@ -44,6 +47,12 @@ import {InterceptorService} from './loader/interceptor.service';
         path: '', component: HomepageComponent
       },
       {
+        path: 'games/:name', component: GameLatestCtrComponent
+      },
+      {
+        path: 'games', component: GamesComponent
+      },
+      {
         path: 'ctr', component: CtrComponent
       },
       {
@@ -55,9 +64,6 @@ import {InterceptorService} from './loader/interceptor.service';
     ])
   ],
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true
-    },
     CtrService
   ],
   bootstrap: [AppComponent]
