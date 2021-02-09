@@ -26,15 +26,15 @@ export class GameLatestCtrComponent implements OnInit {
     ['com.fpg.sharkattack', 'sharkattackios'],
     ['com.fpg.sharkslap', 'sharkworld3dfgp']
   ];
-  willShowLink: any[] = [];
-  willShow: any[] = [];
 
   form: FormGroup;
 
   apps: any[] = [];
   ctrs: any[] = [];
   database = '';
-  latestVersion = '';
+  defaultVersion = '';
+  defaultUserCount = 0;
+  versionsData: any[] = [];
 
   ctrBarData: any[] = [];
 
@@ -50,9 +50,8 @@ export class GameLatestCtrComponent implements OnInit {
     this.offset.setValue(0);
 
     this.route.paramMap.subscribe(params => {
-      this.latestVersion = '';
-      this.willShow = [];
-      this.willShowLink = [];
+      this.defaultVersion = '';
+      this.versionsData = [];
       this.ctrBarData = [];
       this.database = params.get('name') + '';
 
@@ -61,35 +60,49 @@ export class GameLatestCtrComponent implements OnInit {
         limit: this.limit.value,
         offset: this.offset.value
       };
-      this.fetchData(data);
+      this.fetchVersions(this.limit.value, this.offset.value, this.database);
     });
   }
 
-  fetchData(data: any): void {
-    this.service.getCTR(data.limit, data.offset, data.database)
+  selectVersion(version: string): void {
+    this.defaultVersion = version;
+    for (const data of this.versionsData){
+      if (data.version === version){
+        this.defaultUserCount = data.user_count;
+        break;
+      }
+    }
+
+    this.fetchCTR(this.limit.value, this.offset.value, this.database, this.defaultVersion);
+  }
+
+  fetchVersions(limit: number, offset: number, database: string): void {
+    this.service.getVersions(limit, offset, database)
       .subscribe((response: any) => {
-        this.latestVersion = response.latest_version;
+        this.versionsData = response.data;
+        for (let i = this.versionsData.length - 1; i >= 0; i--) {
+          if (this.versionsData[i].user_count >= 50) {
+            this.defaultVersion = this.versionsData[i].version;
+            this.defaultUserCount = this.versionsData[i].user_count;
+          }
+        }
+
+        this.fetchCTR(this.limit.value, this.offset.value, this.database, this.defaultVersion);
+      }, (error: any) => {
+        console.log(error);
+      });
+  }
+
+  fetchCTR(limit: number, offset: number, database: string, version: string): void {
+    this.service.getCTR(limit, offset, database, version)
+      .subscribe((response: any) => {
         this.apps = [];
         this.ctrs = [];
-        this.willShow = [];
-        this.willShowLink = [];
 
         for (const app of response.data) {
           if (app.c1.length > 1){
             this.apps.push(app.c1);
             this.ctrs.push(app.ctr);
-
-            let isExist = false;
-            for (const domain of this.domains) {
-              if (domain[0] === app.c1) {
-                this.willShowLink.push(domain);
-                isExist = true;
-                break;
-              }
-            }
-            if (!isExist) {
-              this.willShow.push(app.c1);
-            }
           }
         }
 
@@ -103,7 +116,7 @@ export class GameLatestCtrComponent implements OnInit {
     this.ctrBarData = [];
     const chartData: ChartDataSets[] = [{
         data: this.ctrs,
-        label: this.latestVersion
+        label: this.defaultVersion
     }];
     const ctr = {
       barChartLabels: this.apps,

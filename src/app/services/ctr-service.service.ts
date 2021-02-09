@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class CtrService {
-  url = 'https://cross-promo-analytics-api.herokuapp.com';
+  url = 'http://localhost:5000';
 
   constructor(private http: HttpClient) { }
 
@@ -16,9 +16,16 @@ export class CtrService {
     });
   }
 
-  getCTR(limit: number, offset: number, database: string): any {
-    return this.http.post(this.url + '/game', {
-      database,
+  getCTR(limit: number, offset: number, database: string, version: string): any {
+    return this.http.post(this.url + '/ctr/' + database, {
+      version,
+      limit,
+      offset,
+    });
+  }
+
+  getVersions(limit: number, offset: number, database: string): any {
+    return this.http.post(this.url + '/versions/' + database, {
       limit,
       offset,
     });
