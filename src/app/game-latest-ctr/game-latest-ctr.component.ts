@@ -84,6 +84,7 @@ export class GameLatestCtrComponent implements OnInit {
           if (this.versionsData[i].user_count >= 50) {
             this.defaultVersion = this.versionsData[i].version;
             this.defaultUserCount = this.versionsData[i].user_count;
+            break;
           }
         }
 
