@@ -13,12 +13,13 @@ import { CtrComponent } from './ctr/ctr.component';
 import { ContactComponent } from './contact/contact.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CtrService } from './services/ctr-service.service';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { ZippyComponent } from './zippy/zippy.component';
 import { ChartsModule } from 'ng2-charts';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { GamesComponent } from './games/games.component';
 import { GameLatestCtrComponent } from './game-latest-ctr/game-latest-ctr.component';
+import {InterceptorService} from './loader/interceptor.service';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,9 @@ import { GameLatestCtrComponent } from './game-latest-ctr/game-latest-ctr.compon
     ])
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true
+    },
     CtrService
   ],
   bootstrap: [AppComponent]
