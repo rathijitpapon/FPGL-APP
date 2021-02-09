@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
+import { ChartDataSets } from 'chart.js';
 import { CtrService } from '../services/ctr-service.service';
 
 @Component({

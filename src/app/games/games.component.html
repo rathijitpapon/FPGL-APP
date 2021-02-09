@@ -1,0 +1,9 @@
+<div class="container games">
+    <div class="row">
+        <div *ngFor="let game of games" class="col col-md-4 col-sm-6">
+            <li class="list-group-item">
+                <a [routerLink]="['/games', game]">{{ game }}</a>
+            </li>
+        </div>
+    </div>
+</div>

@@ -17,6 +17,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ZippyComponent } from './zippy/zippy.component';
 import { ChartsModule } from 'ng2-charts';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
+import { GamesComponent } from './games/games.component';
+import { GameLatestCtrComponent } from './game-latest-ctr/game-latest-ctr.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { BarChartComponent } from './bar-chart/bar-chart.component';
     CtrComponent,
     ContactComponent,
     ZippyComponent,
-    BarChartComponent
+    BarChartComponent,
+    GamesComponent,
+    GameLatestCtrComponent
   ],
   imports: [
     BrowserModule,
@@ -41,6 +45,12 @@ import { BarChartComponent } from './bar-chart/bar-chart.component';
     RouterModule.forRoot([
       {
         path: '', component: HomepageComponent
+      },
+      {
+        path: 'games/:name', component: GameLatestCtrComponent
+      },
+      {
+        path: 'games', component: GamesComponent
       },
       {
         path: 'ctr', component: CtrComponent
