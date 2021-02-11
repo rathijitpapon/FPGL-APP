@@ -38,6 +38,6 @@ export class CtrService {
   }
 
   setDataBase(dbName: string | null): any {
-    return this.http.get(this.url + '/adCompletion/' + dbName);
+    return this.http.get(this.url + '/settingDBname/' + dbName);
   }
 }
