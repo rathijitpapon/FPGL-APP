@@ -1,3 +1,13 @@
 .game-ctr {
     margin: 10px 0px;
 }
+
+.version-item {
+    cursor: pointer;
+}
+
+.version-item:hover {
+    border: 1px solid #ccc;
+    background-color: skyblue;
+
+}

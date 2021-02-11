@@ -15,3 +15,12 @@
   top: 0;
   z-index: 1;
 }
+
+.nav-item {
+  color: skyblue; 
+  text-decoration: none;
+}
+
+.nav-item:hover {
+  opacity: 0.4;
+}
