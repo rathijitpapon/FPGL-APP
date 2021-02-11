@@ -19,6 +19,8 @@ import { ChartsModule } from 'ng2-charts';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { GamesComponent } from './games/games.component';
 import { GameLatestCtrComponent } from './game-latest-ctr/game-latest-ctr.component';
+import { CtrOnGamesComponent } from './ctr-on-games/ctr-on-games.component';
+import { DomainsComponent } from './domains/domains.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { GameLatestCtrComponent } from './game-latest-ctr/game-latest-ctr.compon
     ZippyComponent,
     BarChartComponent,
     GamesComponent,
-    GameLatestCtrComponent
+    GameLatestCtrComponent,
+    CtrOnGamesComponent,
+    DomainsComponent
   ],
   imports: [
     BrowserModule,
@@ -47,13 +51,19 @@ import { GameLatestCtrComponent } from './game-latest-ctr/game-latest-ctr.compon
         path: '', component: HomepageComponent
       },
       {
-        path: 'games/:name', component: GameLatestCtrComponent
+        path: 'otherctr/:name', component: GameLatestCtrComponent
+      },
+      {
+        path: 'thisctr/:name', component: CtrOnGamesComponent
       },
       {
         path: 'games', component: GamesComponent
       },
       {
-        path: 'ctr', component: CtrComponent
+        path: 'domains', component: DomainsComponent
+      },
+      {
+        path: 'dinobattlegp2012', component: CtrComponent
       },
       {
         path: 'contact', component: ContactComponent
