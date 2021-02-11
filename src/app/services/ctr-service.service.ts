@@ -39,4 +39,9 @@ export class CtrService {
       offset,
     });
   }
+
+  getTotalAdCompletion(database: string): any {
+    return this.http.post(this.url + '/adCompletion/' + database, {});
+  }
+
 }

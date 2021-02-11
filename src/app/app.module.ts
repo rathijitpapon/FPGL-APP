@@ -21,6 +21,7 @@ import { GamesComponent } from './games/games.component';
 import { GameLatestCtrComponent } from './game-latest-ctr/game-latest-ctr.component';
 import { CtrOnGamesComponent } from './ctr-on-games/ctr-on-games.component';
 import { DomainsComponent } from './domains/domains.component';
+import { AdCompletionComponent } from './ad-completion/ad-completion.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { DomainsComponent } from './domains/domains.component';
     GamesComponent,
     GameLatestCtrComponent,
     CtrOnGamesComponent,
-    DomainsComponent
+    DomainsComponent,
+    AdCompletionComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +51,9 @@ import { DomainsComponent } from './domains/domains.component';
     RouterModule.forRoot([
       {
         path: '', component: HomepageComponent
+      },
+      {
+        path: 'adcompletion/:name', component: AdCompletionComponent
       },
       {
         path: 'otherctr/:name', component: GameLatestCtrComponent
