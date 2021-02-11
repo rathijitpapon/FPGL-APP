@@ -22,6 +22,7 @@ import { GameLatestCtrComponent } from './game-latest-ctr/game-latest-ctr.compon
 import { CtrOnGamesComponent } from './ctr-on-games/ctr-on-games.component';
 import { DomainsComponent } from './domains/domains.component';
 import { AdCompletionComponent } from './ad-completion/ad-completion.component';
+import { CtrWithRespectToSourceComponent } from './ctr-with-respect-to-source/ctr-with-respect-to-source.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { AdCompletionComponent } from './ad-completion/ad-completion.component';
     GameLatestCtrComponent,
     CtrOnGamesComponent,
     DomainsComponent,
-    AdCompletionComponent
+    AdCompletionComponent,
+    CtrWithRespectToSourceComponent
   ],
   imports: [
     BrowserModule,
@@ -51,6 +53,9 @@ import { AdCompletionComponent } from './ad-completion/ad-completion.component';
     RouterModule.forRoot([
       {
         path: '', component: HomepageComponent
+      },
+      {
+        path: 'ctrwrtsrc/:name', component: CtrWithRespectToSourceComponent
       },
       {
         path: 'adcompletion/:name', component: AdCompletionComponent

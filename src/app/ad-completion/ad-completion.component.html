@@ -1,6 +1,8 @@
+<div class="col-md-12" align="middle">
+  <button class="m5" mat-raised-button (click)="getData()" align="middle">fetch</button>
+  <button mat-raised-button [disabled]=isDisabled (click)="showCrossPromo()" align="middle">toggle cross promo</button>
 
-<button class="m5" mat-raised-button (click)="getData()">fetch</button>
-<button mat-raised-button [disabled]=isDisabled (click)="showCrossPromo()">toggle cross promo</button>
+</div>
 <div class="row">
   <ng-template [ngIf]="!isDisabled">
     <div class="col-md-12" align="middle">

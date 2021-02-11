@@ -36,7 +36,6 @@ export class AdCompletionComponent implements OnInit {
       this.isDisabled = false;
       this.object = object.total_ad_show_complete_in_cross_promo;
       this.labels = object.c1;
-
       this.datasets = [{
         data: object.total_ad_show_complete_in_quit_panel,
         label: 'total_ad_show_complete_in_quit_panel',
