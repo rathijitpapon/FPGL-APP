@@ -1,18 +1,16 @@
 <div class="container games">
     <div class="row">
-      <ng-template [ngIf]="!indicator">
-        <div *ngFor="let game of games" class="col col-md-4 col-sm-6">
-          <li class="list-group-item">
-            <a [routerLink]="['/games', game]">{{ game }}</a>
-          </li>
+        <div *ngFor="let game of games" class="col col-lg-4 col-md-6">
+            <li class="list-group-item">
+                <h3 style="text-align: center;">{{ game }}</h3>
+                <br>
+                <div class="text-center">
+                    <button class="btn btn-secondary game-item" [routerLink]="['/otherctr', game]">CTR of Other Games in This Game</button>
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-secondary" [routerLink]="['/adcompletion', game]">Ad Completion</button>
+                </div>
+            </li>
         </div>
-      </ng-template>
-      <ng-template [ngIf]="indicator">
-        <div *ngFor="let game of games" class="col col-md-4 col-sm-6">
-          <li class="list-group-item">
-            <a [routerLink]="['/ad_completion', game]">{{ game }}</a>
-          </li>
-        </div>
-      </ng-template>
     </div>
 </div>

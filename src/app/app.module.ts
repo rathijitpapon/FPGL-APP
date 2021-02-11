@@ -13,13 +13,14 @@ import { CtrComponent } from './ctr/ctr.component';
 import { ContactComponent } from './contact/contact.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CtrService } from './services/ctr-service.service';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { ZippyComponent } from './zippy/zippy.component';
 import { ChartsModule } from 'ng2-charts';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { GamesComponent } from './games/games.component';
 import { GameLatestCtrComponent } from './game-latest-ctr/game-latest-ctr.component';
-import {InterceptorService} from './loader/interceptor.service';
+import { CtrOnGamesComponent } from './ctr-on-games/ctr-on-games.component';
+import { DomainsComponent } from './domains/domains.component';
 import { AdCompletionComponent } from './ad-completion/ad-completion.component';
 
 @NgModule({
@@ -33,6 +34,8 @@ import { AdCompletionComponent } from './ad-completion/ad-completion.component';
     BarChartComponent,
     GamesComponent,
     GameLatestCtrComponent,
+    CtrOnGamesComponent,
+    DomainsComponent,
     AdCompletionComponent
   ],
   imports: [
@@ -50,13 +53,22 @@ import { AdCompletionComponent } from './ad-completion/ad-completion.component';
         path: '', component: HomepageComponent
       },
       {
-        path: 'games/fromGame', component: GamesComponent
+        path: 'adcompletion/:name', component: AdCompletionComponent
       },
       {
-        path: 'games/:name', component: GameLatestCtrComponent
+        path: 'otherctr/:name', component: GameLatestCtrComponent
       },
       {
-        path: 'ctr', component: CtrComponent
+        path: 'thisctr/:name', component: CtrOnGamesComponent
+      },
+      {
+        path: 'games', component: GamesComponent
+      },
+      {
+        path: 'domains', component: DomainsComponent
+      },
+      {
+        path: 'dinobattlegp2012', component: CtrComponent
       },
       {
         path: 'contact', component: ContactComponent
@@ -67,9 +79,6 @@ import { AdCompletionComponent } from './ad-completion/ad-completion.component';
     ])
   ],
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true
-    },
     CtrService
   ],
   bootstrap: [AppComponent]

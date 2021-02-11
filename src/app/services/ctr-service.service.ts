@@ -1,5 +1,5 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -8,8 +8,7 @@ export class CtrService {
   url = 'https://cross-promo-analytics-api.herokuapp.com';
   // url = 'http://localhost:5000';
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) { }
 
   getData(limit: number, offset: number): any {
     return this.http.post(this.url + '/ctr', {
@@ -18,11 +17,19 @@ export class CtrService {
     });
   }
 
-  getCTR(limit: number, offset: number, database: string, version: string): any {
-    return this.http.post(this.url + '/ctr/' + database, {
+  getOtherCTR(limit: number, offset: number, database: string, version: string): any {
+    return this.http.post(this.url + '/otherctr/' + database, {
       version,
       limit,
       offset,
+    });
+  }
+
+  getThisCTR(limit: number, offset: number, database: string, c1: string): any {
+    return this.http.post(this.url + '/thisctr/' + database, {
+      limit,
+      offset,
+      c1,
     });
   }
 
@@ -33,11 +40,8 @@ export class CtrService {
     });
   }
 
-  getTotalAdCompletion(): any {
-    return this.http.post(this.url + '/adCompletion', {});
+  getTotalAdCompletion(database: string): any {
+    return this.http.post(this.url + '/adCompletion/' + database, {});
   }
 
-  setDataBase(dbName: string | null): any {
-    return this.http.get(this.url + '/settingDBname/' + dbName);
-  }
 }

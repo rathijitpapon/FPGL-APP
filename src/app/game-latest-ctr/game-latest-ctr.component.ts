@@ -55,11 +55,6 @@ export class GameLatestCtrComponent implements OnInit {
       this.ctrBarData = [];
       this.database = params.get('name') + '';
 
-      const data = {
-        database: this.database,
-        limit: this.limit.value,
-        offset: this.offset.value
-      };
       this.fetchVersions(this.limit.value, this.offset.value, this.database);
     });
   }
@@ -95,7 +90,7 @@ export class GameLatestCtrComponent implements OnInit {
   }
 
   fetchCTR(limit: number, offset: number, database: string, version: string): void {
-    this.service.getCTR(limit, offset, database, version)
+    this.service.getOtherCTR(limit, offset, database, version)
       .subscribe((response: any) => {
         this.apps = [];
         this.ctrs = [];

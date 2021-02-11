@@ -14,10 +14,10 @@ export class AdCompletionComponent implements OnInit {
   chartType: any;
   options: any;
   labels: any;
-  public isDisabled: boolean;
+  isDisabled: boolean;
   object: any;
-  private showing = false;
-  public dbName: string | null = '';
+  showing = false;
+  dbName = '';
 
   constructor(private serviceService: CtrService, private router: ActivatedRoute) {
     this.isDisabled = true;
@@ -25,27 +25,25 @@ export class AdCompletionComponent implements OnInit {
 
   ngOnInit(): void {
     this.isDisabled = true;
-    this.router.paramMap.subscribe(params => {
-      this.dbName = params.get('db_name');
-      this.serviceService.setDataBase(params.get('db_name')).subscribe((object: any) => {
 
-      });
+    this.router.paramMap.subscribe(params => {
+      this.dbName = params.get('name') + '';
     });
   }
 
   getData(): any {
-    this.serviceService.getTotalAdCompletion().subscribe((object: any) => {
+    this.serviceService.getTotalAdCompletion(this.dbName).subscribe((object: any) => {
       this.isDisabled = false;
-      this.object = object['total_ad_show_complete_in_cross_promo'];
-      this.labels = object['c1'];
-      console.log(this.labels);
+      this.object = object.total_ad_show_complete_in_cross_promo;
+      this.labels = object.c1;
+
       this.datasets = [{
-        data: object['total_ad_show_complete_in_quit_panel'],
+        data: object.total_ad_show_complete_in_quit_panel,
         label: 'total_ad_show_complete_in_quit_panel',
         backgroundColor: 'rgba(166, 242, 99,0.8)'
       },
         {
-          data: object['total_ad_show_complete_in_more_games'],
+          data: object.total_ad_show_complete_in_more_games,
           label: 'total_ad_show_complete_in_more_games',
           backgroundColor: 'rgba(0,0,0,0.8)'
         }
