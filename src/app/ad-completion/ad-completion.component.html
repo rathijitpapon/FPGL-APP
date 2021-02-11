@@ -1,0 +1,16 @@
+
+<button class="m5" mat-raised-button (click)="getData()">fetch</button>
+<button mat-raised-button [disabled]=isDisabled (click)="showCrossPromo()">toggle cross promo</button>
+<div class="row">
+  <ng-template [ngIf]="!isDisabled">
+    <div class="col-md-12" align="middle">
+      <h1>database : {{dbName}}</h1>
+    </div>
+  </ng-template>
+</div>
+
+<div>
+  <canvas baseChart height="400px" width="600px" [datasets]="datasets" [chartType]="chartType"
+          [labels]="labels" [options]="options" [legend]="legend"></canvas>
+</div>
+

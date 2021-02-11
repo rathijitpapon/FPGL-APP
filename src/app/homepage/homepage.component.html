@@ -1,23 +1,22 @@
 <div class="main">
-    <img class="fpg-img" src="../../assets/fpg.png" alt="Free Pixel Game Ltd.">
-    <h1 class="title">Free Pixel Games Ltd.</h1>
+  <img class="fpg-img" src="../../assets/fpg.png" alt="Free Pixel Game Ltd.">
+  <h1 class="title">Free Pixel Games Ltd.</h1>
 
-    <div class="container">
-        <div class="row">
-            <div class="col col-sm-3 nav-item">
-                <a class="link" mat-list-item routerLink="/games">Games</a>
-            </div>
-            <div class="col col-sm-1">
-            </div>
-            <div class="col col-sm-3 nav-item">
-                <a class="link" mat-list-item routerLink="/ctr">CTR</a>
-            </div>
-            <div class="col col-sm-1">
-            </div>
-            <div class="col col-sm-3 nav-item">
-                <a class="link" mat-list-item routerLink="/contact">Contact</a>
-            </div>
-        </div>
+  <div class="container">
+    <div class="row">
+      <div class="col col-sm-3 nav-item">
+        <a class="link" mat-list-item [routerLink]="['/games', 'fromGame']">Games</a>
+      </div>
+      <div class="col col-sm-3 nav-item">
+        <a class="link" mat-list-item routerLink="/ctr">CTR</a>
+      </div>
+      <div class="col col-sm-3 nav-item">
+        <a class="link" mat-list-item routerLink="/contact">Contact</a>
+      </div>
+      <div class="col col-sm-3 nav-item">
+        <a class="link" mat-list-item [routerLink]="['/ad_complete','ad']">Ad Completion</a>
+      </div>
     </div>
+  </div>
 </div>
 

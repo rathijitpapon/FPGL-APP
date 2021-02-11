@@ -20,6 +20,7 @@ import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { GamesComponent } from './games/games.component';
 import { GameLatestCtrComponent } from './game-latest-ctr/game-latest-ctr.component';
 import {InterceptorService} from './loader/interceptor.service';
+import { AdCompletionComponent } from './ad-completion/ad-completion.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {InterceptorService} from './loader/interceptor.service';
     ZippyComponent,
     BarChartComponent,
     GamesComponent,
-    GameLatestCtrComponent
+    GameLatestCtrComponent,
+    AdCompletionComponent
   ],
   imports: [
     BrowserModule,
@@ -48,10 +50,10 @@ import {InterceptorService} from './loader/interceptor.service';
         path: '', component: HomepageComponent
       },
       {
-        path: 'games/:name', component: GameLatestCtrComponent
+        path: 'games/fromGame', component: GamesComponent
       },
       {
-        path: 'games', component: GamesComponent
+        path: 'games/:name', component: GameLatestCtrComponent
       },
       {
         path: 'ctr', component: CtrComponent

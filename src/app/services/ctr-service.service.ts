@@ -1,13 +1,15 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CtrService {
-  url = 'https://cross-promo-analytics-api.herokuapp.com';
+  // url = 'https://cross-promo-analytics-api.herokuapp.com';
+  url = 'http://localhost:5000';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   getData(limit: number, offset: number): any {
     return this.http.post(this.url + '/ctr', {
@@ -29,5 +31,13 @@ export class CtrService {
       limit,
       offset,
     });
+  }
+
+  getTotalAdCompletion(): any {
+    return this.http.post(this.url + '/adCompletion', {});
+  }
+
+  setDataBase(dbName: string | null): any {
+    return this.http.get(this.url + '/adCompletion/' + dbName);
   }
 }

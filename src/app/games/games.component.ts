@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-games',
@@ -22,9 +23,17 @@ export class GamesComponent implements OnInit {
     'sharkworld3dfgp'
   ];
 
-  constructor() { }
+  public indicator = true;
+
+  constructor(private route: ActivatedRoute) {
+
+  }
 
   ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      this.indicator = (params.get('src') + '' === 'ad');
+      console.log(this.indicator);
+    });
   }
 
 }
