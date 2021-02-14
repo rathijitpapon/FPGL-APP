@@ -14,7 +14,7 @@ export class SourceSinkService {
 
   getBucksStatus(database: string | undefined, upperLimitOfBucks: number | undefined, lowerLimitOfBucks: number | undefined): any {
     console.log(database);
-    return this.http.post(this.url + '/sourceSink/bucksStatus/' + database, {
+    return this.http.post(this.url + '/sourceSink/bucksStatus', {
       db: database,
       upperLimit: upperLimitOfBucks,
       lowerLimit: lowerLimitOfBucks
