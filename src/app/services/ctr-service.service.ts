@@ -5,8 +5,8 @@ import {Injectable} from '@angular/core';
   providedIn: 'root'
 })
 export class CtrService {
-  // url = 'https://cross-promo-analytics-api.herokuapp.com';
-  url = 'http://localhost:5000';
+  url = 'https://cross-promo-analytics-api.herokuapp.com';
+  // url = 'http://localhost:5000';
 
   constructor(private http: HttpClient) {
   }
