@@ -13,7 +13,7 @@ import { CtrComponent } from './ctr/ctr.component';
 import { ContactComponent } from './contact/contact.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CtrService } from './services/ctr-service.service';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { ZippyComponent } from './zippy/zippy.component';
 import { ChartsModule } from 'ng2-charts';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
@@ -23,6 +23,10 @@ import { CtrOnGamesComponent } from './ctr-on-games/ctr-on-games.component';
 import { DomainsComponent } from './domains/domains.component';
 import { AdCompletionComponent } from './ad-completion/ad-completion.component';
 import { CtrWithRespectToSourceComponent } from './ctr-with-respect-to-source/ctr-with-respect-to-source.component';
+import { SourceSinkComponent } from './source-sink/source-sink.component';
+import { BucksStatusComponent } from './bucks-status/bucks-status.component';
+import {SourceSinkService} from './services/source-sink.service';
+import {InterceptorService} from './loader/interceptor.service';
 
 @NgModule({
   declarations: [
@@ -38,7 +42,9 @@ import { CtrWithRespectToSourceComponent } from './ctr-with-respect-to-source/ct
     CtrOnGamesComponent,
     DomainsComponent,
     AdCompletionComponent,
-    CtrWithRespectToSourceComponent
+    CtrWithRespectToSourceComponent,
+    SourceSinkComponent,
+    BucksStatusComponent
   ],
   imports: [
     BrowserModule,
@@ -53,6 +59,12 @@ import { CtrWithRespectToSourceComponent } from './ctr-with-respect-to-source/ct
     RouterModule.forRoot([
       {
         path: '', component: HomepageComponent
+      },
+      {
+        path: 'sourceSink', component: SourceSinkComponent
+      },
+      {
+        path: 'sourceSink/bucksStatus', component: BucksStatusComponent
       },
       {
         path: 'ctrwrtsrc/:name', component: CtrWithRespectToSourceComponent
@@ -84,7 +96,10 @@ import { CtrWithRespectToSourceComponent } from './ctr-with-respect-to-source/ct
     ])
   ],
   providers: [
-    CtrService
+    {
+      provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true
+    },
+    CtrService, SourceSinkService
   ],
   bootstrap: [AppComponent]
 })
