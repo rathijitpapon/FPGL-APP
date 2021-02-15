@@ -46,8 +46,6 @@ export class BucksStatusComponent implements OnInit {
       return alert(`upper limit must be greater than lower limit`);
     }
     this.sourceSinkService.getBucksStatus(this.selectedDatabase, this.upperLimitOfBucks, this.lowerLimitOfBucks).subscribe((param: any) => {
-      console.log(param.userLevels);
-      console.log(param.averageBucks);
       this.isShown = true;
       this.labels = param.userLevels;
       this.datasets = [{

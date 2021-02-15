@@ -27,6 +27,7 @@ import { SourceSinkComponent } from './source-sink/source-sink.component';
 import { BucksStatusComponent } from './bucks-status/bucks-status.component';
 import {SourceSinkService} from './services/source-sink.service';
 import {InterceptorService} from './loader/interceptor.service';
+import { BucksSpendAndEarningComponent } from './bucks-spend-and-earning/bucks-spend-and-earning.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import {InterceptorService} from './loader/interceptor.service';
     AdCompletionComponent,
     CtrWithRespectToSourceComponent,
     SourceSinkComponent,
-    BucksStatusComponent
+    BucksStatusComponent,
+    BucksSpendAndEarningComponent
   ],
   imports: [
     BrowserModule,
@@ -65,6 +67,9 @@ import {InterceptorService} from './loader/interceptor.service';
       },
       {
         path: 'sourceSink/bucksStatus', component: BucksStatusComponent
+      },
+      {
+        path: 'sourceSink/bucksSpendAndEarning', component: BucksSpendAndEarningComponent
       },
       {
         path: 'ctrwrtsrc/:name', component: CtrWithRespectToSourceComponent

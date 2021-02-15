@@ -1,0 +1,32 @@
+<div class="text-center">
+  <form (ngSubmit)="fetchData()">
+    <mat-form-field hideRequiredMarker>
+      <mat-label>Database</mat-label>
+      <mat-select [(value)]="selectedDatabase" required>
+        <mat-option *ngFor="let game of games" [value]="game">{{game}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br>
+    <mat-form-field hideRequiredMarker>
+      <mat-label>Lower Limit</mat-label>
+      <input matInput required type="Number" placeholder="lower limit of bucks" name="lowerLimitOfBucks"
+             [(ngModel)]="lowerLimitOfBucks">
+    </mat-form-field>
+    <br>
+    <mat-form-field hideRequiredMarker>
+      <mat-label>Upper Limit</mat-label>
+      <input matInput required type="Number" placeholder="upper limit of bucks" name="upperLimitOfBucks"
+             [(ngModel)]="upperLimitOfBucks">
+    </mat-form-field>
+    <br>
+    <button mat-raised-button>fetch</button>
+  </form>
+</div>
+
+
+
+<div *ngIf="isShown">
+  <canvas baseChart [datasets]="datasets" [chartType]="chartType"
+          [labels]="labels" [options]="options" [legend]="legend" [plugins]="barChartPlugins"></canvas>
+</div>
+

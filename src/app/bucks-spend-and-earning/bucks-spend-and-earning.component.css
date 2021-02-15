@@ -1,0 +1,15 @@
+.mat-list-item{
+  max-height: 30px;
+}
+.right-align{
+  margin-right: 0;
+  margin-left: auto;
+}
+
+/*.mat-list .mat-list-item.left .mat-list-item-content{*/
+/*  justify-content: flex-start;*/
+/*}*/
+
+/*.mat-list .mat-list-item.right .mat-list-item-content{*/
+/*  justify-content: flex-end;*/
+/*}*/
