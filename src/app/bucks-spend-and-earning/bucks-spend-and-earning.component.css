@@ -1,6 +1,11 @@
 .mat-list-item{
   max-height: 30px;
 }
+
+#canvas{
+  width: 100%;
+}
+
 .right-align{
   margin-right: 0;
   margin-left: auto;

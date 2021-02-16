@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import {LoaderService} from './loader/loader.service';
 
 @Component({
@@ -8,5 +8,6 @@ import {LoaderService} from './loader/loader.service';
 })
 export class AppComponent {
   title = 'FPGL-APP';
-  constructor(public loaderService: LoaderService) {}
+  constructor(public loaderService: LoaderService, private cd: ChangeDetectorRef) {}
+
 }

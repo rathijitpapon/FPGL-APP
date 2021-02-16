@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CtrService} from '../services/ctr-service.service';
 import {ActivatedRoute} from '@angular/router';
+import {LoaderService} from '../loader/loader.service';
 
 @Component({
   selector: 'app-ad-completion',
@@ -19,7 +20,7 @@ export class AdCompletionComponent implements OnInit {
   showing = false;
   dbName = '';
 
-  constructor(private serviceService: CtrService, private router: ActivatedRoute) {
+  constructor(private serviceService: CtrService, private router: ActivatedRoute, public loaderService: LoaderService) {
     this.isDisabled = true;
   }
 

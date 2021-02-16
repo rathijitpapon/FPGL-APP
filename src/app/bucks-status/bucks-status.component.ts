@@ -1,28 +1,46 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, Directive, OnInit, ViewChild} from '@angular/core';
 import {SourceSinkService} from '../services/source-sink.service';
+import {AverageBucksComponent} from '../average-bucks/average-bucks.component';
+import {BucksSpendAndEarningComponent} from '../bucks-spend-and-earning/bucks-spend-and-earning.component';
+import {LoaderService} from '../loader/loader.service';
+import {MatSelect} from '@angular/material/select';
+import {MatOption} from '@angular/material/core';
+
 
 @Component({
+  providers: [AverageBucksComponent],
   selector: 'app-bucks-status',
   templateUrl: './bucks-status.component.html',
   styleUrls: ['./bucks-status.component.css']
 })
+
 export class BucksStatusComponent implements OnInit {
+
+  @ViewChild(AverageBucksComponent) averageBucksComponent!: AverageBucksComponent;
+  @ViewChild(BucksSpendAndEarningComponent) bucksSpendAndEarningComponent!: BucksSpendAndEarningComponent;
 
   games = [
     'dinobattlegp2012',
+    'dinowaterworldios',
     'dragonbattle2012',
     'dragoncarefgp',
-    // 'dragoncareios',
+    'dragoncareios',
     'dragoncastle2012',
     'jseaattackios',
     'jsniper3dfgp',
+    'jurassicpixelcraftios',
     'jurassicseagp',
     'policevsthieffgp',
-    // 'policevsthieffios',
+    'policevsthieffios',
     'seamonstergp2012',
     'sharkattackios',
     'sharkworld3dfgp'
   ];
+
+  charts = {
+    averageBucksComponent: 'Average bucks Per Level',
+    bucksSpendAndEarningComponent: 'Average Earns And Spend Per Level'
+  };
 
   selectedDatabase: string | undefined;
   options: any;
@@ -30,58 +48,54 @@ export class BucksStatusComponent implements OnInit {
   chartType: any;
   datasets: any;
   labels: any;
-  isShown: any = false;
+  isShown: any[] = [];
   lowerLimitOfBucks = 0;
-  upperLimitOfBucks = 0;
+  upperLimitOfBucks = 300;
+  selectedCharts: any;
+  chartsArray: any[] = [];
+
+  allSelected = false;
+
+  @ViewChild('mySel') skillSel!: MatSelect;
 
 
-  constructor(private sourceSinkService: SourceSinkService) {
+  constructor(public loaderService: LoaderService) {
   }
 
   ngOnInit(): void {
+    this.chartsArray = Object.values(this.charts);
+    this.chartsArray.forEach((item, key) => {
+      this.isShown[key] = false;
+    });
   }
 
-  fetchData(): void {
+  toggleAllSelection(): void {
+    this.allSelected = !this.allSelected;  // to control select-unselect
+
+    if (this.allSelected) {
+      this.skillSel.options.forEach( (item: MatOption) => item.select());
+    } else {
+      this.skillSel.options.forEach( (item: MatOption) => {item.deselect()});
+    }
+    this.skillSel.close();
+  }
+
+
+  fetchData(): any {
+    if (this.selectedDatabase === undefined || this.selectedDatabase.length <= 0) {
+      return alert(`database must be selected`);
+    }
     if (this.upperLimitOfBucks < this.lowerLimitOfBucks) {
       return alert(`upper limit must be greater than lower limit`);
     }
-    this.sourceSinkService.getBucksStatus(this.selectedDatabase, this.upperLimitOfBucks, this.lowerLimitOfBucks).subscribe((param: any) => {
-      this.isShown = true;
-      this.labels = param.userLevels;
-      this.datasets = [{
-        data: param.averageBucks,
-        label: 'average bucks',
-        borderColor: 'rgba(0,0,0,0.8)',
-        fill: false
-      }];
-    });
-    this.chartType = 'line';
-    this.options = {
-      scaleShowVerticalLines: false,
-      responsive: true,
-      scales: {
-        yAxes: [{
-          ticks: {
-            maxRotation: 90,
-            minRotation: 90,
-            beginAtZero: true,
-          },
-          scaleLabel: {
-            display: true,
-            labelString: 'average bucks'
-          }
-        }],
-        xAxes: [{
-          ticks: {
-            maxRotation: 90,
-            minRotation: 90
-          },
-          scaleLabel: {
-            display: true,
-            labelString: 'level'
-          }
-        }]
+
+    for (let i = 0; i < this.chartsArray.length; i++) {
+      if (this.selectedCharts.includes(this.chartsArray[i])) {
+        this.isShown[i] = true;
       }
-    };
+    }
+    this.averageBucksComponent.fetchData();
+    this.bucksSpendAndEarningComponent.fetchData();
+
   }
 }

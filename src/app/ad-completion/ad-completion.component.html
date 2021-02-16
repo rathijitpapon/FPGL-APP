@@ -11,6 +11,10 @@
   </ng-template>
 </div>
 
+<div *ngIf="loaderService.isLoading | async" class="loader-container col-md-12">
+  <mat-spinner diameter="50" style="top: 50%; left: 50%;" color="accent" mode="indeterminate"></mat-spinner>
+</div>
+
 <div *ngIf="!isDisabled">
   <canvas baseChart height="400px" width="600px" [datasets]="datasets" [chartType]="chartType"
           [labels]="labels" [options]="options" [legend]="legend"></canvas>

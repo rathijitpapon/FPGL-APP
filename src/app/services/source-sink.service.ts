@@ -6,8 +6,8 @@ import {HttpClient} from '@angular/common/http';
 })
 export class SourceSinkService {
 
-  url = 'https://cross-promo-analytics-api.herokuapp.com';
-  // url = 'http://localhost:5000';
+  // url = 'https://cross-promo-analytics-api.herokuapp.com';
+  url = 'http://localhost:5000';
 
   constructor(private http: HttpClient) {
   }

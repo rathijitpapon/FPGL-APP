@@ -8,6 +8,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatOptionModule} from '@angular/material/core';
 
 const materialComponents = [
   MatButtonModule, MatToolbarModule,
@@ -18,6 +20,8 @@ const materialComponents = [
   MatFormFieldModule,
   MatSelectModule,
   MatInputModule,
+  MatProgressSpinnerModule,
+  MatOptionModule
 ];
 
 

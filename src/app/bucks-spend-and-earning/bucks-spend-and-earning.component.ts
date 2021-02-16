@@ -1,7 +1,8 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {SourceSinkService} from '../services/source-sink.service';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import {Chart} from 'chart.js';
+import {LoaderService} from '../loader/loader.service';
 
 @Component({
   selector: 'app-bucks-spend-and-earning',
@@ -10,11 +11,16 @@ import {Chart} from 'chart.js';
 })
 export class BucksSpendAndEarningComponent implements OnInit {
 
+  @Input() selectedDatabase: any;
+  @Input() lowerLimitOfBucks: any;
+  @Input() upperLimitOfBucks: any;
+
   legendDataforEarn = [];
   legendDataforSpend = [];
   private flagArray: any[] = [];
+  width: any;
 
-  constructor(private sourceSinkService: SourceSinkService) {
+  constructor(private sourceSinkService: SourceSinkService, public loaderService: LoaderService) {
     Chart.plugins.unregister(ChartDataLabels);
   }
 
@@ -34,29 +40,32 @@ export class BucksSpendAndEarningComponent implements OnInit {
     'sharkworld3dfgp'
   ];
 
-  selectedDatabase: string | undefined;
   options: any;
   legend: any = true;
   chartType: any;
   datasets: any;
   labels: any;
   isShown: any = false;
-  lowerLimitOfBucks = 0;
-  upperLimitOfBucks = 0;
-  // barChartPlugins = [ChartDataLabels];
-  barChartPlugins = [];
+  maxPositiveValue = 0;
+  maxNegativeValue = 0;
+  barChartPlugins = [ChartDataLabels];
+
+  // barChartPlugins = [];
 
 
   ngOnInit(): void {
-    for(let i = 0 ; i < 50 ; i ++ ){
-      this.flagArray.push(true);
-    }
+    // for (let i = 0; i < 50; i++) {
+    //   this.flagArray.push(true);
+    // }
+    this.fetchData();
   }
 
   fetchData(): void {
-    if (this.upperLimitOfBucks < this.lowerLimitOfBucks) {
-      return alert(`upper limit must be greater than lower limit`);
-    }
+    this.width = window.innerWidth + ((window.innerWidth < 1000) ? 250 : 0);
+    this.datasets = [];
+    this.labels = [];
+    this.options = {};
+    this.isShown = false;
     this.sourceSinkService.getBucksSpendAndEarning(this.selectedDatabase, this.upperLimitOfBucks, this.lowerLimitOfBucks)
       .subscribe((param: any) => {
         this.isShown = true;
@@ -249,19 +258,16 @@ export class BucksSpendAndEarningComponent implements OnInit {
       });
     this.chartType = 'bar';
     this.options = {
-      scaleShowValues: true,
-      scaleValuePaddingX: 10,
-      scaleValuePaddingY: 10,
       layout: {
         padding: {
           left: 12
         }
       },
-      scaleShowVerticalLines: false,
-      responsive: true,
+      responsive: false,
       scales: {
         yAxes: [{
           ticks: {
+            display: false,
             maxRotation: 90,
             minRotation: 90,
             beginAtZero: true,
@@ -269,38 +275,80 @@ export class BucksSpendAndEarningComponent implements OnInit {
           scaleLabel: {
             display: false
           },
-          stacked: true
-        }],
+          stacked: true,
+          gridLines: {
+            display: false
+          }
+        },
+        ],
         xAxes: [{
           ticks: {
             maxRotation: 90,
             minRotation: 90
           },
           scaleLabel: {
-            display: true,
+            display: false,
             labelString: 'level'
           },
-          stacked: true
-        }]
+          stacked: true,
+          gridLines: {
+            display: false
+          }
+        },
+          {
+            type: 'category',
+            offset: true,
+            position: 'top',
+            ticks: {
+              fontColor: '#000000',
+              fontStyle: 'bold',
+              maxRotation: 90,
+              minRotation: 90,
+              callback: (value: any, index: any) => {
+                let total = 0;
+                this.datasets.forEach((item: { label: string | string[]; data: { [x: string]: any; }; }) => {
+                  if (item.label.includes('Earn')) {
+                    total += Number(item.data[index]);
+                  }
+                });
+                this.maxPositiveValue = Math.max(total, this.maxPositiveValue);
+                return total.toFixed(2);
+              }
+            }
+          },
+          {
+            type: 'category',
+            offset: true,
+            position: 'below',
+            ticks: {
+              fontColor: '#000000',
+              fontStyle: 'bold',
+              maxRotation: 90,
+              minRotation: 90,
+              callback: (value: any, index: any, values: any) => {
+                let total = 0;
+                this.datasets.forEach((item: { label: string | string[]; data: { [x: string]: any; }; }) => {
+                  if (item.label.includes('Spend')) {
+                    total += Number(item.data[index]);
+                  }
+                });
+                this.maxNegativeValue = Math.min(this.maxNegativeValue, total);
+                return total.toFixed(2);
+              }
+            }
+          }
+        ]
       },
       plugins: {
         datalabels: {
-          // formatter: (value: any, context: any) => {
-          //   if (this.flagArray[context.datasetIndex]) {
-          //     this.flagArray[context.datasetIndex] = false;
-          //     return 'abcd';
-          //   }
-          //   return '';
-          //   // return context.dataset.data.labels[context.dataIndex];
-          // },
-          // align: 'center',
-          align: (context: any) => {
-            return context.datasetIndex === 0 ? 'end' : 'start';
+          formatter: (value: any, ctx: any) => {
+            if (Number(value) * 100 / this.maxPositiveValue > 10 || Number(value) * 100 / this.maxNegativeValue > 10) {
+              return Number(value).toFixed(0);
+            }
+            return '';
           },
-          // anchor: 'center',
-          anchor: (context: any) => {
-            return context.datasetIndex === 0 ? 'end' : 'start';
-          },
+          align: 'center',
+          anchor: 'center',
           font: {
             weight: 'bold'
           },
@@ -310,14 +358,30 @@ export class BucksSpendAndEarningComponent implements OnInit {
       },
       legend: {
         position: 'right',
-        title: {
-          display: true,
-          text: 'Average'
-        },
         labels: {
           usePointStyle: true,
-        }
+        },
+        // onClick: (e: any, legendItem: any, legend: any) => {
+        //   // console.log(e);
+        //   // console.log(e.target.__ngContext__[22][0]);
+        //   // console.log(legendItem);
+        //   // const ci = legend.chart;
+        //   legendItem.hidden = !legendItem.hidden;
+        //   console.log(this.datasets[legendItem.datasetIndex]);
+        //   this.datasets[legendItem.datasetIndex]._meta[2].data.forEach((item: { hidden: boolean; }) => {
+        //     item.hidden = true;
+        //   });
+        //   this.datasets[legendItem.datasetIndex]._meta[2].hidden = true;
+        //   this.datasets[legendItem.datasetIndex]._meta[2].bar = false;
+        //
+        //   console.log(this.datasets[legendItem.datasetIndex]._meta[2].hidden);
+        //   // this.datasets[legendItem.datasetIndex].hidden = legendItem.hidden;
+        //   // ci.hide(legendItem.datasetIndex);
+        //   // this.datasets.splice(legendItem.datasetIndex, 1);
+        //   this.options.scales.xAxes[1].ticks.callback(1, 38);
+        // }
       }
     };
   }
 }
+
