@@ -73,9 +73,11 @@ export class BucksStatusComponent implements OnInit {
     this.allSelected = !this.allSelected;  // to control select-unselect
 
     if (this.allSelected) {
-      this.skillSel.options.forEach( (item: MatOption) => item.select());
+      this.skillSel.options.forEach((item: MatOption) => item.select());
     } else {
-      this.skillSel.options.forEach( (item: MatOption) => {item.deselect()});
+      this.skillSel.options.forEach((item: MatOption) => {
+        item.deselect();
+      });
     }
     this.skillSel.close();
   }
@@ -88,12 +90,16 @@ export class BucksStatusComponent implements OnInit {
     if (this.upperLimitOfBucks < this.lowerLimitOfBucks) {
       return alert(`upper limit must be greater than lower limit`);
     }
+    this.chartsArray.forEach((item, key) => {
+      this.isShown[key] = false;
+    });
 
     for (let i = 0; i < this.chartsArray.length; i++) {
       if (this.selectedCharts.includes(this.chartsArray[i])) {
         this.isShown[i] = true;
       }
     }
+    console.log(this.selectedCharts);
     this.averageBucksComponent.fetchData();
     this.bucksSpendAndEarningComponent.fetchData();
 

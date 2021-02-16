@@ -24,22 +24,6 @@ export class BucksSpendAndEarningComponent implements OnInit {
     Chart.plugins.unregister(ChartDataLabels);
   }
 
-  games = [
-    'dinobattlegp2012',
-    'dragonbattle2012',
-    'dragoncarefgp',
-    // 'dragoncareios',
-    'dragoncastle2012',
-    'jseaattackios',
-    'jsniper3dfgp',
-    'jurassicseagp',
-    'policevsthieffgp',
-    // 'policevsthieffios',
-    'seamonstergp2012',
-    'sharkattackios',
-    'sharkworld3dfgp'
-  ];
-
   options: any;
   legend: any = true;
   chartType: any;
@@ -267,7 +251,7 @@ export class BucksSpendAndEarningComponent implements OnInit {
       scales: {
         yAxes: [{
           ticks: {
-            display: false,
+            display: true,
             maxRotation: 90,
             minRotation: 90,
             beginAtZero: true,
