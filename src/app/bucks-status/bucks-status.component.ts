@@ -5,6 +5,7 @@ import {BucksSpendAndEarningComponent} from './bucks-spend-and-earning/bucks-spe
 import {LoaderService} from '../loader/loader.service';
 import {MatSelect} from '@angular/material/select';
 import {MatOption} from '@angular/material/core';
+import {SumOfBucksSpendEarningComponent} from './sum-of-bucks-spend-earning/sum-of-bucks-spend-earning.component';
 
 
 @Component({
@@ -18,6 +19,7 @@ export class BucksStatusComponent implements OnInit {
 
   @ViewChild(AverageBucksComponent) averageBucksComponent!: AverageBucksComponent;
   @ViewChild(BucksSpendAndEarningComponent) bucksSpendAndEarningComponent!: BucksSpendAndEarningComponent;
+  @ViewChild(SumOfBucksSpendEarningComponent) sumOfBucksSpendEarningComponent!: SumOfBucksSpendEarningComponent;
 
   games = [
     'dinobattlegp2012',
@@ -52,6 +54,7 @@ export class BucksStatusComponent implements OnInit {
     'Average Earns And Spend Per Level',
     'Average Cumulative Earn And Spend Per Level',
     'Average Total Ad Show Per Source',
+    'Total Earns And Spend Per Level'
   ];
 
   allSelected = false;
@@ -98,9 +101,9 @@ export class BucksStatusComponent implements OnInit {
         this.isShown[i] = true;
       }
     }
-    console.log(this.selectedCharts);
     this.averageBucksComponent.fetchData();
     this.bucksSpendAndEarningComponent.fetchData();
+    this.sumOfBucksSpendEarningComponent.fetchData();
 
   }
 }

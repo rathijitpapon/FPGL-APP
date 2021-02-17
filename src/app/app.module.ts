@@ -32,6 +32,7 @@ import { DrawingChartComponent } from './drawing-chart/drawing-chart.component';
 import { AverageBucksComponent } from './bucks-status/average-bucks/average-bucks.component';
 import { AverageCumulativeBucksComponent } from './bucks-status/average-cumulative-bucks/average-cumulative-bucks.component';
 import { AverageAdshowSourceComponent } from './bucks-status/average-adshow-source/average-adshow-source.component';
+import {SumOfBucksSpendEarningComponent} from './bucks-status/sum-of-bucks-spend-earning/sum-of-bucks-spend-earning.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { AverageAdshowSourceComponent } from './bucks-status/average-adshow-sour
     DrawingChartComponent,
     AverageBucksComponent,
     AverageCumulativeBucksComponent,
-    AverageAdshowSourceComponent
+    AverageAdshowSourceComponent,
+    SumOfBucksSpendEarningComponent
   ],
   imports: [
     BrowserModule,

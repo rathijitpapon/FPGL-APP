@@ -76,8 +76,6 @@ export class AverageAdshowSourceComponent implements OnInit {
             label: key,
           });
         });
-
-        console.log(this.datasets);
       });
 
     this.chartType = 'bar';
