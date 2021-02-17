@@ -5,10 +5,10 @@ import {BucksSpendAndEarningComponent} from './bucks-spend-and-earning/bucks-spe
 import {LoaderService} from '../loader/loader.service';
 import {MatSelect} from '@angular/material/select';
 import {MatOption} from '@angular/material/core';
+import {SumOfBucksSpendEarningComponent} from './sum-of-bucks-spend-earning/sum-of-bucks-spend-earning.component';
 
 
 @Component({
-  providers: [AverageBucksComponent],
   selector: 'app-bucks-status',
   templateUrl: './bucks-status.component.html',
   styleUrls: ['./bucks-status.component.css']
@@ -18,6 +18,8 @@ export class BucksStatusComponent implements OnInit {
 
   @ViewChild(AverageBucksComponent) averageBucksComponent!: AverageBucksComponent;
   @ViewChild(BucksSpendAndEarningComponent) bucksSpendAndEarningComponent!: BucksSpendAndEarningComponent;
+  @ViewChild(SumOfBucksSpendEarningComponent) sumOfBucksSpendEarningComponent!: SumOfBucksSpendEarningComponent;
+  @ViewChild('mySel') skillSel!: MatSelect;
 
   games = [
     'dinobattlegp2012',
@@ -37,33 +39,23 @@ export class BucksStatusComponent implements OnInit {
     'sharkworld3dfgp'
   ];
 
-  charts = {
-    averageBucksComponent: 'Average bucks Per Level',
-    bucksSpendAndEarningComponent: 'Average Earns And Spend Per Level'
-  };
-
   selectedDatabase: string | undefined;
-  options: any;
-  legend: any = true;
-  chartType: any;
-  datasets: any;
-  labels: any;
   isShown: any[] = [];
   lowerLimitOfBucks = 0;
   upperLimitOfBucks = 300;
   selectedCharts: any;
-  chartsArray: any[] = [];
+  chartsArray: any[] = [
+    'Average bucks Per Level',
+    'Average Earns And Spend Per Level',
+    'Total Earns And Spend Per Level'
+  ];
 
   allSelected = false;
-
-  @ViewChild('mySel') skillSel!: MatSelect;
-
 
   constructor(public loaderService: LoaderService) {
   }
 
   ngOnInit(): void {
-    this.chartsArray = Object.values(this.charts);
     this.chartsArray.forEach((item, key) => {
       this.isShown[key] = false;
     });
@@ -99,9 +91,8 @@ export class BucksStatusComponent implements OnInit {
         this.isShown[i] = true;
       }
     }
-    console.log(this.selectedCharts);
     this.averageBucksComponent.fetchData();
     this.bucksSpendAndEarningComponent.fetchData();
-
+    this.sumOfBucksSpendEarningComponent.fetchData();
   }
 }

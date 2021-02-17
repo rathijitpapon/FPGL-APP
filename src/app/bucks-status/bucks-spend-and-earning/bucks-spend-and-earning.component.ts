@@ -19,6 +19,9 @@ export class BucksSpendAndEarningComponent implements OnInit {
   legendDataforSpend = [];
   private flagArray: any[] = [];
   width: any;
+  height: any;
+  fontWeight: any;
+  legendPosition: any;
 
   constructor(private sourceSinkService: SourceSinkService, public loaderService: LoaderService) {
     Chart.plugins.unregister(ChartDataLabels);
@@ -37,15 +40,16 @@ export class BucksSpendAndEarningComponent implements OnInit {
   // barChartPlugins = [];
 
 
+
   ngOnInit(): void {
-    // for (let i = 0; i < 50; i++) {
-    //   this.flagArray.push(true);
-    // }
     this.fetchData();
   }
 
   fetchData(): void {
-    this.width = window.innerWidth + ((window.innerWidth < 1000) ? 250 : 0);
+    this.width = window.innerWidth + ((window.innerWidth < 800) ? 600 : 0);
+    this.height = (window.innerWidth < 800) ? 700 : 700;
+    this.fontWeight = (window.innerWidth < 800) ? 'normal' : 'bold';
+    this.legendPosition = (window.innerWidth < 800) ? 'top' : 'right';
     this.datasets = [];
     this.labels = [];
     this.options = {};
@@ -326,6 +330,9 @@ export class BucksSpendAndEarningComponent implements OnInit {
       plugins: {
         datalabels: {
           formatter: (value: any, ctx: any) => {
+            // if (window.innerWidth < 1000) {
+            //   return ' ';
+            // }
             if (Number(value) * 100 / this.maxPositiveValue > 10 || Number(value) * 100 / this.maxNegativeValue > 10) {
               return Number(value).toFixed(0);
             }
@@ -334,14 +341,14 @@ export class BucksSpendAndEarningComponent implements OnInit {
           align: 'center',
           anchor: 'center',
           font: {
-            weight: 'bold'
+            weight: this.fontWeight
           },
           color: '#000000',
           rotation: -90
         }
       },
       legend: {
-        position: 'right',
+        position: this.legendPosition,
         labels: {
           usePointStyle: true,
         },

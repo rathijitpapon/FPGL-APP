@@ -30,6 +30,7 @@ import {InterceptorService} from './loader/interceptor.service';
 import { BucksSpendAndEarningComponent } from './bucks-status/bucks-spend-and-earning/bucks-spend-and-earning.component';
 import { DrawingChartComponent } from './drawing-chart/drawing-chart.component';
 import { AverageBucksComponent } from './bucks-status/average-bucks/average-bucks.component';
+import { SumOfBucksSpendEarningComponent } from './bucks-status/sum-of-bucks-spend-earning/sum-of-bucks-spend-earning.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { AverageBucksComponent } from './bucks-status/average-bucks/average-buck
     BucksStatusComponent,
     BucksSpendAndEarningComponent,
     DrawingChartComponent,
-    AverageBucksComponent
+    AverageBucksComponent,
+    SumOfBucksSpendEarningComponent
   ],
   imports: [
     BrowserModule,
