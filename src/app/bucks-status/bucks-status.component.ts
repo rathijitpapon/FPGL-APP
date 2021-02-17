@@ -6,6 +6,8 @@ import {LoaderService} from '../loader/loader.service';
 import {MatSelect} from '@angular/material/select';
 import {MatOption} from '@angular/material/core';
 import {SumOfBucksSpendEarningComponent} from './sum-of-bucks-spend-earning/sum-of-bucks-spend-earning.component';
+import {AverageAdshowSourceComponent} from './average-adshow-source/average-adshow-source.component';
+import {AverageCumulativeBucksComponent} from './average-cumulative-bucks/average-cumulative-bucks.component';
 
 
 @Component({
@@ -20,6 +22,8 @@ export class BucksStatusComponent implements OnInit {
   @ViewChild(AverageBucksComponent) averageBucksComponent!: AverageBucksComponent;
   @ViewChild(BucksSpendAndEarningComponent) bucksSpendAndEarningComponent!: BucksSpendAndEarningComponent;
   @ViewChild(SumOfBucksSpendEarningComponent) sumOfBucksSpendEarningComponent!: SumOfBucksSpendEarningComponent;
+  @ViewChild(AverageAdshowSourceComponent) averageAdshowSourceComponent!: AverageAdshowSourceComponent;
+  @ViewChild(AverageCumulativeBucksComponent) averageCumulativeBucksComponent!: AverageCumulativeBucksComponent;
 
   games = [
     'dinobattlegp2012',
@@ -104,6 +108,8 @@ export class BucksStatusComponent implements OnInit {
     this.averageBucksComponent.fetchData();
     this.bucksSpendAndEarningComponent.fetchData();
     this.sumOfBucksSpendEarningComponent.fetchData();
+    this.averageAdshowSourceComponent.fetchData();
+    this.averageCumulativeBucksComponent.fetchData();
 
   }
 }
