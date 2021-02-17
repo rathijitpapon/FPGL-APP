@@ -27,4 +27,19 @@ export class SourceSinkService {
       lowerLimit: lowerLimitOfBucks
     });
   }
+
+  getBucksColumns(database: string): any {
+    return this.http.get(this.url + '/sourceSink/columns/' + database);
+  }
+
+  getAverageCumulativeBucksSpendAndEarn(database: string, upperLimit: number, lowerLimit: number): any {
+    return this.http.post(this.url + '/sourceSink/averageBucksSpendAndEarning/' + database, {
+      upperLimit,
+      lowerLimit,
+    });
+  }
+
+  getAverageAdShowPerSource(database: string): any {
+    return this.http.get(this.url + '/sourceSink/averageAdShowPerSource/' + database);
+  }
 }

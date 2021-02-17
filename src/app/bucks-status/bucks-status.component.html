@@ -51,3 +51,19 @@
   ></app-bucks-spend-and-earning>
 </div>
 <br>
+<div *ngIf='isShown[2]'>
+  <app-average-cumulative-bucks [selectedDatabase]="selectedDatabase"
+                               [lowerLimitOfBucks]="lowerLimitOfBucks"
+                               [upperLimitOfBucks]="upperLimitOfBucks"
+
+  ></app-average-cumulative-bucks>
+</div>
+<br>
+<div *ngIf='isShown[3]'>
+  <app-average-adshow-source [selectedDatabase]="selectedDatabase"
+                               [lowerLimitOfBucks]="lowerLimitOfBucks"
+                               [upperLimitOfBucks]="upperLimitOfBucks"
+
+  ></app-average-adshow-source>
+</div>
+<br>

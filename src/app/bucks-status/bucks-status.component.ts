@@ -37,11 +37,6 @@ export class BucksStatusComponent implements OnInit {
     'sharkworld3dfgp'
   ];
 
-  charts = {
-    averageBucksComponent: 'Average bucks Per Level',
-    bucksSpendAndEarningComponent: 'Average Earns And Spend Per Level'
-  };
-
   selectedDatabase: string | undefined;
   options: any;
   legend: any = true;
@@ -52,7 +47,12 @@ export class BucksStatusComponent implements OnInit {
   lowerLimitOfBucks = 0;
   upperLimitOfBucks = 300;
   selectedCharts: any;
-  chartsArray: any[] = [];
+  chartsArray: any[] = [
+    'Average bucks Per Level',
+    'Average Earns And Spend Per Level',
+    'Average Cumulative Earn And Spend Per Level',
+    'Average Total Ad Show Per Source',
+  ];
 
   allSelected = false;
 
@@ -63,7 +63,6 @@ export class BucksStatusComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.chartsArray = Object.values(this.charts);
     this.chartsArray.forEach((item, key) => {
       this.isShown[key] = false;
     });

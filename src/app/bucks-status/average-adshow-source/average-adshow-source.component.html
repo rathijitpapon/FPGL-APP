@@ -1,0 +1,14 @@
+<div *ngIf="loaderService.isLoading | async" class="loader-container col-md-12">
+    <mat-spinner diameter="50" style="top: 50%; left: 50%;" color="accent" mode="indeterminate"></mat-spinner>
+  </div>
+  
+  <div *ngIf="isShown" class="text-center">
+    <app-drawing-chart [options]="options" [legend]="legend"
+                       [datasets]="datasets" [chartType]="chartType"
+                       [labels]="labels" [barChartPlugins]="barChartPlugins"
+                       [width]="width" [height]="700"
+    ></app-drawing-chart>
+    <h2>Average Total Ad Show Per Level</h2>
+  
+  </div>
+  
