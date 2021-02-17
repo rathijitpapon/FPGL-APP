@@ -1,7 +1,7 @@
 import {AfterViewInit, ChangeDetectorRef, Component, Directive, OnInit, ViewChild} from '@angular/core';
 import {SourceSinkService} from '../services/source-sink.service';
-import {AverageBucksComponent} from '../average-bucks/average-bucks.component';
-import {BucksSpendAndEarningComponent} from '../bucks-spend-and-earning/bucks-spend-and-earning.component';
+import {AverageBucksComponent} from './average-bucks/average-bucks.component';
+import {BucksSpendAndEarningComponent} from './bucks-spend-and-earning/bucks-spend-and-earning.component';
 import {LoaderService} from '../loader/loader.service';
 import {MatSelect} from '@angular/material/select';
 import {MatOption} from '@angular/material/core';

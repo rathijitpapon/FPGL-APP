@@ -1,8 +1,8 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {SourceSinkService} from '../services/source-sink.service';
+import {SourceSinkService} from '../../services/source-sink.service';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import {Chart} from 'chart.js';
-import {LoaderService} from '../loader/loader.service';
+import {LoaderService} from '../../loader/loader.service';
 
 @Component({
   selector: 'app-bucks-spend-and-earning',

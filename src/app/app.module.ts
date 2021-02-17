@@ -27,9 +27,9 @@ import { SourceSinkComponent } from './source-sink/source-sink.component';
 import { BucksStatusComponent } from './bucks-status/bucks-status.component';
 import {SourceSinkService} from './services/source-sink.service';
 import {InterceptorService} from './loader/interceptor.service';
-import { BucksSpendAndEarningComponent } from './bucks-spend-and-earning/bucks-spend-and-earning.component';
+import { BucksSpendAndEarningComponent } from './bucks-status/bucks-spend-and-earning/bucks-spend-and-earning.component';
 import { DrawingChartComponent } from './drawing-chart/drawing-chart.component';
-import { AverageBucksComponent } from './average-bucks/average-bucks.component';
+import { AverageBucksComponent } from './bucks-status/average-bucks/average-bucks.component';
 
 @NgModule({
   declarations: [

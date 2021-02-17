@@ -5,7 +5,7 @@
 <div *ngIf="isShown" class="text-center">
   <app-drawing-chart [options]="options" [legend]="legend"
                      [datasets]="datasets" [chartType]="chartType"
-                     [labels]="labels"
+                     [labels]="labels" [barChartPlugins]="barChartPlugins"
                      [width]="width" [height]="700"
   ></app-drawing-chart>
   <h2>Average bucks Per Level</h2>

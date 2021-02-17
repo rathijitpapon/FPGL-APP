@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {SourceSinkService} from '../services/source-sink.service';
-import {LoaderService} from '../loader/loader.service';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+import {SourceSinkService} from '../../services/source-sink.service';
+import {LoaderService} from '../../loader/loader.service';
+import {Chart} from 'chart.js';
 
 @Component({
   selector: 'app-average-bucks',
@@ -19,11 +21,13 @@ export class AverageBucksComponent implements OnInit {
   datasets: any;
   labels: any;
   isShown: any = false;
-  barChartPlugins: any = [];
+  barChartPlugins: any = [ChartDataLabels];
   width: any;
 
 
-  constructor(private sourceSinkService: SourceSinkService, public loaderService: LoaderService) { }
+  constructor(private sourceSinkService: SourceSinkService, public loaderService: LoaderService) {
+    Chart.plugins.unregister(ChartDataLabels);
+  }
 
   ngOnInit(): void {
     this.fetchData();
@@ -41,7 +45,11 @@ export class AverageBucksComponent implements OnInit {
         data: param.averageBucks,
         label: 'average bucks',
         borderColor: 'rgba(0,0,0,0.8)',
-        fill: false
+        fill: false,
+        datalabels: {
+          align: 'center',
+          anchor: 'center'
+        }
       }];
     });
     this.chartType = 'line';
@@ -70,6 +78,18 @@ export class AverageBucksComponent implements OnInit {
             labelString: 'level'
           }
         }]
+      },
+      plugins: {
+        datalabels: {
+          backgroundColor: (context: { dataset: { borderColor: any; }; }) => context.dataset.borderColor,
+          borderRadius: 4,
+          color: 'white',
+          font: {
+            weight: 'bold'
+          },
+          formatter: Math.round,
+          padding: 3
+        }
       }
     };
   }
