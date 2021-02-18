@@ -6,9 +6,12 @@ import {LoaderService} from '../loader/loader.service';
 import {MatSelect} from '@angular/material/select';
 import {MatOption} from '@angular/material/core';
 import {SumOfBucksSpendEarningComponent} from './sum-of-bucks-spend-earning/sum-of-bucks-spend-earning.component';
+import {AverageAdshowSourceComponent} from './average-adshow-source/average-adshow-source.component';
+import {AverageCumulativeBucksComponent} from './average-cumulative-bucks/average-cumulative-bucks.component';
 
 
 @Component({
+  providers: [AverageBucksComponent],
   selector: 'app-bucks-status',
   templateUrl: './bucks-status.component.html',
   styleUrls: ['./bucks-status.component.css']
@@ -19,7 +22,8 @@ export class BucksStatusComponent implements OnInit {
   @ViewChild(AverageBucksComponent) averageBucksComponent!: AverageBucksComponent;
   @ViewChild(BucksSpendAndEarningComponent) bucksSpendAndEarningComponent!: BucksSpendAndEarningComponent;
   @ViewChild(SumOfBucksSpendEarningComponent) sumOfBucksSpendEarningComponent!: SumOfBucksSpendEarningComponent;
-  @ViewChild('mySel') skillSel!: MatSelect;
+  @ViewChild(AverageAdshowSourceComponent) averageAdshowSourceComponent!: AverageAdshowSourceComponent;
+  @ViewChild(AverageCumulativeBucksComponent) averageCumulativeBucksComponent!: AverageCumulativeBucksComponent;
 
   games = [
     'dinobattlegp2012',
@@ -40,6 +44,11 @@ export class BucksStatusComponent implements OnInit {
   ];
 
   selectedDatabase: string | undefined;
+  options: any;
+  legend: any = true;
+  chartType: any;
+  datasets: any;
+  labels: any;
   isShown: any[] = [];
   lowerLimitOfBucks = 0;
   upperLimitOfBucks = 300;
@@ -47,10 +56,15 @@ export class BucksStatusComponent implements OnInit {
   chartsArray: any[] = [
     'Average bucks Per Level',
     'Average Earns And Spend Per Level',
+    'Average Cumulative Earn And Spend Per Level',
+    'Average Total Ad Show Per Source',
     'Total Earns And Spend Per Level'
   ];
 
   allSelected = false;
+
+  @ViewChild('mySel') skillSel!: MatSelect;
+
 
   constructor(public loaderService: LoaderService) {
   }
@@ -94,5 +108,8 @@ export class BucksStatusComponent implements OnInit {
     this.averageBucksComponent.fetchData();
     this.bucksSpendAndEarningComponent.fetchData();
     this.sumOfBucksSpendEarningComponent.fetchData();
+    this.averageAdshowSourceComponent.fetchData();
+    this.averageCumulativeBucksComponent.fetchData();
+
   }
 }
