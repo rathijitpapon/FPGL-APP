@@ -1,8 +1,8 @@
 <div class="container game-ctr">
-    <h2 align="center">{{ database | uppercase }} - V{{ latestVersion }}</h2>
+    <h2 align="center">{{ database | uppercase }}</h2>
     <div class="row">
         <div class="col-md-6">
-            <form [formGroup]="form" (ngSubmit)="fetchData(form.value)">
+            <form [formGroup]="form" (ngSubmit)="fetchVersions(form.value.limit, form.value.offset, database)">
 
                 <div class="form-group">
                     <label for="">Limit</label>
@@ -27,27 +27,27 @@
         </div>
 
         <div class="col-md-6">
-            <app-zippy title="Applications">
+            <app-zippy title="Versions">
                 <ul class="list-group">
                     <li 
-                        *ngFor="let domain of willShowLink" 
-                        class="list-group-item"
+                        *ngFor="let data of versionsData" 
+                        class="list-group-item version-item"
+                        (click)="selectVersion(data.version)"
                     >
-                        <a [routerLink]="['/games', domain[1]]">{{ domain[0] }}</a>
-                    </li>
-                </ul>
-                <ul class="list-group">
-                    <li 
-                        *ngFor="let app of willShow" 
-                        class="list-group-item"
-                    >
-                        {{ app }}
+                        {{ data.version }}
                     </li>
                 </ul>
             </app-zippy>
         </div>
     </div>
 </div>
+
+<h3 align="center">
+    Version: {{ defaultVersion }}
+</h3>
+<h3 align="center">
+    User Count: {{ defaultUserCount }}
+</h3>
 
 <app-bar-chart 
     *ngFor="let ctr of ctrBarData"

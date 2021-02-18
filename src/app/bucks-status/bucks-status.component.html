@@ -1,0 +1,60 @@
+<div class="text-center">
+  <form (ngSubmit)="fetchData()">
+    <mat-form-field hideRequiredMarker>
+      <mat-label>Database</mat-label>
+      <mat-select [(value)]="selectedDatabase" required>
+        <mat-option *ngFor="let game of games" [value]="game">{{game}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br>
+    <mat-form-field hideRequiredMarker>
+      <mat-label>Lower Limit</mat-label>
+      <input matInput required type="Number" placeholder="lower limit of bucks" name="lowerLimitOfBucks"
+             [(ngModel)]="lowerLimitOfBucks">
+    </mat-form-field>
+    <br>
+    <mat-form-field hideRequiredMarker>
+      <mat-label>Upper Limit</mat-label>
+      <input matInput required type="Number" placeholder="upper limit of bucks" name="upperLimitOfBucks"
+             [(ngModel)]="upperLimitOfBucks">
+    </mat-form-field>
+    <br>
+    <mat-form-field hideRequiredMarker>
+      <mat-label>select charts</mat-label>
+      <mat-select #mySel [(value)]="selectedCharts" multiple>
+        <mat-option [value]="0" (click)="toggleAllSelection()">All items</mat-option>
+        <mat-option *ngFor="let chart of chartsArray" [value]="chart">{{chart}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br>
+    <button mat-raised-button>fetch</button>
+  </form>
+</div>
+
+<br>
+
+<!--<ng-template *ngIf="isShown">-->
+<div *ngIf="isShown[0]">
+  <app-average-bucks [selectedDatabase]="selectedDatabase"
+                     [lowerLimitOfBucks]="lowerLimitOfBucks"
+                     [upperLimitOfBucks]="upperLimitOfBucks"
+  >
+
+  </app-average-bucks>
+</div>
+<br>
+<div *ngIf='isShown[1]'>
+  <app-bucks-spend-and-earning [selectedDatabase]="selectedDatabase"
+                               [lowerLimitOfBucks]="lowerLimitOfBucks"
+                               [upperLimitOfBucks]="upperLimitOfBucks"
+
+  ></app-bucks-spend-and-earning>
+</div>
+<br>
+<div *ngIf='isShown[2]'>
+  <app-sum-of-bucks-spend-earning [selectedDatabase]="selectedDatabase"
+                                  [lowerLimitOfBucks]="lowerLimitOfBucks"
+                                  [upperLimitOfBucks]="upperLimitOfBucks"
+  ></app-sum-of-bucks-spend-earning>
+</div>
+<br>

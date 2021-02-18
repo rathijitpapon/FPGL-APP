@@ -1,0 +1,19 @@
+
+<div class="col-md-12" align="middle">
+  <button class="m5" mat-raised-button (click)="getdata()">fetch</button>
+</div>
+<div class="row">
+  <ng-template [ngIf]="isShown">
+    <div class="col-md-12" align="middle">
+      <h1>database : {{database}}</h1>
+    </div>
+  </ng-template>
+</div>
+<div *ngIf="loaderService.isLoading | async" class="loader-container col-md-12">
+  <mat-spinner diameter="50" style="top: 50%; left: 50%;" color="accent" mode="indeterminate"></mat-spinner>
+</div>
+
+<div *ngIf="isShown">
+  <canvas baseChart height="400px" width="600px" [datasets]="datasets" [chartType]="chartType"
+          [labels]="labels" [options]="options" [legend]="legend"></canvas>
+</div>
