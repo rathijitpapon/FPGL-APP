@@ -24,6 +24,7 @@ export class SumOfBucksSpendEarningComponent implements OnInit {
   barChartPlugins: any = [ChartDataLabels];
   width: any;
   fontSize: any;
+  fontWeight: any;
 
   constructor(private sourceSinkService: SourceSinkService, public loaderService: LoaderService) {
     Chart.plugins.unregister(ChartDataLabels);
@@ -35,6 +36,7 @@ export class SumOfBucksSpendEarningComponent implements OnInit {
 
   fetchData(): void {
     this.fontSize = (window.innerWidth < 800) ? 7 : 12;
+    this.fontWeight = (window.innerWidth < 800) ? 'normal' : 'bold';
     this.datasets = [];
     this.labels = [];
     this.options = {};
@@ -100,7 +102,8 @@ export class SumOfBucksSpendEarningComponent implements OnInit {
       plugins: {
         datalabels: {
           font: {
-            size: this.fontSize
+            size: this.fontSize,
+            weight: this.fontWeight
           },
           color: '#000000',
           rotation: -90
