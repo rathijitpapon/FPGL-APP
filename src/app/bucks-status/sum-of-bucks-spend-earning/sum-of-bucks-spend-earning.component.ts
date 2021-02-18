@@ -34,6 +34,7 @@ export class SumOfBucksSpendEarningComponent implements OnInit {
   }
 
   fetchData(): void {
+    this.fontSize = (window.innerWidth < 800) ? 7 : 12;
     this.datasets = [];
     this.labels = [];
     this.options = {};
