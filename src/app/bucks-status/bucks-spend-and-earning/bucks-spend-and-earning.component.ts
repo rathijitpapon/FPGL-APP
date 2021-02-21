@@ -1,8 +1,9 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, Input, OnInit, ViewChild} from '@angular/core';
 import {SourceSinkService} from '../../services/source-sink.service';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import {Chart} from 'chart.js';
 import {LoaderService} from '../../loader/loader.service';
+import {DrawingChartComponent} from '../../drawing-chart/drawing-chart.component';
 
 @Component({
   selector: 'app-bucks-spend-and-earning',
@@ -11,9 +12,16 @@ import {LoaderService} from '../../loader/loader.service';
 })
 export class BucksSpendAndEarningComponent implements OnInit {
 
+  constructor(private sourceSinkService: SourceSinkService, public loaderService: LoaderService) {
+    Chart.plugins.unregister(ChartDataLabels);
+  }
+
   @Input() selectedDatabase: any;
   @Input() lowerLimitOfBucks: any;
   @Input() upperLimitOfBucks: any;
+
+  @ViewChild(DrawingChartComponent) drawingChartComponent!: DrawingChartComponent;
+
 
   legendDataforEarn = [];
   legendDataforSpend = [];
@@ -22,10 +30,6 @@ export class BucksSpendAndEarningComponent implements OnInit {
   height: any;
   fontWeight: any;
   legendPosition: any;
-
-  constructor(private sourceSinkService: SourceSinkService, public loaderService: LoaderService) {
-    Chart.plugins.unregister(ChartDataLabels);
-  }
 
   options: any;
   legend: any = true;
@@ -37,8 +41,17 @@ export class BucksSpendAndEarningComponent implements OnInit {
   maxNegativeValue = 0;
   barChartPlugins = [ChartDataLabels];
 
-  // barChartPlugins = [];
+  // @HostListener('window:resize', ['$event'])
+  onResize(event: any): any {
+    this.width = window.innerWidth + ((window.innerWidth <= 850) ? 600 : 0);
+    this.height = (window.innerWidth > 850) ? 700 : 700;
+    this.fontWeight = (window.innerWidth > 850) ? 'bold' : 'normal';
+    this.legendPosition = (window.innerWidth > 850) ? 'right' : 'top';
+    this.drawingChartComponent.onResize(event.target.innerWidth > 850, this.legendPosition,
+      this.fontWeight, this.width, this.height);
+  }
 
+  // barChartPlugins = [];
 
 
   ngOnInit(): void {
@@ -46,7 +59,7 @@ export class BucksSpendAndEarningComponent implements OnInit {
   }
 
   fetchData(): void {
-    this.width = window.innerWidth + ((window.innerWidth < 800) ? 600 : 0);
+    this.width = window.innerWidth + ((window.innerWidth < 850) ? 600 : 0);
     this.height = (window.innerWidth < 800) ? 700 : 700;
     this.fontWeight = (window.innerWidth < 800) ? 'normal' : 'bold';
     this.legendPosition = (window.innerWidth < 800) ? 'top' : 'right';
@@ -252,6 +265,7 @@ export class BucksSpendAndEarningComponent implements OnInit {
         }
       },
       responsive: false,
+      maintainAspectRatio: false,
       scales: {
         yAxes: [{
           ticks: {
