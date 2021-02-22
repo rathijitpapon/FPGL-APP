@@ -27,6 +27,13 @@
       </mat-select>
     </mat-form-field>
     <br>
+    <mat-form-field hideRequiredMarker>
+      <mat-label>select time span</mat-label>
+      <mat-select [(value)]="seletedTimeSpan">
+        <mat-option *ngFor="let timeSpan of timeSpans; let i = index" [value]="numericalValuesOfTimeSpans[i]">{{timeSpan}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br>
     <button mat-raised-button>fetch</button>
   </form>
 </div>
@@ -60,18 +67,40 @@
 </div>
 <br>
 <div *ngIf='isShown[3]'>
-  <app-average-adshow-source [selectedDatabase]="selectedDatabase"
-                               [lowerLimitOfBucks]="lowerLimitOfBucks"
-                               [upperLimitOfBucks]="upperLimitOfBucks"
-
-  ></app-average-adshow-source>
-</div>
-<br>
-<div *ngIf='isShown[4]'>
   <app-sum-of-bucks-spend-earning [selectedDatabase]="selectedDatabase"
                                [lowerLimitOfBucks]="lowerLimitOfBucks"
                                [upperLimitOfBucks]="upperLimitOfBucks"
 
   ></app-sum-of-bucks-spend-earning>
+</div>
+<br>
+<div *ngIf='isShown[4]'>
+  <app-average-adshow-source [selectedDatabase]="selectedDatabase"
+                               [lowerLimitOfBucks]="lowerLimitOfBucks"
+                               [upperLimitOfBucks]="upperLimitOfBucks"
+                               [selectedTimeSpan]="seletedTimeSpan"
+                               [reqType] = "'all'"
+
+  ></app-average-adshow-source>
+</div>
+<br>
+<div *ngIf='isShown[5]'>
+  <app-average-adshow-source [selectedDatabase]="selectedDatabase"
+                               [lowerLimitOfBucks]="lowerLimitOfBucks"
+                               [upperLimitOfBucks]="upperLimitOfBucks"
+                               [selectedTimeSpan]="seletedTimeSpan"
+                               [reqType] = "'reward'"
+
+  ></app-average-adshow-source>
+</div>
+<br>
+<div *ngIf='isShown[6]'>
+  <app-average-adshow-source [selectedDatabase]="selectedDatabase"
+                               [lowerLimitOfBucks]="lowerLimitOfBucks"
+                               [upperLimitOfBucks]="upperLimitOfBucks"
+                               [selectedTimeSpan]="seletedTimeSpan"
+                               [reqType] = "'int'"
+
+  ></app-average-adshow-source>
 </div>
 <br>

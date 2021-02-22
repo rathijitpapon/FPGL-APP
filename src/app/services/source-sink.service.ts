@@ -47,7 +47,10 @@ export class SourceSinkService {
     });
   }
 
-  getAverageAdShowPerSource(database: string): any {
-    return this.http.get(this.url + '/sourceSink/averageAdShowPerSource/' + database);
+  getAverageAdShowPerSource(database: string, timeSpan: number, reqType: string): any {
+    return this.http.post(this.url + '/sourceSink/averageAdShowPerSource/' + database, {
+      reqType,
+      hoursBefore: timeSpan,
+    });
   }
 }
