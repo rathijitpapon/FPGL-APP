@@ -29,7 +29,7 @@ export class SourceSinkService {
   }
 
   getBucksSpendAndEarning(selectedDatabase: string | undefined, upperLimitOfBucks: number, lowerLimitOfBucks: number): any {
-    return this.http.post(this.url + '/sourceSink/bucksSpendAndEarning', {
+    return this.http.post(this.url + '/sourceSink/bucksStatus/bucksSpendAndEarning', {
       db: selectedDatabase,
       upperLimit: upperLimitOfBucks,
       lowerLimit: lowerLimitOfBucks
