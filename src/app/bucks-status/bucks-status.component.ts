@@ -11,7 +11,13 @@ import {AverageCumulativeBucksComponent} from './average-cumulative-bucks/averag
 
 
 @Component({
-  providers: [AverageBucksComponent],
+  providers: [
+    AverageBucksComponent,
+    BucksSpendAndEarningComponent,
+    SumOfBucksSpendEarningComponent,
+    AverageAdshowSourceComponent,
+    AverageCumulativeBucksComponent
+  ],
   selector: 'app-bucks-status',
   templateUrl: './bucks-status.component.html',
   styleUrls: ['./bucks-status.component.css']
@@ -105,11 +111,30 @@ export class BucksStatusComponent implements OnInit {
         this.isShown[i] = true;
       }
     }
-    this.averageBucksComponent.fetchData();
-    this.bucksSpendAndEarningComponent.fetchData();
-    this.sumOfBucksSpendEarningComponent.fetchData();
-    this.averageAdshowSourceComponent.fetchData();
-    this.averageCumulativeBucksComponent.fetchData();
 
+    try {
+      this.averageBucksComponent.fetchData();
+    } catch (e) {
+    }
+
+    try {
+      this.bucksSpendAndEarningComponent.fetchData();
+    } catch (e) {
+    }
+
+    try {
+      this.sumOfBucksSpendEarningComponent.fetchData();
+    } catch (e) {
+    }
+
+    try {
+      this.averageAdshowSourceComponent.fetchData();
+    } catch (e) {
+    }
+
+    try {
+      this.averageCumulativeBucksComponent.fetchData();
+    } catch (e) {
+    }
   }
 }
