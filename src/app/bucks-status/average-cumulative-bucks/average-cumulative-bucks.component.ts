@@ -12,6 +12,7 @@ import {LoaderService} from '../../loader/loader.service';
 export class AverageCumulativeBucksComponent implements OnInit {
 
   @Input() selectedDatabase: any;
+  @Input() selectedTimeSpan: any;
   @Input() lowerLimitOfBucks = 0;
   @Input() upperLimitOfBucks = 0;
 
@@ -49,7 +50,8 @@ export class AverageCumulativeBucksComponent implements OnInit {
     await this.sourceSinkService.getAverageCumulativeBucksSpendAndEarn(
       this.selectedDatabase,
       this.upperLimitOfBucks,
-      this.lowerLimitOfBucks
+      this.lowerLimitOfBucks,
+      this.selectedTimeSpan
       )
       .toPromise()
       .then((data: any) => {

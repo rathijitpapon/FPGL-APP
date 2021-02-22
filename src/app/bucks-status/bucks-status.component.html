@@ -27,6 +27,13 @@
       </mat-select>
     </mat-form-field>
     <br>
+    <mat-form-field hideRequiredMarker>
+      <mat-label>select time span</mat-label>
+      <mat-select [(value)]="seletedTimeSpan">
+        <mat-option *ngFor="let timeSpan of timeSpans; let i = index" [value]="numericalValuesOfTimeSpans[i]">{{timeSpan}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br>
     <button mat-raised-button>fetch</button>
   </form>
 </div>
@@ -38,8 +45,8 @@
   <app-average-bucks [selectedDatabase]="selectedDatabase"
                      [lowerLimitOfBucks]="lowerLimitOfBucks"
                      [upperLimitOfBucks]="upperLimitOfBucks"
+                     [selectedTimeSpan]="seletedTimeSpan"
   >
-
   </app-average-bucks>
 </div>
 <br>
@@ -47,22 +54,23 @@
   <app-bucks-spend-and-earning [selectedDatabase]="selectedDatabase"
                                [lowerLimitOfBucks]="lowerLimitOfBucks"
                                [upperLimitOfBucks]="upperLimitOfBucks"
-
+                               [selectedTimeSpan]="seletedTimeSpan"
   ></app-bucks-spend-and-earning>
 </div>
 <br>
 <div *ngIf='isShown[2]'>
   <app-average-cumulative-bucks [selectedDatabase]="selectedDatabase"
-                               [lowerLimitOfBucks]="lowerLimitOfBucks"
-                               [upperLimitOfBucks]="upperLimitOfBucks"
-
+                                [lowerLimitOfBucks]="lowerLimitOfBucks"
+                                [upperLimitOfBucks]="upperLimitOfBucks"
+                                [selectedTimeSpan]="seletedTimeSpan"
   ></app-average-cumulative-bucks>
 </div>
 <br>
 <div *ngIf='isShown[3]'>
   <app-average-adshow-source [selectedDatabase]="selectedDatabase"
-                               [lowerLimitOfBucks]="lowerLimitOfBucks"
-                               [upperLimitOfBucks]="upperLimitOfBucks"
+                             [lowerLimitOfBucks]="lowerLimitOfBucks"
+                             [upperLimitOfBucks]="upperLimitOfBucks"
+                             [selectedTimeSpan]="seletedTimeSpan"
 
   ></app-average-adshow-source>
 </div>

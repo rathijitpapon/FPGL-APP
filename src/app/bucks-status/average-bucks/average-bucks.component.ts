@@ -14,6 +14,7 @@ export class AverageBucksComponent implements OnInit {
   @Input() public selectedDatabase: any;
   @Input() public lowerLimitOfBucks: any;
   @Input() public upperLimitOfBucks: any;
+  @Input() public selectedTimeSpan: any;
 
   options: any;
   legend: any = true;
@@ -38,7 +39,8 @@ export class AverageBucksComponent implements OnInit {
     this.labels = [];
     this.options = {};
     this.isShown = false;
-    this.sourceSinkService.getBucksStatus(this.selectedDatabase, this.upperLimitOfBucks, this.lowerLimitOfBucks).subscribe((param: any) => {
+    this.sourceSinkService.getBucksStatus(this.selectedDatabase, this.upperLimitOfBucks,
+      this.lowerLimitOfBucks, this.selectedTimeSpan).subscribe((param: any) => {
       this.isShown = true;
       this.labels = param.userLevels;
       this.datasets = [{

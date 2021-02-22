@@ -14,6 +14,7 @@ export class SumOfBucksSpendEarningComponent implements OnInit {
   @Input() public selectedDatabase: any;
   @Input() public lowerLimitOfBucks: any;
   @Input() public upperLimitOfBucks: any;
+  @Input() public selectedTimeSpan: any;
 
   options: any;
   legend: any = true;
@@ -41,31 +42,32 @@ export class SumOfBucksSpendEarningComponent implements OnInit {
     this.labels = [];
     this.options = {};
     this.isShown = false;
-    this.sourceSinkService.getTotalBucksSpendAndEarning(this.selectedDatabase, this.upperLimitOfBucks, this.lowerLimitOfBucks)
+    this.sourceSinkService.getTotalBucksSpendAndEarning(this.selectedDatabase, this.upperLimitOfBucks,
+      this.lowerLimitOfBucks, this.selectedTimeSpan)
       .subscribe((param: any) => {
-      this.isShown = true;
-      this.labels = param.userLevel;
-      this.datasets = [{
-        data: param.totalBucksEarn,
-        label: 'total Bucks Earn',
-        borderColor: 'rgba(0,0,0,0.8)',
-        fill: false,
-        datalabels: {
-          align: 'top',
-          anchor: 'end'
-        }
-      },
-        {
-          data: param.totalBucksSpend,
-          label: 'total Bucks Spend',
+        this.isShown = true;
+        this.labels = param.userLevel;
+        this.datasets = [{
+          data: param.totalBucksEarn,
+          label: 'total Bucks Earn',
           borderColor: 'rgba(0,0,0,0.8)',
+          fill: false,
           datalabels: {
-            align: 'start',
-            anchor: 'start'
+            align: 'top',
+            anchor: 'end'
           }
-        }
-      ];
-    });
+        },
+          {
+            data: param.totalBucksSpend,
+            label: 'total Bucks Spend',
+            borderColor: 'rgba(0,0,0,0.8)',
+            datalabels: {
+              align: 'start',
+              anchor: 'start'
+            }
+          }
+        ];
+      });
     this.chartType = 'bar';
     this.options = {
       scaleShowVerticalLines: false,

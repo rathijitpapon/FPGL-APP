@@ -14,6 +14,7 @@ export class AverageAdshowSourceComponent implements OnInit {
   @Input() selectedDatabase: any;
   @Input() lowerLimitOfBucks = 0;
   @Input() upperLimitOfBucks = 0;
+  @Input() selectedTimeSpan: any;
 
   legendData = [];
   private flagArray: any[] = [];
@@ -45,7 +46,7 @@ export class AverageAdshowSourceComponent implements OnInit {
     this.isShown = false;
 
     await this.sourceSinkService.getAverageAdShowPerSource(
-      this.selectedDatabase
+      this.selectedDatabase, this.selectedTimeSpan
       )
       .toPromise()
       .then((data: any) => {
