@@ -31,14 +31,13 @@ export class DrawingChartComponent implements OnInit {
            height?: number): any {
     if (flag) {
       this.chart.chart.resize();
+      this.chart.chart.width = width;
     } else {
       this.chart.chart.width = width;
     }
     this.chart.chart.options.legend.position = legendPosition;
     this.chart.chart.options.plugins.datalabels.font.weight = fontWeight;
-    this.chart.chart.height = 700;
-
+    this.chart.chart.height = height;
     this.chart.chart.update();
   }
-
 }
