@@ -6,8 +6,8 @@ import {HttpClient} from '@angular/common/http';
 })
 export class SourceSinkService {
 
-  // url = 'https://cross-promo-analytics-api.herokuapp.com';
-  url = 'http://localhost:5000';
+  url = 'https://cross-promo-analytics-api.herokuapp.com';
+  // url = 'http://localhost:5000';
 
   constructor(private http: HttpClient) {
   }
@@ -29,10 +29,25 @@ export class SourceSinkService {
   }
 
   getBucksSpendAndEarning(selectedDatabase: string | undefined, upperLimitOfBucks: number, lowerLimitOfBucks: number): any {
-    return this.http.post(this.url + '/sourceSink/bucksSpendAndEarning', {
+    return this.http.post(this.url + '/sourceSink/bucksStatus/bucksSpendAndEarning', {
       db: selectedDatabase,
       upperLimit: upperLimitOfBucks,
       lowerLimit: lowerLimitOfBucks
     });
+  }
+
+  getBucksColumns(database: string): any {
+    return this.http.get(this.url + '/sourceSink/columns/' + database);
+  }
+
+  getAverageCumulativeBucksSpendAndEarn(database: string, upperLimit: number, lowerLimit: number): any {
+    return this.http.post(this.url + '/sourceSink/averageBucksSpendAndEarning/' + database, {
+      upperLimit,
+      lowerLimit,
+    });
+  }
+
+  getAverageAdShowPerSource(database: string): any {
+    return this.http.get(this.url + '/sourceSink/averageAdShowPerSource/' + database);
   }
 }

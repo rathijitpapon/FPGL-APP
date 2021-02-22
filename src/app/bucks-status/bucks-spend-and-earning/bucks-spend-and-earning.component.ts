@@ -1,8 +1,9 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, Input, OnInit, ViewChild} from '@angular/core';
 import {SourceSinkService} from '../../services/source-sink.service';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import {Chart} from 'chart.js';
 import {LoaderService} from '../../loader/loader.service';
+import {DrawingChartComponent} from '../../drawing-chart/drawing-chart.component';
 
 @Component({
   selector: 'app-bucks-spend-and-earning',
@@ -11,9 +12,16 @@ import {LoaderService} from '../../loader/loader.service';
 })
 export class BucksSpendAndEarningComponent implements OnInit {
 
+  constructor(private sourceSinkService: SourceSinkService, public loaderService: LoaderService) {
+    Chart.plugins.unregister(ChartDataLabels);
+  }
+
   @Input() selectedDatabase: any;
   @Input() lowerLimitOfBucks: any;
   @Input() upperLimitOfBucks: any;
+
+  @ViewChild(DrawingChartComponent) drawingChartComponent!: DrawingChartComponent;
+
 
   legendDataforEarn = [];
   legendDataforSpend = [];
@@ -22,10 +30,6 @@ export class BucksSpendAndEarningComponent implements OnInit {
   height: any;
   fontWeight: any;
   legendPosition: any;
-
-  constructor(private sourceSinkService: SourceSinkService, public loaderService: LoaderService) {
-    Chart.plugins.unregister(ChartDataLabels);
-  }
 
   options: any;
   legend: any = true;
@@ -37,8 +41,17 @@ export class BucksSpendAndEarningComponent implements OnInit {
   maxNegativeValue = 0;
   barChartPlugins = [ChartDataLabels];
 
-  // barChartPlugins = [];
+  // @HostListener('window:resize', ['$event'])
+  onResize(event: any): any {
+    this.width = window.innerWidth + ((window.innerWidth <= 850) ? 600 : 0);
+    this.height = 750;
+    this.fontWeight = (window.innerWidth > 850) ? 'bold' : 'normal';
+    this.legendPosition = (window.innerWidth > 850) ? 'right' : 'top';
+    this.drawingChartComponent.onResize(event.target.innerWidth > 850, this.legendPosition,
+      this.fontWeight, this.width, this.height);
+  }
 
+  // barChartPlugins = [];
 
 
   ngOnInit(): void {
@@ -46,8 +59,8 @@ export class BucksSpendAndEarningComponent implements OnInit {
   }
 
   fetchData(): void {
-    this.width = window.innerWidth + ((window.innerWidth < 800) ? 600 : 0);
-    this.height = (window.innerWidth < 800) ? 700 : 700;
+    this.width = window.innerWidth + ((window.innerWidth < 850) ? 600 : 0);
+    this.height = 750;
     this.fontWeight = (window.innerWidth < 800) ? 'normal' : 'bold';
     this.legendPosition = (window.innerWidth < 800) ? 'top' : 'right';
     this.datasets = [];
@@ -58,161 +71,18 @@ export class BucksSpendAndEarningComponent implements OnInit {
       .subscribe((param: any) => {
         this.isShown = true;
         this.labels = param.userLevels;
-        this.datasets = [
-          {
-            data: param.averageEarnAfterFight,
-            label: 'averageEarnAfterFight'
-          },
-          {
-            data: param.averageEarninGoal,
-            label: 'averageEarninGoal'
-          },
-          {
-            data: param.averageEarnInAppPackChest,
-            label: 'averageEarnInAppPackChest'
-          },
-          {
-            data: param.averageEarnInAppUSD,
-            label: 'averageEarnInAppUSD'
-          },
-          {
-            data: param.averageEarnDailyBonus,
-            label: 'averageEarnDailyBonus'
-          },
-          {
-            data: param.averageEarnInAppPanel,
-            label: 'averageEarnInAppPanel'
-          },
-          {
-            data: param.averageEarninitialbuck,
-            label: 'averageEarninitialbuck'
-          },
-          {
-            data: param.averageEarnInAppSpecialOffer,
-            label: 'averageEarnInAppSpecialOffer'
-          },
-          {
-            data: param.averageEarndailyBonusProduct,
-            label: 'averageEarndailyBonusProduct'
-          },
-          {
-            data: param.averageEarnAdReward,
-            label: 'averageEarnAdReward'
-          },
-          {
-            data: param.averageEarnInApp,
-            label: 'averageEarnInApp'
-          },
-          {
-            data: param.averageEarnOwnAdReward,
-            label: 'averageEarnOwnAdReward'
-          },
-          {
-            data: param.averageEarnVideoAdReward,
-            label: 'averageEarnVideoAdReward'
-          },
-          {
-            data: param.averageEarnVIPBenefits,
-            label: 'averageEarnVIPBenefits'
-          },
-          {
-            data: param.averageEarnJump3Times,
-            label: 'averageEarnJump3Times'
-          },
-          {
-            data: param.averageEarnBestReward,
-            label: 'averageEarnBestReward'
-          },
-          {
-            data: param.averageEarnJump3Times2x,
-            label: 'averageEarnJump3Times2x'
-          },
-          {
-            data: param.averageEarnJ3TGOBestReward,
-            label: 'averageEarnJ3TGOBestReward'
-          },
-          {
-            data: param.averageEarnFightWinLooseBR,
-            label: 'averageEarnFightWinLooseBR'
-          },
-          {
-            data: param.averageEarnOwnAdVIPReward,
-            label: 'averageEarnOwnAdVIPReward'
-          },
-
-
-          {
-            data: param.averageSpendClaimWithGemsPopup,
-            label: 'averageSpendClaimWithGemsPopup'
-          },
-          {
-            data: param.averageSpendNursery,
-            label: 'averageSpendNursery'
-          },
-          {
-            data: param.averageSpendProduct,
-            label: 'averageSpendProduct'
-          },
-          {
-            data: param.averageSpendProductLand,
-            label: 'averageSpendProductLand'
-          },
-          {
-            data: param.averageSpendRefillEnergy,
-            label: 'averageSpendRefillEnergy'
-          },
-          {
-            data: param.averageSpendOuter,
-            label: 'averageSpendOuter'
-          },
-          {
-            data: param.averageSpendFarm,
-            label: 'averageSpendFarm'
-          },
-          {
-            data: param.averageSpendSummonCard,
-            label: 'averageSpendSummonCard'
-          },
-          {
-            data: param.averageSpendClaimWithGems,
-            label: 'averageSpendClaimWithGems'
-          },
-          {
-            data: param.averageSpendChallenge9Summon,
-            label: 'averageSpendChallenge9Summon'
-          },
-          {
-            data: param.averageSpendProductEvolve,
-            label: 'averageSpendProductEvolve'
-          },
-          {
-            data: param.averageSpendBreedLab,
-            label: 'averageSpendBreedLab'
-          },
-          {
-            data: param.averageSpendTodaysOffer_BuyFood,
-            label: 'averageSpendTodaysOffer_BuyFood'
-          },
-          {
-            data: param.averageSpendTodaysOffer_BuyProduct,
-            label: 'averageSpendTodaysOffer_BuyProduct'
-          },
-          {
-            data: param.averageSpendTodaysOffer_BuyAll,
-            label: 'averageSpendTodaysOffer_BuyAll'
-          },
-          {
-            data: param.averageSpendDailyBonusProduct,
-            label: 'averageSpendDailyBonusProduct'
-          },
-          {
-            data: param.averageSpendJ3TBallShop,
-            label: 'averageSpendJ3TBallShop'
-          },
-          {
-            data: param.averageSpendDailyTaskSkip,
-            label: 'averageSpendDailyTaskSkip'
-          }];
+        Object.keys(param.averageEarns).forEach(item => {
+          this.datasets.push({
+            data: param.averageEarns[item],
+            label: item
+          });
+        });
+        Object.keys(param.averageSpends).forEach(item => {
+          this.datasets.push({
+            data: param.averageSpends[item],
+            label: item
+          });
+        });
         const temp: any[] = [];
         this.datasets.forEach((item: any) => {
           let flag = true;
@@ -252,6 +122,7 @@ export class BucksSpendAndEarningComponent implements OnInit {
         }
       },
       responsive: false,
+      maintainAspectRatio: false,
       scales: {
         yAxes: [{
           ticks: {

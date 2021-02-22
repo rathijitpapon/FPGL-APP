@@ -2,7 +2,7 @@
   <mat-spinner diameter="50" style="top: 50%; left: 50%;" color="accent" mode="indeterminate"></mat-spinner>
 </div>
 
-<div *ngIf="isShown" class="text-center">
+<div *ngIf="isShown" class="text-center" (window:resize)="onResize($event)">
   <app-drawing-chart [options]="options" [legend]="legend"
                      [datasets]="datasets" [chartType]="chartType"
                      [labels]="labels" [barChartPlugins]="barChartPlugins"
