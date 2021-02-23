@@ -3,6 +3,7 @@ import {SourceSinkService} from '../../services/source-sink.service';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import {Chart} from 'chart.js';
 import {LoaderService} from '../../loader/loader.service';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 
 @Component({
   selector: 'app-average-adshow-source',
@@ -47,6 +48,8 @@ export class AverageAdshowSourceComponent implements OnInit {
     this.options = {};
     this.isShown = false;
 
+    this.loaderService._isLoading = new BehaviorSubject<boolean>(true);
+
     // await this.sourceSinkService.sendMessage('Hello From Frontend')
     //   .subscribe((data: any) => {
     //     console.log(data);
@@ -65,6 +68,7 @@ export class AverageAdshowSourceComponent implements OnInit {
     await this.sourceSinkService.getData(dataId
       )
       .subscribe((data: any) => {
+        this.loaderService._isLoading = new BehaviorSubject<boolean>(false);
         this.isShown = true;
         this.labels = data.userLevel;
         const sourcesValue: any = {};
