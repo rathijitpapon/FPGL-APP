@@ -78,7 +78,6 @@ export class SourceSinkService {
   getData(dataId: string): any{
     return new Observable(observer => {
       this.socket.on(dataId, (data: any) => {
-        console.log(data);
         observer.next(data);
       });
     });
