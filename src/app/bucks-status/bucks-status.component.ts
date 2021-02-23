@@ -72,15 +72,6 @@ export class BucksStatusComponent implements OnInit {
   allSelected = false;
 
   @ViewChild('mySel') skillSel!: MatSelect;
-  seletedTimeSpan: any;
-  timeSpans: any = [
-    'last 24 hours',
-    'last 10 days',
-    'last 30 days',
-  ];
-  numericalValuesOfTimeSpans: any = [
-    24, 240, 720
-  ];
 
   seletedTimeSpan = 0;
   timeSpans = [
