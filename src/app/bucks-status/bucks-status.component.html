@@ -67,19 +67,40 @@
 </div>
 <br>
 <div *ngIf='isShown[3]'>
-  <app-average-adshow-source [selectedDatabase]="selectedDatabase"
-                             [lowerLimitOfBucks]="lowerLimitOfBucks"
-                             [upperLimitOfBucks]="upperLimitOfBucks"
-                             [selectedTimeSpan]="seletedTimeSpan"
-
-  ></app-average-adshow-source>
-</div>
-<br>
-<div *ngIf='isShown[4]'>
   <app-sum-of-bucks-spend-earning [selectedDatabase]="selectedDatabase"
                                [lowerLimitOfBucks]="lowerLimitOfBucks"
                                [upperLimitOfBucks]="upperLimitOfBucks"
 
   ></app-sum-of-bucks-spend-earning>
+</div>
+<br>
+<div *ngIf='isShown[4]'>
+  <app-average-adshow-source [selectedDatabase]="selectedDatabase"
+                               [lowerLimitOfBucks]="lowerLimitOfBucks"
+                               [upperLimitOfBucks]="upperLimitOfBucks"
+                               [selectedTimeSpan]="seletedTimeSpan"
+                               [reqType] = "'all'"
+
+  ></app-average-adshow-source>
+</div>
+<br>
+<div *ngIf='isShown[5]'>
+  <app-average-adshow-source [selectedDatabase]="selectedDatabase"
+                               [lowerLimitOfBucks]="lowerLimitOfBucks"
+                               [upperLimitOfBucks]="upperLimitOfBucks"
+                               [selectedTimeSpan]="seletedTimeSpan"
+                               [reqType] = "'reward'"
+
+  ></app-average-adshow-source>
+</div>
+<br>
+<div *ngIf='isShown[6]'>
+  <app-average-adshow-source [selectedDatabase]="selectedDatabase"
+                               [lowerLimitOfBucks]="lowerLimitOfBucks"
+                               [upperLimitOfBucks]="upperLimitOfBucks"
+                               [selectedTimeSpan]="seletedTimeSpan"
+                               [reqType] = "'int'"
+
+  ></app-average-adshow-source>
 </div>
 <br>

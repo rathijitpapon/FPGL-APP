@@ -63,8 +63,10 @@ export class BucksStatusComponent implements OnInit {
     'Average bucks Per Level',
     'Average Earns And Spend Per Level',
     'Average Cumulative Earn And Spend Per Level',
+    'Total Earns And Spend Per Level',
     'Average Total Ad Show Per Source',
-    'Total Earns And Spend Per Level'
+    'Average Total Reward Ad Show Per Source',
+    'Average Total Int Ad Show Per Source',
   ];
 
   allSelected = false;
@@ -80,6 +82,18 @@ export class BucksStatusComponent implements OnInit {
     24, 240, 720
   ];
 
+  seletedTimeSpan = 0;
+  timeSpans = [
+    'All Data',
+    'last 24 hours',
+    'last 48 hours',
+    'last 7 days',
+    'last 28 days'
+  ];
+
+  numericalValuesOfTimeSpans = [
+    10000000, 24, 48, 168, 672
+  ];
 
   constructor(public loaderService: LoaderService) {
   }
@@ -150,7 +164,8 @@ export class BucksStatusComponent implements OnInit {
     }
   }
 
-  typeof() {
-    return typeof(this.seletedTimeSpan);
-  }
+  // typeof() {
+  //   return typeof(this.seletedTimeSpan);
+  // }
+
 }
