@@ -45,8 +45,8 @@
   <app-average-bucks [selectedDatabase]="selectedDatabase"
                      [lowerLimitOfBucks]="lowerLimitOfBucks"
                      [upperLimitOfBucks]="upperLimitOfBucks"
+                     [selectedTimeSpan]="seletedTimeSpan"
   >
-
   </app-average-bucks>
 </div>
 <br>
@@ -54,15 +54,15 @@
   <app-bucks-spend-and-earning [selectedDatabase]="selectedDatabase"
                                [lowerLimitOfBucks]="lowerLimitOfBucks"
                                [upperLimitOfBucks]="upperLimitOfBucks"
-
+                               [selectedTimeSpan]="seletedTimeSpan"
   ></app-bucks-spend-and-earning>
 </div>
 <br>
 <div *ngIf='isShown[2]'>
   <app-average-cumulative-bucks [selectedDatabase]="selectedDatabase"
-                               [lowerLimitOfBucks]="lowerLimitOfBucks"
-                               [upperLimitOfBucks]="upperLimitOfBucks"
-
+                                [lowerLimitOfBucks]="lowerLimitOfBucks"
+                                [upperLimitOfBucks]="upperLimitOfBucks"
+                                [selectedTimeSpan]="seletedTimeSpan"
   ></app-average-cumulative-bucks>
 </div>
 <br>

@@ -12,27 +12,33 @@ export class SourceSinkService {
   constructor(private http: HttpClient) {
   }
 
-  getTotalBucksSpendAndEarning(selectedDatabase: string | undefined, upperLimitOfBucks: number, lowerLimitOfBucks: number): any {
+  getTotalBucksSpendAndEarning(selectedDatabase: string, upperLimitOfBucks: number, lowerLimitOfBucks: number,
+                               timeSpan: number): any {
     return this.http.post(this.url + '/sourceSink/bucksStatus/totalSpendAndEarning', {
       db: selectedDatabase,
       upperLimit: upperLimitOfBucks,
-      lowerLimit: lowerLimitOfBucks
+      lowerLimit: lowerLimitOfBucks,
+      timeSpan
     });
   }
 
-  getBucksStatus(database: string | undefined, upperLimitOfBucks: number | undefined, lowerLimitOfBucks: number | undefined): any {
+  getBucksStatus(database: string, upperLimitOfBucks: number, lowerLimitOfBucks: number,
+                 timeSpan: number): any {
     return this.http.post(this.url + '/sourceSink/bucksStatus', {
       db: database,
       upperLimit: upperLimitOfBucks,
-      lowerLimit: lowerLimitOfBucks
+      lowerLimit: lowerLimitOfBucks,
+      timeSpan
     });
   }
 
-  getBucksSpendAndEarning(selectedDatabase: string | undefined, upperLimitOfBucks: number, lowerLimitOfBucks: number): any {
+  getBucksSpendAndEarning(selectedDatabase: string , upperLimitOfBucks: number,
+                          lowerLimitOfBucks: number, timeSpan: number): any {
     return this.http.post(this.url + '/sourceSink/bucksStatus/bucksSpendAndEarning', {
       db: selectedDatabase,
       upperLimit: upperLimitOfBucks,
-      lowerLimit: lowerLimitOfBucks
+      lowerLimit: lowerLimitOfBucks,
+      timeSpan
     });
   }
 
@@ -40,10 +46,11 @@ export class SourceSinkService {
     return this.http.get(this.url + '/sourceSink/columns/' + database);
   }
 
-  getAverageCumulativeBucksSpendAndEarn(database: string, upperLimit: number, lowerLimit: number): any {
+  getAverageCumulativeBucksSpendAndEarn(database: string, upperLimit: number, lowerLimit: number, timeSpan: number): any {
     return this.http.post(this.url + '/sourceSink/averageBucksSpendAndEarning/' + database, {
       upperLimit,
       lowerLimit,
+      timeSpan
     });
   }
 
