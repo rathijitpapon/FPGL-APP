@@ -55,7 +55,7 @@ export class AverageAdshowSourceComponent implements OnInit {
     //     console.log(data);
     //   });
 
-    const dataId = this.selectedDatabase + this.reqType + this.selectedMaxTimeSpan + this.selectedMinTimeSpan;
+    const dataId = this.selectedDatabase + this.reqType + this.selectedMaxTimeSpan + this.selectedMinTimeSpan + (new Date()).getTime();
 
     await this.sourceSinkService.sendData({
       id: dataId,
