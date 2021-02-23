@@ -116,7 +116,7 @@ export class BucksStatusComponent implements OnInit {
     if (this.upperLimitOfBucks < this.lowerLimitOfBucks) {
       return alert(`upper limit must be greater than lower limit`);
     }
-    if (this.seletedTimeSpan === undefined) {
+    if (this.seletedTimeSpan === undefined || this.seletedTimeSpan === 0) {
       return alert(`time span must be selected`);
     }
     this.chartsArray.forEach((item, key) => {

@@ -14,7 +14,8 @@ export class AverageAdshowSourceComponent implements OnInit {
   @Input() selectedDatabase: any;
   @Input() lowerLimitOfBucks = 0;
   @Input() upperLimitOfBucks = 0;
-  @Input() selectedTimeSpan = 0;
+  @Input() selectedMinTimeSpan = 0;
+  @Input() selectedMaxTimeSpan = 0;
   @Input() reqType = '';
 
   legendData = [];
@@ -46,13 +47,24 @@ export class AverageAdshowSourceComponent implements OnInit {
     this.options = {};
     this.isShown = false;
 
-    await this.sourceSinkService.getAverageAdShowPerSource(
-      this.selectedDatabase,
-      this.selectedTimeSpan,
-      this.reqType
+    // await this.sourceSinkService.sendMessage('Hello From Frontend')
+    //   .subscribe((data: any) => {
+    //     console.log(data);
+    //   });
+
+    const dataId = this.selectedDatabase + this.reqType + this.selectedMaxTimeSpan + this.selectedMinTimeSpan;
+
+    await this.sourceSinkService.sendData({
+      id: dataId,
+      database: this.selectedDatabase,
+      reqType: this.reqType,
+      hoursMin: this.selectedMinTimeSpan,
+      hoursMax: this.selectedMaxTimeSpan
+    });
+
+    await this.sourceSinkService.getData(dataId
       )
-      .toPromise()
-      .then((data: any) => {
+      .subscribe((data: any) => {
         this.isShown = true;
         this.labels = data.userLevel;
         const sourcesValue: any = {};
