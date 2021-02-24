@@ -8,6 +8,7 @@ import {MatOption} from '@angular/material/core';
 import {SumOfBucksSpendEarningComponent} from './sum-of-bucks-spend-earning/sum-of-bucks-spend-earning.component';
 import {AverageAdshowSourceComponent} from './average-adshow-source/average-adshow-source.component';
 import {AverageCumulativeBucksComponent} from './average-cumulative-bucks/average-cumulative-bucks.component';
+import { AverageAdshowCompletionSourceComponent } from './average-adshow-completion-source/average-adshow-completion-source.component';
 
 
 @Component({
@@ -16,7 +17,8 @@ import {AverageCumulativeBucksComponent} from './average-cumulative-bucks/averag
     BucksSpendAndEarningComponent,
     SumOfBucksSpendEarningComponent,
     AverageAdshowSourceComponent,
-    AverageCumulativeBucksComponent
+    AverageAdshowCompletionSourceComponent,
+    AverageCumulativeBucksComponent,
   ],
   selector: 'app-bucks-status',
   templateUrl: './bucks-status.component.html',
@@ -29,6 +31,7 @@ export class BucksStatusComponent implements OnInit {
   @ViewChild(BucksSpendAndEarningComponent) bucksSpendAndEarningComponent!: BucksSpendAndEarningComponent;
   @ViewChild(SumOfBucksSpendEarningComponent) sumOfBucksSpendEarningComponent!: SumOfBucksSpendEarningComponent;
   @ViewChild(AverageAdshowSourceComponent) averageAdshowSourceComponent!: AverageAdshowSourceComponent;
+  @ViewChild(AverageAdshowCompletionSourceComponent) averageAdshowCompletionSourceComponent!: AverageAdshowCompletionSourceComponent;
   @ViewChild(AverageCumulativeBucksComponent) averageCumulativeBucksComponent!: AverageCumulativeBucksComponent;
 
   games = [
@@ -67,6 +70,7 @@ export class BucksStatusComponent implements OnInit {
     'Average Total Ad Show Per Source',
     'Average Total Reward Ad Show Per Source',
     'Average Total Int Ad Show Per Source',
+    'Average Reward Ad Rejection Per Source'
   ];
 
   allSelected = false;
@@ -129,30 +133,35 @@ export class BucksStatusComponent implements OnInit {
       }
     }
 
-    try {
-      this.averageBucksComponent.fetchData();
-    } catch (e) {
-    }
+    // try {
+    //   this.averageBucksComponent.fetchData();
+    // } catch (e) {
+    // }
 
-    try {
-      this.bucksSpendAndEarningComponent.fetchData();
-    } catch (e) {
-    }
+    // try {
+    //   this.bucksSpendAndEarningComponent.fetchData();
+    // } catch (e) {
+    // }
 
-    try {
-      this.sumOfBucksSpendEarningComponent.fetchData();
-    } catch (e) {
-    }
+    // try {
+    //   this.sumOfBucksSpendEarningComponent.fetchData();
+    // } catch (e) {
+    // }
 
-    try {
-      this.averageAdshowSourceComponent.fetchData();
-    } catch (e) {
-    }
+    // try {
+    //   this.averageAdshowSourceComponent.fetchData();
+    // } catch (e) {
+    // }
 
-    try {
-      this.averageCumulativeBucksComponent.fetchData();
-    } catch (e) {
-    }
+    // try {
+    //   this.averageAdshowCompletionSourceComponent.fetchData();
+    // } catch (e) {
+    // }
+
+    // try {
+    //   this.averageCumulativeBucksComponent.fetchData();
+    // } catch (e) {
+    // }
   }
 
   // typeof() {

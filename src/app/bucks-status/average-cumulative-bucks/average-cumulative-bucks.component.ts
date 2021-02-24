@@ -3,13 +3,15 @@ import {SourceSinkService} from '../../services/source-sink.service';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import {Chart} from 'chart.js';
 import {LoaderService} from '../../loader/loader.service';
+import { OnChanges } from '@angular/core';
+import { SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-average-cumulative-bucks',
   templateUrl: './average-cumulative-bucks.component.html',
   styleUrls: ['./average-cumulative-bucks.component.css']
 })
-export class AverageCumulativeBucksComponent implements OnInit {
+export class AverageCumulativeBucksComponent implements OnInit, OnChanges {
 
   @Input() selectedDatabase: any;
   @Input() selectedTimeSpan: any;
@@ -35,9 +37,12 @@ export class AverageCumulativeBucksComponent implements OnInit {
   maxNegativeValue = 0;
   barChartPlugins = [ChartDataLabels];
 
+  ngOnChanges(changes: SimpleChanges): void {
+    this.fetchData();
+  }
 
   ngOnInit(): void {
-    this.fetchData();
+    // this.fetchData();
   }
 
   async fetchData(): Promise<void> {

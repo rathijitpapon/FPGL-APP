@@ -3,13 +3,15 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import {SourceSinkService} from '../../services/source-sink.service';
 import {LoaderService} from '../../loader/loader.service';
 import {Chart} from 'chart.js';
+import { SimpleChanges } from '@angular/core';
+import { OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-average-bucks',
   templateUrl: './average-bucks.component.html',
   styleUrls: ['./average-bucks.component.css']
 })
-export class AverageBucksComponent implements OnInit {
+export class AverageBucksComponent implements OnInit, OnChanges {
 
   @Input() public selectedDatabase: any;
   @Input() public lowerLimitOfBucks: any;
@@ -30,8 +32,12 @@ export class AverageBucksComponent implements OnInit {
     Chart.plugins.unregister(ChartDataLabels);
   }
 
-  ngOnInit(): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.fetchData();
+  }
+
+  ngOnInit(): void {
+    // this.fetchData();
   }
 
   fetchData(): void {

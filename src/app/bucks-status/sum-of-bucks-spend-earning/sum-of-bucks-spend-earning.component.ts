@@ -3,13 +3,15 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import {SourceSinkService} from '../../services/source-sink.service';
 import {LoaderService} from '../../loader/loader.service';
 import {Chart} from 'chart.js';
+import { OnChanges } from '@angular/core';
+import { SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-sum-of-bucks-spend-earning',
   templateUrl: './sum-of-bucks-spend-earning.component.html',
   styleUrls: ['./sum-of-bucks-spend-earning.component.css']
 })
-export class SumOfBucksSpendEarningComponent implements OnInit {
+export class SumOfBucksSpendEarningComponent implements OnInit, OnChanges {
 
   @Input() public selectedDatabase: any;
   @Input() public lowerLimitOfBucks: any;
@@ -31,8 +33,12 @@ export class SumOfBucksSpendEarningComponent implements OnInit {
     Chart.plugins.unregister(ChartDataLabels);
   }
 
-  ngOnInit(): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.fetchData();
+  }
+
+  ngOnInit(): void {
+    // this.fetchData();
   }
 
   fetchData(): void {

@@ -8,11 +8,11 @@ import { SimpleChanges } from '@angular/core';
 import { OnChanges } from '@angular/core';
 
 @Component({
-  selector: 'app-average-adshow-source',
-  templateUrl: './average-adshow-source.component.html',
-  styleUrls: ['./average-adshow-source.component.css']
+  selector: 'app-average-adshow-completion-source',
+  templateUrl: './average-adshow-completion-source.component.html',
+  styleUrls: ['./average-adshow-completion-source.component.css']
 })
-export class AverageAdshowSourceComponent implements OnInit, OnChanges {
+export class AverageAdshowCompletionSourceComponent implements OnInit, OnChanges {
 
   @Input() selectedDatabase: any;
   @Input() lowerLimitOfBucks = 0;
@@ -60,9 +60,14 @@ export class AverageAdshowSourceComponent implements OnInit, OnChanges {
     //     console.log(data);
     //   });
 
-    const dataId = this.selectedDatabase + this.reqType + this.selectedMaxTimeSpan + this.selectedMinTimeSpan + (new Date()).getTime();
+    const dataId = this.selectedDatabase
+      + this.reqType
+      + this.selectedMaxTimeSpan
+      + this.selectedMinTimeSpan
+      + 'completion'
+      + (new Date()).getTime();
 
-    await this.sourceSinkService.sendData({
+    await this.sourceSinkService.sendAdCompletionData({
       id: dataId,
       database: this.selectedDatabase,
       reqType: this.reqType,
@@ -70,7 +75,7 @@ export class AverageAdshowSourceComponent implements OnInit, OnChanges {
       hoursMax: this.selectedMaxTimeSpan
     });
 
-    await this.sourceSinkService.getData(dataId
+    await this.sourceSinkService.getAdCompletionData(dataId
       )
       .subscribe((data: any) => {
         this.loaderService._isLoading = new BehaviorSubject<boolean>(false);

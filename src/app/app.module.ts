@@ -33,6 +33,7 @@ import { AverageBucksComponent } from './bucks-status/average-bucks/average-buck
 import { AverageCumulativeBucksComponent } from './bucks-status/average-cumulative-bucks/average-cumulative-bucks.component';
 import { AverageAdshowSourceComponent } from './bucks-status/average-adshow-source/average-adshow-source.component';
 import {SumOfBucksSpendEarningComponent} from './bucks-status/sum-of-bucks-spend-earning/sum-of-bucks-spend-earning.component';
+import { AverageAdshowCompletionSourceComponent } from './bucks-status/average-adshow-completion-source/average-adshow-completion-source.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import {SumOfBucksSpendEarningComponent} from './bucks-status/sum-of-bucks-spend
     AverageBucksComponent,
     AverageCumulativeBucksComponent,
     AverageAdshowSourceComponent,
-    SumOfBucksSpendEarningComponent
+    SumOfBucksSpendEarningComponent,
+    AverageAdshowCompletionSourceComponent
   ],
   imports: [
     BrowserModule,

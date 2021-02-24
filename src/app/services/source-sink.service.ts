@@ -82,4 +82,17 @@ export class SourceSinkService {
       });
     });
   }
+
+  sendAdCompletionData(data: any): any {
+    this.socket.emit('join', data);
+    this.socket.emit('sendCompletedAdData', data);
+  }
+
+  getAdCompletionData(dataId: string): any{
+    return new Observable(observer => {
+      this.socket.on(dataId, (data: any) => {
+        observer.next(data);
+      });
+    });
+  }
 }
