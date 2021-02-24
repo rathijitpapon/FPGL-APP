@@ -3,6 +3,7 @@ import {SourceSinkService} from '../../services/source-sink.service';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import {Chart} from 'chart.js';
 import {LoaderService} from '../../loader/loader.service';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 
 @Component({
   selector: 'app-average-adshow-source',
@@ -14,7 +15,8 @@ export class AverageAdshowSourceComponent implements OnInit {
   @Input() selectedDatabase: any;
   @Input() lowerLimitOfBucks = 0;
   @Input() upperLimitOfBucks = 0;
-  @Input() selectedTimeSpan = 0;
+  @Input() selectedMinTimeSpan = 0;
+  @Input() selectedMaxTimeSpan = 0;
   @Input() reqType = '';
 
   legendData = [];
@@ -46,13 +48,27 @@ export class AverageAdshowSourceComponent implements OnInit {
     this.options = {};
     this.isShown = false;
 
-    await this.sourceSinkService.getAverageAdShowPerSource(
-      this.selectedDatabase,
-      this.selectedTimeSpan,
-      this.reqType
+    this.loaderService._isLoading = new BehaviorSubject<boolean>(true);
+
+    // await this.sourceSinkService.sendMessage('Hello From Frontend')
+    //   .subscribe((data: any) => {
+    //     console.log(data);
+    //   });
+
+    const dataId = this.selectedDatabase + this.reqType + this.selectedMaxTimeSpan + this.selectedMinTimeSpan + (new Date()).getTime();
+
+    await this.sourceSinkService.sendData({
+      id: dataId,
+      database: this.selectedDatabase,
+      reqType: this.reqType,
+      hoursMin: this.selectedMinTimeSpan,
+      hoursMax: this.selectedMaxTimeSpan
+    });
+
+    await this.sourceSinkService.getData(dataId
       )
-      .toPromise()
-      .then((data: any) => {
+      .subscribe((data: any) => {
+        this.loaderService._isLoading = new BehaviorSubject<boolean>(false);
         this.isShown = true;
         this.labels = data.userLevel;
         const sourcesValue: any = {};

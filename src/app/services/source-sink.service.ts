@@ -1,15 +1,19 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import { Observable } from 'rxjs';
+import * as io from 'socket.io-client';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SourceSinkService {
 
-  url = 'https://cross-promo-analytics-api.herokuapp.com';
-  // url = 'http://localhost:5000';
+  // url = 'https://cross-promo-analytics-api.herokuapp.com';
+  url = 'http://localhost:5000';
+  socket: any;
 
   constructor(private http: HttpClient) {
+    this.socket = io(this.url);
   }
 
   getTotalBucksSpendAndEarning(selectedDatabase: string, upperLimitOfBucks: number, lowerLimitOfBucks: number,
@@ -55,9 +59,27 @@ export class SourceSinkService {
   }
 
   getAverageAdShowPerSource(database: string, timeSpan: number, reqType: string): any {
-    return this.http.post(this.url + '/sourceSink/averageAdShowPerSource/' + database, {
-      reqType,
-      hoursBefore: timeSpan,
+    this.sendData({
+        database,
+        reqType,
+        hoursBefore: timeSpan,
+      });
+    // return this.http.post(this.url + '/sourceSink/averageAdShowPerSource/' + database, {
+    //   reqType,
+    //   hoursBefore: timeSpan,
+    // });
+  }
+
+  sendData(data: any): any {
+    this.socket.emit('join', data);
+    this.socket.emit('sendData', data);
+  }
+
+  getData(dataId: string): any{
+    return new Observable(observer => {
+      this.socket.on(dataId, (data: any) => {
+        observer.next(data);
+      });
     });
   }
 }
