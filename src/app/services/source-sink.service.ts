@@ -17,32 +17,35 @@ export class SourceSinkService {
   }
 
   getTotalBucksSpendAndEarning(selectedDatabase: string, upperLimitOfBucks: number, lowerLimitOfBucks: number,
-                               timeSpan: number): any {
+                               minTimeSpan: number, maxTimeSpan: number): any {
     return this.http.post(this.url + '/sourceSink/bucksStatus/totalSpendAndEarning', {
       db: selectedDatabase,
       upperLimit: upperLimitOfBucks,
       lowerLimit: lowerLimitOfBucks,
-      timeSpan
+      minTimeSpan,
+      maxTimeSpan
     });
   }
 
   getBucksStatus(database: string, upperLimitOfBucks: number, lowerLimitOfBucks: number,
-                 timeSpan: number): any {
+                 minTimeSpan: number, maxTimeSpan: number): any {
     return this.http.post(this.url + '/sourceSink/bucksStatus', {
       db: database,
       upperLimit: upperLimitOfBucks,
       lowerLimit: lowerLimitOfBucks,
-      timeSpan
+      minTimeSpan,
+      maxTimeSpan
     });
   }
 
   getBucksSpendAndEarning(selectedDatabase: string , upperLimitOfBucks: number,
-                          lowerLimitOfBucks: number, timeSpan: number): any {
+                          lowerLimitOfBucks: number, minTimeSpan: number, maxTimeSpan: number): any {
     return this.http.post(this.url + '/sourceSink/bucksStatus/bucksSpendAndEarning', {
       db: selectedDatabase,
       upperLimit: upperLimitOfBucks,
       lowerLimit: lowerLimitOfBucks,
-      timeSpan
+      minTimeSpan,
+      maxTimeSpan
     });
   }
 
@@ -50,11 +53,13 @@ export class SourceSinkService {
     return this.http.get(this.url + '/sourceSink/columns/' + database);
   }
 
-  getAverageCumulativeBucksSpendAndEarn(database: string, upperLimit: number, lowerLimit: number, timeSpan: number): any {
+  getAverageCumulativeBucksSpendAndEarn(database: string, upperLimit: number, lowerLimit: number,
+                                        minTimeSpan: number, maxTimeSpan: number): any {
     return this.http.post(this.url + '/sourceSink/averageBucksSpendAndEarning/' + database, {
       upperLimit,
       lowerLimit,
-      timeSpan
+      minTimeSpan,
+      maxTimeSpan
     });
   }
 

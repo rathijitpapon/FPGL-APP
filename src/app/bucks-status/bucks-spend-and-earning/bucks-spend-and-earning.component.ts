@@ -19,7 +19,8 @@ export class BucksSpendAndEarningComponent implements OnInit {
   @Input() selectedDatabase: any;
   @Input() lowerLimitOfBucks: any;
   @Input() upperLimitOfBucks: any;
-  @Input() selectedTimeSpan: any;
+  @Input() public selectedMinTimeSpan: any;
+  @Input() public selectedMaxTimeSpan: any;
 
   @ViewChild(DrawingChartComponent) drawingChartComponent!: DrawingChartComponent;
 
@@ -69,7 +70,7 @@ export class BucksSpendAndEarningComponent implements OnInit {
     this.options = {};
     this.isShown = false;
     this.sourceSinkService.getBucksSpendAndEarning(this.selectedDatabase, this.upperLimitOfBucks,
-      this.lowerLimitOfBucks, this.selectedTimeSpan)
+      this.lowerLimitOfBucks, this.selectedMinTimeSpan, this.selectedMaxTimeSpan)
       .subscribe((param: any) => {
         this.isShown = true;
         this.labels = param.userLevels;

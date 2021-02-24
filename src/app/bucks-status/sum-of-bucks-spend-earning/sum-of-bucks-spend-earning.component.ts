@@ -14,7 +14,8 @@ export class SumOfBucksSpendEarningComponent implements OnInit {
   @Input() public selectedDatabase: any;
   @Input() public lowerLimitOfBucks: any;
   @Input() public upperLimitOfBucks: any;
-  @Input() public selectedTimeSpan: any;
+  @Input() public selectedMinTimeSpan: any;
+  @Input() public selectedMaxTimeSpan: any;
 
   options: any;
   legend: any = true;
@@ -43,7 +44,7 @@ export class SumOfBucksSpendEarningComponent implements OnInit {
     this.options = {};
     this.isShown = false;
     this.sourceSinkService.getTotalBucksSpendAndEarning(this.selectedDatabase, this.upperLimitOfBucks,
-      this.lowerLimitOfBucks, this.selectedTimeSpan)
+      this.lowerLimitOfBucks, this.selectedMinTimeSpan, this.selectedMaxTimeSpan)
       .subscribe((param: any) => {
         this.isShown = true;
         this.labels = param.userLevel;

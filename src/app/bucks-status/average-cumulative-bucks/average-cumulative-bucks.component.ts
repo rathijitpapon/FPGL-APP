@@ -12,7 +12,8 @@ import {LoaderService} from '../../loader/loader.service';
 export class AverageCumulativeBucksComponent implements OnInit {
 
   @Input() selectedDatabase: any;
-  @Input() selectedTimeSpan: any;
+  @Input() public selectedMinTimeSpan: any;
+  @Input() public selectedMaxTimeSpan: any;
   @Input() lowerLimitOfBucks = 0;
   @Input() upperLimitOfBucks = 0;
 
@@ -51,7 +52,8 @@ export class AverageCumulativeBucksComponent implements OnInit {
       this.selectedDatabase,
       this.upperLimitOfBucks,
       this.lowerLimitOfBucks,
-      this.selectedTimeSpan
+      this.selectedMinTimeSpan,
+      this.selectedMaxTimeSpan
       )
       .toPromise()
       .then((data: any) => {

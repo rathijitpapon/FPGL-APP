@@ -73,6 +73,10 @@ export class BucksStatusComponent implements OnInit {
 
   @ViewChild('mySel') skillSel!: MatSelect;
 
+  currentTime: any;
+  lastNDaysTime: any;
+  previousNdaysTime: any;
+
   seletedTimeSpan = 0;
   timeSpans = [
     'All Data',
@@ -108,8 +112,12 @@ export class BucksStatusComponent implements OnInit {
     this.skillSel.close();
   }
 
+  fetchVersions(): any {
+  }
+
 
   fetchData(): any {
+    this.fetchVersions();
     if (this.selectedDatabase === undefined || this.selectedDatabase.length <= 0) {
       return alert(`database must be selected`);
     }
@@ -153,6 +161,20 @@ export class BucksStatusComponent implements OnInit {
       this.averageCumulativeBucksComponent.fetchData();
     } catch (e) {
     }
+
+
+
+    let timestamp = new Date();
+    timestamp = new Date(timestamp.getTime() - timestamp.getTimezoneOffset() * 60000);
+    this.currentTime = new Date(timestamp.getTime()).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    timestamp = new Date(timestamp.getTime() - this.seletedTimeSpan * 60 * 60 * 1000);
+    this.lastNDaysTime = new Date(timestamp).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    // this.lastNDaysTime = new Date(timestamp)
+    timestamp = new Date(timestamp.getTime() - (this.seletedTimeSpan * 60 * 60 * 1000));
+    this.previousNdaysTime = new Date(timestamp).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+
+
+
   }
 
   // typeof() {
