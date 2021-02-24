@@ -29,6 +29,8 @@ export class SumOfBucksSpendEarningComponent implements OnInit, OnChanges {
   width: any;
   fontSize: any;
   fontWeight: any;
+  minTime: any;
+  maxTime: any;
 
   constructor(private sourceSinkService: SourceSinkService, public loaderService: LoaderService) {
     Chart.plugins.unregister(ChartDataLabels);
@@ -119,6 +121,18 @@ export class SumOfBucksSpendEarningComponent implements OnInit, OnChanges {
         }
       }
     };
+
+    let timestamp = new Date();
+    timestamp = new Date(timestamp.getTime() - timestamp.getTimezoneOffset() * 60000);
+    // this.currentTime = new Date(timestamp.getTime()).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    timestamp = new Date(timestamp.getTime() - this.selectedMinTimeSpan * 60 * 60 * 1000);
+    this.minTime = new Date(timestamp).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    // this.lastNDaysTime = new Date(timestamp)
+    timestamp = new Date();
+    timestamp = new Date(timestamp.getTime() - timestamp.getTimezoneOffset() * 60000);
+    timestamp = new Date(timestamp.getTime() - (this.selectedMaxTimeSpan * 60 * 60 * 1000));
+    this.maxTime = new Date(timestamp).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+
   }
 
 }

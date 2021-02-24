@@ -37,6 +37,8 @@ export class AverageCumulativeBucksComponent implements OnInit, OnChanges {
   maxPositiveValue = 0;
   maxNegativeValue = 0;
   barChartPlugins = [ChartDataLabels];
+  minTime: any;
+  maxTime: any;
 
   ngOnChanges(changes: SimpleChanges): void {
     this.fetchData();
@@ -212,6 +214,18 @@ export class AverageCumulativeBucksComponent implements OnInit, OnChanges {
           },
         }
     };
+
+    let timestamp = new Date();
+    timestamp = new Date(timestamp.getTime() - timestamp.getTimezoneOffset() * 60000);
+    // this.currentTime = new Date(timestamp.getTime()).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    timestamp = new Date(timestamp.getTime() - this.selectedMinTimeSpan * 60 * 60 * 1000);
+    this.minTime = new Date(timestamp).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    // this.lastNDaysTime = new Date(timestamp)
+    timestamp = new Date();
+    timestamp = new Date(timestamp.getTime() - timestamp.getTimezoneOffset() * 60000);
+    timestamp = new Date(timestamp.getTime() - (this.selectedMaxTimeSpan * 60 * 60 * 1000));
+    this.maxTime = new Date(timestamp).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+
   }
 
 }

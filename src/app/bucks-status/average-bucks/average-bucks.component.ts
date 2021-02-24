@@ -27,6 +27,8 @@ export class AverageBucksComponent implements OnInit, OnChanges {
   isShown: any = false;
   barChartPlugins: any = [ChartDataLabels];
   width: any;
+  minTime: any;
+  maxTime: any;
 
 
   constructor(private sourceSinkService: SourceSinkService, public loaderService: LoaderService) {
@@ -101,6 +103,18 @@ export class AverageBucksComponent implements OnInit, OnChanges {
         }
       }
     };
+
+    let timestamp = new Date();
+    timestamp = new Date(timestamp.getTime() - timestamp.getTimezoneOffset() * 60000);
+    // this.currentTime = new Date(timestamp.getTime()).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    timestamp = new Date(timestamp.getTime() - this.selectedMinTimeSpan * 60 * 60 * 1000);
+    this.minTime = new Date(timestamp).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    // this.lastNDaysTime = new Date(timestamp)
+    timestamp = new Date();
+    timestamp = new Date(timestamp.getTime() - timestamp.getTimezoneOffset() * 60000);
+    timestamp = new Date(timestamp.getTime() - (this.selectedMaxTimeSpan * 60 * 60 * 1000));
+    this.maxTime = new Date(timestamp).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+
   }
 
 }

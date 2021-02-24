@@ -16,6 +16,8 @@ export class SourceSinkService {
     this.socket = io(this.url);
   }
 
+
+
   getTotalBucksSpendAndEarning(selectedDatabase: string, upperLimitOfBucks: number, lowerLimitOfBucks: number,
                                minTimeSpan: number, maxTimeSpan: number): any {
     return this.http.post(this.url + '/sourceSink/bucksStatus/totalSpendAndEarning', {
@@ -99,5 +101,9 @@ export class SourceSinkService {
         observer.next(data);
       });
     });
+  }
+
+  getVersions(selectedDatabase: string | undefined) {
+    return this.http.get(this.url + '/sourceSink/bucksStatus/getVersions/' + selectedDatabase);
   }
 }

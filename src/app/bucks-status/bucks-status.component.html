@@ -36,6 +36,16 @@
     <br>
     <button mat-raised-button>fetch</button>
   </form>
+<!--  <form *ngIf="showingVersions" (ngSubmit)="fetchDataWRTVersions()">-->
+<!--    <mat-form-field hideRequiredMarker>-->
+<!--      <mat-label>App versions</mat-label>-->
+<!--      <mat-select [(value)]="selectedAppVersion" required>-->
+<!--        <mat-option *ngFor="let version of appVersions" [value]="version">{{version}}</mat-option>-->
+<!--      </mat-select>-->
+<!--    </mat-form-field>-->
+<!--    <br>-->
+<!--    <button mat-raised-button>fetch again</button>-->
+<!--  </form>-->
 </div>
 
 <br>
@@ -45,7 +55,7 @@
 
 <!--<ng-template *ngIf="isShown">-->
 <div *ngIf="isShown[0]">
-  <h3 style="text-align: center;">from {{this.lastNDaysTime}} to {{this.currentTime}}</h3>
+
   <app-average-bucks [selectedDatabase]="selectedDatabase"
                      [lowerLimitOfBucks]="lowerLimitOfBucks"
                      [upperLimitOfBucks]="upperLimitOfBucks"
@@ -57,7 +67,7 @@
 </div>
 
 <div *ngIf="isShown[0]">
-  <h3 style="text-align: center;">from {{this.previousNdaysTime}} to {{this.lastNDaysTime}}</h3>
+<!--  <h3 style="text-align: center;">from {{this.previousNdaysTime}} to {{this.lastNDaysTime}}</h3>-->
   <app-average-bucks [selectedDatabase]="selectedDatabase"
                      [lowerLimitOfBucks]="lowerLimitOfBucks"
                      [upperLimitOfBucks]="upperLimitOfBucks"
@@ -69,7 +79,7 @@
 </div>
 
 <div *ngIf='isShown[1]'>
-  <h3 style="text-align: center;">from {{this.lastNDaysTime}} to {{this.currentTime}}</h3>
+<!--  <h3 style="text-align: center;">from {{this.lastNDaysTime}} to {{this.currentTime}}</h3>-->
   <app-bucks-spend-and-earning [selectedDatabase]="selectedDatabase"
                                [lowerLimitOfBucks]="lowerLimitOfBucks"
                                [upperLimitOfBucks]="upperLimitOfBucks"
@@ -79,7 +89,7 @@
   <br>
 </div>
 <div *ngIf='isShown[1]'>
-  <h3 style="text-align: center;">from {{this.previousNdaysTime}} to {{this.lastNDaysTime}}</h3>
+<!--  <h3 style="text-align: center;">from {{this.previousNdaysTime}} to {{this.lastNDaysTime}}</h3>-->
   <app-bucks-spend-and-earning [selectedDatabase]="selectedDatabase"
                                [lowerLimitOfBucks]="lowerLimitOfBucks"
                                [upperLimitOfBucks]="upperLimitOfBucks"
@@ -89,7 +99,7 @@
   <br>
 </div>
 <div *ngIf='isShown[2]'>
-  <h3 style="text-align: center;">from {{this.lastNDaysTime}} to {{this.currentTime}}</h3>
+<!--  <h3 style="text-align: center;">from {{this.lastNDaysTime}} to {{this.currentTime}}</h3>-->
   <app-average-cumulative-bucks [selectedDatabase]="selectedDatabase"
                                 [lowerLimitOfBucks]="lowerLimitOfBucks"
                                 [upperLimitOfBucks]="upperLimitOfBucks"
@@ -99,7 +109,7 @@
   <br>
 </div>
 <div *ngIf='isShown[2]'>
-  <h3 style="text-align: center;">from {{this.previousNdaysTime}} to {{this.lastNDaysTime}}</h3>
+<!--  <h3 style="text-align: center;">from {{this.previousNdaysTime}} to {{this.lastNDaysTime}}</h3>-->
   <app-average-cumulative-bucks [selectedDatabase]="selectedDatabase"
                                 [lowerLimitOfBucks]="lowerLimitOfBucks"
                                 [upperLimitOfBucks]="upperLimitOfBucks"
@@ -109,7 +119,7 @@
   <br>
 </div>
 <div *ngIf='isShown[3]'>
-  <h3 style="text-align: center;">from {{this.lastNDaysTime}} to {{this.currentTime}}</h3>
+<!--  <h3 style="text-align: center;">from {{this.lastNDaysTime}} to {{this.currentTime}}</h3>-->
   <app-sum-of-bucks-spend-earning [selectedDatabase]="selectedDatabase"
                                   [lowerLimitOfBucks]="lowerLimitOfBucks"
                                   [upperLimitOfBucks]="upperLimitOfBucks"
@@ -120,7 +130,7 @@
   <br>
 </div>
 <div *ngIf='isShown[3]'>
-  <h3 style="text-align: center;">from {{this.previousNdaysTime}} to {{this.lastNDaysTime}}</h3>
+<!--  <h3 style="text-align: center;">from {{this.previousNdaysTime}} to {{this.lastNDaysTime}}</h3>-->
   <app-sum-of-bucks-spend-earning [selectedDatabase]="selectedDatabase"
                                   [lowerLimitOfBucks]="lowerLimitOfBucks"
                                   [upperLimitOfBucks]="upperLimitOfBucks"
@@ -144,7 +154,7 @@
 </div>
 
 <div *ngIf='isShown[5]'>
-  <h3 style="text-align: center;">from {{this.lastNDaysTime}} to {{this.currentTime}}</h3>
+<!--  <h3 style="text-align: center;">from {{this.lastNDaysTime}} to {{this.currentTime}}</h3>-->
   <app-average-adshow-source [selectedDatabase]="selectedDatabase"
                                [lowerLimitOfBucks]="lowerLimitOfBucks"
                                [upperLimitOfBucks]="upperLimitOfBucks"
@@ -156,7 +166,7 @@
   <br>
 </div>
 <div *ngIf='isShown[5]'>
-  <h3 style="text-align: center;">from {{this.previousNdaysTime}} to {{this.lastNDaysTime}}</h3>
+<!--  <h3 style="text-align: center;">from {{this.previousNdaysTime}} to {{this.lastNDaysTime}}</h3>-->
   <app-average-adshow-source [selectedDatabase]="selectedDatabase"
                                [lowerLimitOfBucks]="lowerLimitOfBucks"
                                [upperLimitOfBucks]="upperLimitOfBucks"
@@ -169,7 +179,7 @@
 </div>
 
 <div *ngIf='isShown[6]'>
-  <h3 style="text-align: center;">from {{this.lastNDaysTime}} to {{this.currentTime}}</h3>
+<!--  <h3 style="text-align: center;">from {{this.lastNDaysTime}} to {{this.currentTime}}</h3>-->
   <app-average-adshow-source [selectedDatabase]="selectedDatabase"
                                [lowerLimitOfBucks]="lowerLimitOfBucks"
                                [upperLimitOfBucks]="upperLimitOfBucks"
@@ -181,7 +191,7 @@
   <br>
 </div>
 <div *ngIf='isShown[6]'>
-  <h3 style="text-align: center;">from {{this.previousNdaysTime}} to {{this.lastNDaysTime}}</h3>
+<!--  <h3 style="text-align: center;">from {{this.previousNdaysTime}} to {{this.lastNDaysTime}}</h3>-->
   <app-average-adshow-source [selectedDatabase]="selectedDatabase"
                                [lowerLimitOfBucks]="lowerLimitOfBucks"
                                [upperLimitOfBucks]="upperLimitOfBucks"
@@ -194,19 +204,18 @@
 </div>
 
 <div *ngIf='isShown[7]'>
-  <<h3 style="text-align: center;">from {{this.lastNDaysTime}} to {{this.currentTime}}</h3>
+<!--  <<h3 style="text-align: center;">from {{this.lastNDaysTime}} to {{this.currentTime}}</h3>-->
   <app-average-adshow-completion-source [selectedDatabase]="selectedDatabase"
                                [lowerLimitOfBucks]="lowerLimitOfBucks"
                                [upperLimitOfBucks]="upperLimitOfBucks"
                                [selectedMinTimeSpan]="0"
                                [selectedMaxTimeSpan]="seletedTimeSpan"
                                [reqType] = "'reward'"
-
   ></app-average-adshow-completion-source>
   <br>
 </div>
 <div *ngIf='isShown[7]'>
-  <h3 style="text-align: center;">from {{this.previousNdaysTime}} to {{this.lastNDaysTime}}</h3>
+<!--  <h3 style="text-align: center;">from {{this.previousNdaysTime}} to {{this.lastNDaysTime}}</h3>-->
   <app-average-adshow-completion-source [selectedDatabase]="selectedDatabase"
                                [lowerLimitOfBucks]="lowerLimitOfBucks"
                                [upperLimitOfBucks]="upperLimitOfBucks"

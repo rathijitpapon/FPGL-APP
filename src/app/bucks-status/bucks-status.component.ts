@@ -8,7 +8,7 @@ import {MatOption} from '@angular/material/core';
 import {SumOfBucksSpendEarningComponent} from './sum-of-bucks-spend-earning/sum-of-bucks-spend-earning.component';
 import {AverageAdshowSourceComponent} from './average-adshow-source/average-adshow-source.component';
 import {AverageCumulativeBucksComponent} from './average-cumulative-bucks/average-cumulative-bucks.component';
-import { AverageAdshowCompletionSourceComponent } from './average-adshow-completion-source/average-adshow-completion-source.component';
+import {AverageAdshowCompletionSourceComponent} from './average-adshow-completion-source/average-adshow-completion-source.component';
 
 
 @Component({
@@ -53,6 +53,7 @@ export class BucksStatusComponent implements OnInit {
   ];
 
   selectedDatabase: string | undefined;
+  previouslySelectedDatabase: string | undefined;
   options: any;
   legend: any = true;
   chartType: any;
@@ -77,9 +78,8 @@ export class BucksStatusComponent implements OnInit {
 
   @ViewChild('mySel') skillSel!: MatSelect;
 
-  currentTime: any;
-  lastNDaysTime: any;
-  previousNdaysTime: any;
+  showingVersions = false;
+  appVersions: any[] = [];
 
   seletedTimeSpan = 0;
   timeSpans = [
@@ -93,8 +93,9 @@ export class BucksStatusComponent implements OnInit {
   numericalValuesOfTimeSpans = [
     10000000, 24, 48, 168, 672
   ];
+  selectedAppVersion: any;
 
-  constructor(public loaderService: LoaderService) {
+  constructor(public loaderService: LoaderService, public sourceSinkService: SourceSinkService) {
   }
 
   ngOnInit(): void {
@@ -117,11 +118,18 @@ export class BucksStatusComponent implements OnInit {
   }
 
   fetchVersions(): any {
+    this.sourceSinkService.getVersions(this.selectedDatabase).subscribe(
+      (param) => {
+        // @ts-ignore
+        for (const version of param) {
+          this.appVersions.push(version);
+        }
+      });
   }
 
 
   fetchData(): any {
-    this.fetchVersions();
+
     if (this.selectedDatabase === undefined || this.selectedDatabase.length <= 0) {
       return alert(`database must be selected`);
     }
@@ -131,9 +139,12 @@ export class BucksStatusComponent implements OnInit {
     if (this.seletedTimeSpan === undefined || this.seletedTimeSpan === 0) {
       return alert(`time span must be selected`);
     }
+
     this.chartsArray.forEach((item, key) => {
       this.isShown[key] = false;
     });
+
+    this.showingVersions = true;
 
     for (let i = 0; i < this.chartsArray.length; i++) {
       if (this.selectedCharts.includes(this.chartsArray[i])) {
@@ -141,57 +152,11 @@ export class BucksStatusComponent implements OnInit {
       }
     }
 
-    // try {
-    //   this.averageBucksComponent.fetchData();
-    // } catch (e) {
-    // }
-
-    // try {
-    //   this.bucksSpendAndEarningComponent.fetchData();
-    // } catch (e) {
-    // }
-
-    // try {
-    //   this.sumOfBucksSpendEarningComponent.fetchData();
-    // } catch (e) {
-    // }
-
-    // try {
-    //   this.averageAdshowSourceComponent.fetchData();
-    // } catch (e) {
-    // }
-
-    // try {
-    //   this.averageAdshowCompletionSourceComponent.fetchData();
-    // } catch (e) {
-    // }
-
-    // try {
-    //   this.averageCumulativeBucksComponent.fetchData();
-    // } catch (e) {
-    // }
-    // try {
-    //   this.averageCumulativeBucksComponent.fetchData();
-    // } catch (e) {
-    // }
-
-
-
-    let timestamp = new Date();
-    timestamp = new Date(timestamp.getTime() - timestamp.getTimezoneOffset() * 60000);
-    this.currentTime = new Date(timestamp.getTime()).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-    timestamp = new Date(timestamp.getTime() - this.seletedTimeSpan * 60 * 60 * 1000);
-    this.lastNDaysTime = new Date(timestamp).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-    // this.lastNDaysTime = new Date(timestamp)
-    timestamp = new Date(timestamp.getTime() - (this.seletedTimeSpan * 60 * 60 * 1000));
-    this.previousNdaysTime = new Date(timestamp).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-
-
+    // this.fetchVersions();
 
   }
 
-  // typeof() {
-  //   return typeof(this.seletedTimeSpan);
-  // }
+  fetchDataWRTVersions() {
 
+  }
 }
