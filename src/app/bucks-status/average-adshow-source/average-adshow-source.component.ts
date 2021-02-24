@@ -4,13 +4,15 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import {Chart} from 'chart.js';
 import {LoaderService} from '../../loader/loader.service';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { SimpleChanges } from '@angular/core';
+import { OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-average-adshow-source',
   templateUrl: './average-adshow-source.component.html',
   styleUrls: ['./average-adshow-source.component.css']
 })
-export class AverageAdshowSourceComponent implements OnInit {
+export class AverageAdshowSourceComponent implements OnInit, OnChanges {
 
   @Input() selectedDatabase: any;
   @Input() lowerLimitOfBucks = 0;
@@ -36,9 +38,12 @@ export class AverageAdshowSourceComponent implements OnInit {
   maxPositiveValue = 0;
   barChartPlugins = [ChartDataLabels];
 
+  ngOnChanges(changes: SimpleChanges): void {
+    this.fetchData();
+  }
 
   ngOnInit(): void {
-    this.fetchData();
+    // this.fetchData();
   }
 
   async fetchData(): Promise<void> {

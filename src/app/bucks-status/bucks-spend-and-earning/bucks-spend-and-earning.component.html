@@ -3,11 +3,12 @@
 </div>
 
 <div *ngIf="isShown" class="text-center" (window:resize)="onResize($event)">
+  <h2>Average Earns And Spend Per Level</h2>
+
   <app-drawing-chart [options]="options" [legend]="legend"
                      [datasets]="datasets" [chartType]="chartType"
                      [labels]="labels" [barChartPlugins]="barChartPlugins"
                      [width]="width" [height]="height"
   ></app-drawing-chart>
-  <h2>Average Earns And Spend Per Level</h2>
 
 </div>

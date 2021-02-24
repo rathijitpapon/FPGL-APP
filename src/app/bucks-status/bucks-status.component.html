@@ -53,8 +53,9 @@
                      [selectedMaxTimeSpan]="seletedTimeSpan"
   >
   </app-average-bucks>
+  <br>
 </div>
-<br>
+
 <div *ngIf="isShown[0]">
   <h3 style="text-align: center;">from {{this.previousNdaysTime}} to {{this.lastNDaysTime}}</h3>
   <app-average-bucks [selectedDatabase]="selectedDatabase"
@@ -64,8 +65,9 @@
                      [selectedMaxTimeSpan]="2 * seletedTimeSpan"
   >
   </app-average-bucks>
+  <br>
 </div>
-<br>
+
 <div *ngIf='isShown[1]'>
   <h3 style="text-align: center;">from {{this.lastNDaysTime}} to {{this.currentTime}}</h3>
   <app-bucks-spend-and-earning [selectedDatabase]="selectedDatabase"
@@ -74,8 +76,8 @@
                                [selectedMinTimeSpan]="0"
                                [selectedMaxTimeSpan]="seletedTimeSpan"
   ></app-bucks-spend-and-earning>
+  <br>
 </div>
-<br>
 <div *ngIf='isShown[1]'>
   <h3 style="text-align: center;">from {{this.previousNdaysTime}} to {{this.lastNDaysTime}}</h3>
   <app-bucks-spend-and-earning [selectedDatabase]="selectedDatabase"
@@ -84,8 +86,8 @@
                                [selectedMinTimeSpan]="0"
                                [selectedMaxTimeSpan]="seletedTimeSpan"
   ></app-bucks-spend-and-earning>
+  <br>
 </div>
-<br>
 <div *ngIf='isShown[2]'>
   <h3 style="text-align: center;">from {{this.lastNDaysTime}} to {{this.currentTime}}</h3>
   <app-average-cumulative-bucks [selectedDatabase]="selectedDatabase"
@@ -94,8 +96,8 @@
                                 [selectedMinTimeSpan]="0"
                                 [selectedMaxTimeSpan]="seletedTimeSpan"
   ></app-average-cumulative-bucks>
+  <br>
 </div>
-<br>
 <div *ngIf='isShown[2]'>
   <h3 style="text-align: center;">from {{this.previousNdaysTime}} to {{this.lastNDaysTime}}</h3>
   <app-average-cumulative-bucks [selectedDatabase]="selectedDatabase"
@@ -104,8 +106,8 @@
                                 [selectedMinTimeSpan]="seletedTimeSpan"
                                 [selectedMaxTimeSpan]="2 * seletedTimeSpan"
   ></app-average-cumulative-bucks>
+  <br>
 </div>
-<br>
 <div *ngIf='isShown[3]'>
   <h3 style="text-align: center;">from {{this.lastNDaysTime}} to {{this.currentTime}}</h3>
   <app-sum-of-bucks-spend-earning [selectedDatabase]="selectedDatabase"
@@ -115,8 +117,8 @@
                                   [selectedMaxTimeSpan]="seletedTimeSpan"
 
   ></app-sum-of-bucks-spend-earning>
+  <br>
 </div>
-<br>
 <div *ngIf='isShown[3]'>
   <h3 style="text-align: center;">from {{this.previousNdaysTime}} to {{this.lastNDaysTime}}</h3>
   <app-sum-of-bucks-spend-earning [selectedDatabase]="selectedDatabase"
@@ -126,8 +128,8 @@
                                   [selectedMaxTimeSpan]="2 * seletedTimeSpan"
 
   ></app-sum-of-bucks-spend-earning>
+  <br>
 </div>
-<br>
 
 <div *ngIf='isShown[4]'>
   <app-average-adshow-source [selectedDatabase]="selectedDatabase"
@@ -138,8 +140,8 @@
                                [reqType] = "'all'"
 
   ></app-average-adshow-source>
+  <br>
 </div>
-<br>
 
 <div *ngIf='isShown[5]'>
   <h3 style="text-align: center;">from {{this.lastNDaysTime}} to {{this.currentTime}}</h3>
@@ -151,8 +153,8 @@
                                [reqType] = "'reward'"
 
   ></app-average-adshow-source>
+  <br>
 </div>
-<br>
 <div *ngIf='isShown[5]'>
   <h3 style="text-align: center;">from {{this.previousNdaysTime}} to {{this.lastNDaysTime}}</h3>
   <app-average-adshow-source [selectedDatabase]="selectedDatabase"
@@ -163,10 +165,8 @@
                                [reqType] = "'reward'"
 
   ></app-average-adshow-source>
+  <br>
 </div>
-<br>
-
-<br>
 
 <div *ngIf='isShown[6]'>
   <h3 style="text-align: center;">from {{this.lastNDaysTime}} to {{this.currentTime}}</h3>
@@ -178,8 +178,8 @@
                                [reqType] = "'int'"
 
   ></app-average-adshow-source>
+  <br>
 </div>
-<br>
 <div *ngIf='isShown[6]'>
   <h3 style="text-align: center;">from {{this.previousNdaysTime}} to {{this.lastNDaysTime}}</h3>
   <app-average-adshow-source [selectedDatabase]="selectedDatabase"
@@ -190,5 +190,30 @@
                                [reqType] = "'int'"
 
   ></app-average-adshow-source>
+  <br>
 </div>
-<br>
+
+<div *ngIf='isShown[7]'>
+  <<h3 style="text-align: center;">from {{this.lastNDaysTime}} to {{this.currentTime}}</h3>
+  <app-average-adshow-completion-source [selectedDatabase]="selectedDatabase"
+                               [lowerLimitOfBucks]="lowerLimitOfBucks"
+                               [upperLimitOfBucks]="upperLimitOfBucks"
+                               [selectedMinTimeSpan]="0"
+                               [selectedMaxTimeSpan]="seletedTimeSpan"
+                               [reqType] = "'reward'"
+
+  ></app-average-adshow-completion-source>
+  <br>
+</div>
+<div *ngIf='isShown[7]'>
+  <h3 style="text-align: center;">from {{this.previousNdaysTime}} to {{this.lastNDaysTime}}</h3>
+  <app-average-adshow-completion-source [selectedDatabase]="selectedDatabase"
+                               [lowerLimitOfBucks]="lowerLimitOfBucks"
+                               [upperLimitOfBucks]="upperLimitOfBucks"
+                               [selectedMinTimeSpan]="seletedTimeSpan"
+                               [selectedMaxTimeSpan]="seletedTimeSpan + seletedTimeSpan"
+                               [reqType] = "'reward'"
+
+  ></app-average-adshow-completion-source>
+  <br>
+</div>

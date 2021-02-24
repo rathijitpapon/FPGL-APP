@@ -4,13 +4,15 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import {Chart} from 'chart.js';
 import {LoaderService} from '../../loader/loader.service';
 import {DrawingChartComponent} from '../../drawing-chart/drawing-chart.component';
+import { OnChanges } from '@angular/core';
+import { SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-bucks-spend-and-earning',
   templateUrl: './bucks-spend-and-earning.component.html',
   styleUrls: ['./bucks-spend-and-earning.component.css']
 })
-export class BucksSpendAndEarningComponent implements OnInit {
+export class BucksSpendAndEarningComponent implements OnInit, OnChanges {
 
   constructor(private sourceSinkService: SourceSinkService, public loaderService: LoaderService) {
     Chart.plugins.unregister(ChartDataLabels);
@@ -57,6 +59,10 @@ export class BucksSpendAndEarningComponent implements OnInit {
 
 
   ngOnInit(): void {
+    // this.fetchData();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
     this.fetchData();
   }
 

@@ -3,24 +3,25 @@ import {SourceSinkService} from '../../services/source-sink.service';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import {Chart} from 'chart.js';
 import {LoaderService} from '../../loader/loader.service';
-import { OnChanges } from '@angular/core';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { SimpleChanges } from '@angular/core';
+import { OnChanges } from '@angular/core';
 
 @Component({
-  selector: 'app-average-cumulative-bucks',
-  templateUrl: './average-cumulative-bucks.component.html',
-  styleUrls: ['./average-cumulative-bucks.component.css']
+  selector: 'app-average-adshow-completion-source',
+  templateUrl: './average-adshow-completion-source.component.html',
+  styleUrls: ['./average-adshow-completion-source.component.css']
 })
-export class AverageCumulativeBucksComponent implements OnInit, OnChanges {
+export class AverageAdshowCompletionSourceComponent implements OnInit, OnChanges {
 
   @Input() selectedDatabase: any;
-  @Input() public selectedMinTimeSpan: any;
-  @Input() public selectedMaxTimeSpan: any;
   @Input() lowerLimitOfBucks = 0;
   @Input() upperLimitOfBucks = 0;
+  @Input() selectedMinTimeSpan = 0;
+  @Input() selectedMaxTimeSpan = 0;
+  @Input() reqType = '';
 
-  legendDataforEarn = [];
-  legendDataforSpend = [];
+  legendData = [];
   private flagArray: any[] = [];
   width: any;
 
@@ -35,7 +36,6 @@ export class AverageCumulativeBucksComponent implements OnInit, OnChanges {
   labels: any;
   isShown: any = false;
   maxPositiveValue = 0;
-  maxNegativeValue = 0;
   barChartPlugins = [ChartDataLabels];
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -53,55 +53,58 @@ export class AverageCumulativeBucksComponent implements OnInit, OnChanges {
     this.options = {};
     this.isShown = false;
 
-    await this.sourceSinkService.getAverageCumulativeBucksSpendAndEarn(
-      this.selectedDatabase,
-      this.upperLimitOfBucks,
-      this.lowerLimitOfBucks,
-      this.selectedMinTimeSpan,
-      this.selectedMaxTimeSpan
+    this.loaderService._isLoading = new BehaviorSubject<boolean>(true);
+
+    // await this.sourceSinkService.sendMessage('Hello From Frontend')
+    //   .subscribe((data: any) => {
+    //     console.log(data);
+    //   });
+
+    const dataId = this.selectedDatabase
+      + this.reqType
+      + this.selectedMaxTimeSpan
+      + this.selectedMinTimeSpan
+      + 'completion'
+      + (new Date()).getTime();
+
+    await this.sourceSinkService.sendAdCompletionData({
+      id: dataId,
+      database: this.selectedDatabase,
+      reqType: this.reqType,
+      hoursMin: this.selectedMinTimeSpan,
+      hoursMax: this.selectedMaxTimeSpan
+    });
+
+    await this.sourceSinkService.getAdCompletionData(dataId
       )
-      .toPromise()
-      .then((data: any) => {
+      .subscribe((data: any) => {
+        this.loaderService._isLoading = new BehaviorSubject<boolean>(false);
         this.isShown = true;
         this.labels = data.userLevel;
-        this.datasets = [
-          {
-            data: data.averageBucksSpend,
-            label: 'averageSpend'
-          },
-          {
-            data: data.averageBucksEarn,
-            label: 'averageEarn'
-          },
-        ];
+        const sourcesValue: any = {};
 
-        const temp: any[] = [];
-        this.datasets.forEach((item: any) => {
-          let flag = true;
-          temp.push(item);
-          const precision = 0.01;
-          item.data.forEach((i: number) => {
-            if (Math.abs(i) >= precision) {
-              flag = false;
-            }
-          });
-          if (flag) {
-            temp.pop();
-          } else {
-            if (item.label.includes('Earn')) {
-              // @ts-ignore
-              this.legendDataforEarn.push(item.label);
-            } else {
-              // @ts-ignore
-              this.legendDataforSpend.push(item.label);
-            }
+        for (const adData of data.averageAdShowPerSource) {
+          if (adData.source.length <= 1) { continue; }
+          const source = adData.source;
+          sourcesValue[source] = [];
+          for (const level of this.labels) {
+            sourcesValue[source].push(0);
           }
-        });
+        }
 
-        this.datasets = [];
-        temp.forEach((i) => {
-          this.datasets.push(i);
-          this.flagArray.push(true);
+        for (const adData of data.averageAdShowPerSource) {
+          if (adData.source.length <= 1) { continue; }
+          const source = adData.source;
+
+          sourcesValue[source][adData.level - 1] = adData.value;
+        }
+
+        Object.keys(sourcesValue).map((key: string
+          ) => {
+          this.datasets.push({
+            data: sourcesValue[key],
+            label: key,
+          });
         });
       });
 
@@ -156,32 +159,9 @@ export class AverageCumulativeBucksComponent implements OnInit, OnChanges {
                 callback: (value: any, index: any) => {
                   let total = 0;
                   this.datasets.forEach((item: { label: string | string[]; data: { [x: string]: any; }; }) => {
-                    if (item.label.includes('Earn')) {
-                      total += Number(item.data[index]);
-                    }
+                    total += Number(item.data[index]);
                   });
                   this.maxPositiveValue = Math.max(total, this.maxPositiveValue);
-                  return total.toFixed(2);
-                }
-              }
-            },
-            {
-              type: 'category',
-              offset: true,
-              position: 'below',
-              ticks: {
-                fontColor: '#000000',
-                fontStyle: 'bold',
-                maxRotation: 90,
-                minRotation: 90,
-                callback: (value: any, index: any, values: any) => {
-                  let total = 0;
-                  this.datasets.forEach((item: { label: string | string[]; data: { [x: string]: any; }; }) => {
-                    if (item.label.includes('Spend')) {
-                      total += Number(item.data[index]);
-                    }
-                  });
-                  this.maxNegativeValue = Math.min(this.maxNegativeValue, total);
                   return total.toFixed(2);
                 }
               }
@@ -191,7 +171,7 @@ export class AverageCumulativeBucksComponent implements OnInit, OnChanges {
         plugins: {
           datalabels: {
             formatter: (value: any, ctx: any) => {
-              if (Number(value) * 100 / this.maxPositiveValue > 10 || Number(value) * 100 / this.maxNegativeValue > 10) {
+              if (Number(value) * 100 / this.maxPositiveValue > 10) {
                 return Number(value).toFixed(0);
               }
               return '';
