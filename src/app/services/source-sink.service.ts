@@ -8,8 +8,8 @@ import * as io from 'socket.io-client';
 })
 export class SourceSinkService {
 
-  // url = 'https://cross-promo-analytics-api.herokuapp.com';
-  url = 'http://localhost:5000';
+  url = 'https://cross-promo-analytics-api.herokuapp.com';
+  // url = 'http://localhost:5000';
   socket: any;
 
   constructor(private http: HttpClient) {
