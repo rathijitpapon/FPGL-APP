@@ -162,6 +162,6 @@ export class BucksStatusComponent implements OnInit {
     this.selectedVersions = [];
     this.appVersions = [];
     this.showingVersions = false;
-    this.fetchVersions();
+    // this.fetchVersions();
   }
 }
