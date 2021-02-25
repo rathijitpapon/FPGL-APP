@@ -158,6 +158,8 @@ export class BucksStatusComponent implements OnInit {
 
 
   change(event: any): void {
+    this.selectedAppVersions = 0;
+    this.selectedVersions = [];
     this.showingVersions = false;
     this.fetchVersions();
   }
