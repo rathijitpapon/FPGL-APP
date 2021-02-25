@@ -2,7 +2,7 @@
     <mat-spinner diameter="50" style="top: 50%; left: 50%;" color="accent" mode="indeterminate"></mat-spinner>
 </div>
 <div *ngIf="isShown">
-  <h2>Average Total {{ reqType | uppercase }} Ad Rejection Per Level</h2>
+  <h3>Average Total {{ reqType | uppercase }} Ad Rejection Per Level</h3>
   <h3 style="text-align: center;">(from {{this.maxTime}} to {{this.minTime}})</h3>
   <app-drawing-chart [options]="options" [legend]="legend"
                     [datasets]="datasets" [chartType]="chartType"
