@@ -2,7 +2,6 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {SourceSinkService} from '../../services/source-sink.service';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import {Chart} from 'chart.js';
-import {LoaderService} from '../../loader/loader.service';
 import { OnChanges } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
 
@@ -25,7 +24,7 @@ export class AverageCumulativeBucksComponent implements OnInit, OnChanges {
   private flagArray: any[] = [];
   width: any;
 
-  constructor(private sourceSinkService: SourceSinkService, public loaderService: LoaderService) {
+  constructor(private sourceSinkService: SourceSinkService) {
     Chart.plugins.unregister(ChartDataLabels);
   }
 
@@ -40,6 +39,7 @@ export class AverageCumulativeBucksComponent implements OnInit, OnChanges {
   barChartPlugins = [ChartDataLabels];
   minTime: any;
   maxTime: any;
+  isLoading = false;
 
   ngOnChanges(changes: SimpleChanges): void {
     this.fetchData();
@@ -55,6 +55,7 @@ export class AverageCumulativeBucksComponent implements OnInit, OnChanges {
     this.labels = [];
     this.options = {};
     this.isShown = false;
+    this.isLoading = true;
 
     await this.sourceSinkService.getAverageCumulativeBucksSpendAndEarn(
       this.selectedDatabase,
@@ -107,6 +108,7 @@ export class AverageCumulativeBucksComponent implements OnInit, OnChanges {
           this.datasets.push(i);
           this.flagArray.push(true);
         });
+        this.isLoading = false;
       });
 
     this.chartType = 'bar';

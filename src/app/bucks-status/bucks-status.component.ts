@@ -96,7 +96,7 @@ export class BucksStatusComponent implements OnInit {
   selectedVersions = [];
   selectedAppVersions: any;
 
-  constructor(public loaderService: LoaderService, public sourceSinkService: SourceSinkService) {
+  constructor(public sourceSinkService: SourceSinkService) {
   }
 
   ngOnInit(): void {

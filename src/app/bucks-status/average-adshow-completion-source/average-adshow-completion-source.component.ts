@@ -2,7 +2,6 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {SourceSinkService} from '../../services/source-sink.service';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import {Chart} from 'chart.js';
-import {LoaderService} from '../../loader/loader.service';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { SimpleChanges } from '@angular/core';
 import { OnChanges } from '@angular/core';
@@ -26,7 +25,7 @@ export class AverageAdshowCompletionSourceComponent implements OnInit, OnChanges
   private flagArray: any[] = [];
   width: any;
 
-  constructor(private sourceSinkService: SourceSinkService, public loaderService: LoaderService) {
+  constructor(private sourceSinkService: SourceSinkService) {
     Chart.plugins.unregister(ChartDataLabels);
   }
   minTime: any;
@@ -40,6 +39,7 @@ export class AverageAdshowCompletionSourceComponent implements OnInit, OnChanges
   isShown: any = false;
   maxPositiveValue = 0;
   barChartPlugins = [ChartDataLabels];
+  isLoading = false;
 
   ngOnChanges(changes: SimpleChanges): void {
     this.fetchData();
@@ -56,7 +56,7 @@ export class AverageAdshowCompletionSourceComponent implements OnInit, OnChanges
     this.options = {};
     this.isShown = false;
 
-    this.loaderService._isLoading = new BehaviorSubject<boolean>(true);
+    this.isLoading = true;
 
     // await this.sourceSinkService.sendMessage('Hello From Frontend')
     //   .subscribe((data: any) => {
@@ -82,7 +82,6 @@ export class AverageAdshowCompletionSourceComponent implements OnInit, OnChanges
     await this.sourceSinkService.getAdCompletionData(dataId
       )
       .subscribe((data: any) => {
-        this.loaderService._isLoading = new BehaviorSubject<boolean>(false);
         this.isShown = true;
         this.labels = data.userLevel;
         const sourcesValue: any = {};
@@ -110,6 +109,7 @@ export class AverageAdshowCompletionSourceComponent implements OnInit, OnChanges
             label: key,
           });
         });
+        this.isLoading = false;
       });
 
     this.chartType = 'bar';

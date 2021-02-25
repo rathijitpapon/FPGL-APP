@@ -2,7 +2,6 @@ import {Component, HostListener, Input, OnInit, ViewChild} from '@angular/core';
 import {SourceSinkService} from '../../services/source-sink.service';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import {Chart} from 'chart.js';
-import {LoaderService} from '../../loader/loader.service';
 import {DrawingChartComponent} from '../../drawing-chart/drawing-chart.component';
 import { OnChanges } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
@@ -14,7 +13,7 @@ import { SimpleChanges } from '@angular/core';
 })
 export class BucksSpendAndEarningComponent implements OnInit, OnChanges {
 
-  constructor(private sourceSinkService: SourceSinkService, public loaderService: LoaderService) {
+  constructor(private sourceSinkService: SourceSinkService) {
     Chart.plugins.unregister(ChartDataLabels);
   }
 
@@ -47,6 +46,7 @@ export class BucksSpendAndEarningComponent implements OnInit, OnChanges {
   barChartPlugins = [ChartDataLabels];
   minTime: any;
   maxTime: any;
+  isLoading = false;
 
   // @HostListener('window:resize', ['$event'])
   onResize(event: any): any {
@@ -78,6 +78,7 @@ export class BucksSpendAndEarningComponent implements OnInit, OnChanges {
     this.labels = [];
     this.options = {};
     this.isShown = false;
+    this.isLoading = true;
     this.sourceSinkService.getBucksSpendAndEarning(this.selectedDatabase, this.upperLimitOfBucks,
       this.lowerLimitOfBucks, this.selectedMinTimeSpan, this.selectedMaxTimeSpan,
       this.selectedAppVersion)
@@ -126,6 +127,7 @@ export class BucksSpendAndEarningComponent implements OnInit, OnChanges {
           this.datasets.push(i);
           this.flagArray.push(true);
         });
+        this.isLoading = false;
       });
     this.chartType = 'bar';
     this.options = {

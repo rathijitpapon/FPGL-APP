@@ -1,4 +1,4 @@
-<div *ngIf="loaderService.isLoading | async" class="loader-container col-md-12">
+<div *ngIf="isLoading" class="loader-container col-md-12">
     <mat-spinner diameter="50" style="top: 50%; left: 50%;" color="accent" mode="indeterminate"></mat-spinner>
   </div>
   <div *ngIf="isShown">

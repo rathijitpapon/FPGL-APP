@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import {SourceSinkService} from '../../services/source-sink.service';
-import {LoaderService} from '../../loader/loader.service';
 import {Chart} from 'chart.js';
 import { SimpleChanges } from '@angular/core';
 import { OnChanges } from '@angular/core';
@@ -31,8 +30,10 @@ export class AverageBucksComponent implements OnInit, OnChanges {
   minTime: any;
   maxTime: any;
 
+  isLoading = false;
 
-  constructor(private sourceSinkService: SourceSinkService, public loaderService: LoaderService) {
+
+  constructor(private sourceSinkService: SourceSinkService) {
     Chart.plugins.unregister(ChartDataLabels);
   }
 
@@ -49,6 +50,7 @@ export class AverageBucksComponent implements OnInit, OnChanges {
     this.labels = [];
     this.options = {};
     this.isShown = false;
+    this.isLoading = true;
     this.sourceSinkService.getBucksStatus(this.selectedDatabase, this.upperLimitOfBucks,
       this.lowerLimitOfBucks, this.selectedMinTimeSpan, this.selectedMaxTimeSpan,
       this.selectedAppVersion).subscribe((param: any) => {
@@ -64,6 +66,7 @@ export class AverageBucksComponent implements OnInit, OnChanges {
           anchor: 'center'
         }
       }];
+      this.isLoading = false;
     });
     this.chartType = 'line';
     this.options = {

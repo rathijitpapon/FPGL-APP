@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import {SourceSinkService} from '../../services/source-sink.service';
-import {LoaderService} from '../../loader/loader.service';
 import {Chart} from 'chart.js';
 import { OnChanges } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
@@ -32,8 +31,9 @@ export class SumOfBucksSpendEarningComponent implements OnInit, OnChanges {
   fontWeight: any;
   minTime: any;
   maxTime: any;
+  isLoading = false;
 
-  constructor(private sourceSinkService: SourceSinkService, public loaderService: LoaderService) {
+  constructor(private sourceSinkService: SourceSinkService) {
     Chart.plugins.unregister(ChartDataLabels);
   }
 
@@ -52,6 +52,7 @@ export class SumOfBucksSpendEarningComponent implements OnInit, OnChanges {
     this.labels = [];
     this.options = {};
     this.isShown = false;
+    this.isLoading = true;
     this.sourceSinkService.getTotalBucksSpendAndEarning(this.selectedDatabase, this.upperLimitOfBucks,
       this.lowerLimitOfBucks, this.selectedMinTimeSpan, this.selectedMaxTimeSpan,
       this.selectedAppVersion)
@@ -78,6 +79,7 @@ export class SumOfBucksSpendEarningComponent implements OnInit, OnChanges {
             }
           }
         ];
+        this.isLoading = false;
       });
     this.chartType = 'bar';
     this.options = {
