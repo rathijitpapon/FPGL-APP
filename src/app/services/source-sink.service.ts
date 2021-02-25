@@ -8,8 +8,8 @@ import * as io from 'socket.io-client';
 })
 export class SourceSinkService {
 
-  url = 'https://cross-promo-analytics-api.herokuapp.com';
-  // url = 'http://localhost:5000';
+  // url = 'https://cross-promo-analytics-api.herokuapp.com';
+  url = 'http://localhost:5000';
   socket: any;
 
   constructor(private http: HttpClient) {
@@ -19,35 +19,39 @@ export class SourceSinkService {
 
 
   getTotalBucksSpendAndEarning(selectedDatabase: string, upperLimitOfBucks: number, lowerLimitOfBucks: number,
-                               minTimeSpan: number, maxTimeSpan: number): any {
+                               minTimeSpan: number, maxTimeSpan: number, appVersion: number): any {
     return this.http.post(this.url + '/sourceSink/bucksStatus/totalSpendAndEarning', {
       db: selectedDatabase,
       upperLimit: upperLimitOfBucks,
       lowerLimit: lowerLimitOfBucks,
       minTimeSpan,
-      maxTimeSpan
+      maxTimeSpan,
+      appVersion
     });
   }
 
   getBucksStatus(database: string, upperLimitOfBucks: number, lowerLimitOfBucks: number,
-                 minTimeSpan: number, maxTimeSpan: number): any {
+                 minTimeSpan: number, maxTimeSpan: number, appVersion: number): any {
     return this.http.post(this.url + '/sourceSink/bucksStatus', {
       db: database,
       upperLimit: upperLimitOfBucks,
       lowerLimit: lowerLimitOfBucks,
       minTimeSpan,
-      maxTimeSpan
+      maxTimeSpan,
+      appVersion
     });
   }
 
   getBucksSpendAndEarning(selectedDatabase: string , upperLimitOfBucks: number,
-                          lowerLimitOfBucks: number, minTimeSpan: number, maxTimeSpan: number): any {
+                          lowerLimitOfBucks: number, minTimeSpan: number, maxTimeSpan: number,
+                          appVersion: number): any {
     return this.http.post(this.url + '/sourceSink/bucksStatus/bucksSpendAndEarning', {
       db: selectedDatabase,
       upperLimit: upperLimitOfBucks,
       lowerLimit: lowerLimitOfBucks,
       minTimeSpan,
-      maxTimeSpan
+      maxTimeSpan,
+      appVersion
     });
   }
 
@@ -56,12 +60,14 @@ export class SourceSinkService {
   }
 
   getAverageCumulativeBucksSpendAndEarn(database: string, upperLimit: number, lowerLimit: number,
-                                        minTimeSpan: number, maxTimeSpan: number): any {
+                                        minTimeSpan: number, maxTimeSpan: number,
+                                        appVersion: number): any {
     return this.http.post(this.url + '/sourceSink/averageBucksSpendAndEarning/' + database, {
       upperLimit,
       lowerLimit,
       minTimeSpan,
-      maxTimeSpan
+      maxTimeSpan,
+      appVersion
     });
   }
 

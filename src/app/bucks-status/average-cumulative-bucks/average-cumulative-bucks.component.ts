@@ -18,6 +18,7 @@ export class AverageCumulativeBucksComponent implements OnInit, OnChanges {
   @Input() public selectedMaxTimeSpan: any;
   @Input() lowerLimitOfBucks = 0;
   @Input() upperLimitOfBucks = 0;
+  @Input() selectedAppVersion = 0;
 
   legendDataforEarn = [];
   legendDataforSpend = [];
@@ -60,7 +61,8 @@ export class AverageCumulativeBucksComponent implements OnInit, OnChanges {
       this.upperLimitOfBucks,
       this.lowerLimitOfBucks,
       this.selectedMinTimeSpan,
-      this.selectedMaxTimeSpan
+      this.selectedMaxTimeSpan,
+      this.selectedAppVersion
       )
       .toPromise()
       .then((data: any) => {

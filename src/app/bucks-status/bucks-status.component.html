@@ -36,16 +36,16 @@
     <br>
     <button mat-raised-button>fetch</button>
   </form>
-<!--  <form *ngIf="showingVersions" (ngSubmit)="fetchDataWRTVersions()">-->
-<!--    <mat-form-field hideRequiredMarker>-->
-<!--      <mat-label>App versions</mat-label>-->
-<!--      <mat-select [(value)]="selectedAppVersion" required>-->
-<!--        <mat-option *ngFor="let version of appVersions" [value]="version">{{version}}</mat-option>-->
-<!--      </mat-select>-->
-<!--    </mat-form-field>-->
-<!--    <br>-->
-<!--    <button mat-raised-button>fetch again</button>-->
-<!--  </form>-->
+  <form *ngIf="showingVersions" (ngSubmit)="fetchData()">
+    <mat-form-field hideRequiredMarker>
+      <mat-label>App versions</mat-label>
+      <mat-select [(value)]="selectedVersions" required multiple>
+        <mat-option *ngFor="let version of appVersions" [value]="version">{{version}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br>
+    <button mat-raised-button>fetch again</button>
+  </form>
 </div>
 
 <br>
@@ -61,6 +61,7 @@
                      [upperLimitOfBucks]="upperLimitOfBucks"
                      [selectedMinTimeSpan]="0"
                      [selectedMaxTimeSpan]="seletedTimeSpan"
+                     [selectedAppVersion]="selectedAppVersions"
   >
   </app-average-bucks>
   <br>
@@ -73,6 +74,7 @@
                      [upperLimitOfBucks]="upperLimitOfBucks"
                      [selectedMinTimeSpan]="seletedTimeSpan"
                      [selectedMaxTimeSpan]="2 * seletedTimeSpan"
+                     [selectedAppVersion]="selectedAppVersions"
   >
   </app-average-bucks>
   <br>
@@ -85,6 +87,7 @@
                                [upperLimitOfBucks]="upperLimitOfBucks"
                                [selectedMinTimeSpan]="0"
                                [selectedMaxTimeSpan]="seletedTimeSpan"
+                               [selectedAppVersion]="selectedAppVersions"
   ></app-bucks-spend-and-earning>
   <br>
 </div>
@@ -93,8 +96,9 @@
   <app-bucks-spend-and-earning [selectedDatabase]="selectedDatabase"
                                [lowerLimitOfBucks]="lowerLimitOfBucks"
                                [upperLimitOfBucks]="upperLimitOfBucks"
-                               [selectedMinTimeSpan]="0"
-                               [selectedMaxTimeSpan]="seletedTimeSpan"
+                               [selectedMinTimeSpan]="seletedTimeSpan"
+                               [selectedMaxTimeSpan]="2 * seletedTimeSpan"
+                               [selectedAppVersion]="selectedAppVersions"
   ></app-bucks-spend-and-earning>
   <br>
 </div>
@@ -105,6 +109,7 @@
                                 [upperLimitOfBucks]="upperLimitOfBucks"
                                 [selectedMinTimeSpan]="0"
                                 [selectedMaxTimeSpan]="seletedTimeSpan"
+                                [selectedAppVersion]="selectedAppVersions"
   ></app-average-cumulative-bucks>
   <br>
 </div>
@@ -115,6 +120,7 @@
                                 [upperLimitOfBucks]="upperLimitOfBucks"
                                 [selectedMinTimeSpan]="seletedTimeSpan"
                                 [selectedMaxTimeSpan]="2 * seletedTimeSpan"
+                                [selectedAppVersion]="selectedAppVersions"
   ></app-average-cumulative-bucks>
   <br>
 </div>
@@ -125,6 +131,7 @@
                                   [upperLimitOfBucks]="upperLimitOfBucks"
                                   [selectedMinTimeSpan]="0"
                                   [selectedMaxTimeSpan]="seletedTimeSpan"
+                                  [selectedAppVersion]="selectedAppVersions"
 
   ></app-sum-of-bucks-spend-earning>
   <br>
@@ -136,6 +143,7 @@
                                   [upperLimitOfBucks]="upperLimitOfBucks"
                                   [selectedMinTimeSpan]="seletedTimeSpan"
                                   [selectedMaxTimeSpan]="2 * seletedTimeSpan"
+                                  [selectedAppVersion]="selectedAppVersions"
 
   ></app-sum-of-bucks-spend-earning>
   <br>
@@ -148,6 +156,7 @@
                                [selectedMinTimeSpan]="0"
                                [selectedMaxTimeSpan]="seletedTimeSpan"
                                [reqType] = "'all'"
+                              [selectedAppVersion]="selectedAppVersions"
 
   ></app-average-adshow-source>
   <br>
@@ -161,6 +170,7 @@
                                [selectedMinTimeSpan]="0"
                                [selectedMaxTimeSpan]="seletedTimeSpan"
                                [reqType] = "'reward'"
+                             [selectedAppVersion]="selectedAppVersions"
 
   ></app-average-adshow-source>
   <br>
@@ -173,6 +183,7 @@
                                [selectedMinTimeSpan]="seletedTimeSpan"
                                [selectedMaxTimeSpan]="seletedTimeSpan + seletedTimeSpan"
                                [reqType] = "'reward'"
+                             [selectedAppVersion]="selectedAppVersions"
 
   ></app-average-adshow-source>
   <br>
@@ -186,6 +197,7 @@
                                [selectedMinTimeSpan]="0"
                                [selectedMaxTimeSpan]="seletedTimeSpan"
                                [reqType] = "'int'"
+                             [selectedAppVersion]="selectedAppVersions"
 
   ></app-average-adshow-source>
   <br>
@@ -198,6 +210,7 @@
                                [selectedMinTimeSpan]="seletedTimeSpan"
                                [selectedMaxTimeSpan]="seletedTimeSpan + seletedTimeSpan"
                                [reqType] = "'int'"
+                             [selectedAppVersion]="selectedAppVersions"
 
   ></app-average-adshow-source>
   <br>
@@ -211,6 +224,7 @@
                                [selectedMinTimeSpan]="0"
                                [selectedMaxTimeSpan]="seletedTimeSpan"
                                [reqType] = "'reward'"
+                               [selectedAppVersion]="selectedAppVersions"
   ></app-average-adshow-completion-source>
   <br>
 </div>
@@ -222,6 +236,7 @@
                                [selectedMinTimeSpan]="seletedTimeSpan"
                                [selectedMaxTimeSpan]="seletedTimeSpan + seletedTimeSpan"
                                [reqType] = "'reward'"
+                               [selectedAppVersion]="selectedAppVersions"
 
   ></app-average-adshow-completion-source>
   <br>

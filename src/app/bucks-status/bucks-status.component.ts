@@ -93,7 +93,8 @@ export class BucksStatusComponent implements OnInit {
   numericalValuesOfTimeSpans = [
     10000000, 24, 48, 168, 672
   ];
-  selectedAppVersion: any;
+  selectedVersions = 0;
+  selectedAppVersions = 0;
 
   constructor(public loaderService: LoaderService, public sourceSinkService: SourceSinkService) {
   }
@@ -139,6 +140,7 @@ export class BucksStatusComponent implements OnInit {
     if (this.seletedTimeSpan === undefined || this.seletedTimeSpan === 0) {
       return alert(`time span must be selected`);
     }
+    this.selectedAppVersions = this.selectedVersions;
 
     this.chartsArray.forEach((item, key) => {
       this.isShown[key] = false;
@@ -151,12 +153,6 @@ export class BucksStatusComponent implements OnInit {
         this.isShown[i] = true;
       }
     }
-
-    // this.fetchVersions();
-
-  }
-
-  fetchDataWRTVersions() {
-
+    this.fetchVersions();
   }
 }

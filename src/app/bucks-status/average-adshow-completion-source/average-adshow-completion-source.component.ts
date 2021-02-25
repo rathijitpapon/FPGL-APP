@@ -20,6 +20,7 @@ export class AverageAdshowCompletionSourceComponent implements OnInit, OnChanges
   @Input() selectedMinTimeSpan = 0;
   @Input() selectedMaxTimeSpan = 0;
   @Input() reqType = '';
+  @Input() public selectedAppVersion: any;
 
   legendData = [];
   private flagArray: any[] = [];
@@ -74,7 +75,8 @@ export class AverageAdshowCompletionSourceComponent implements OnInit, OnChanges
       database: this.selectedDatabase,
       reqType: this.reqType,
       hoursMin: this.selectedMinTimeSpan,
-      hoursMax: this.selectedMaxTimeSpan
+      hoursMax: this.selectedMaxTimeSpan,
+      appVersion: this.selectedAppVersion
     });
 
     await this.sourceSinkService.getAdCompletionData(dataId
