@@ -2,7 +2,7 @@
   <form (ngSubmit)="fetchData()">
     <mat-form-field hideRequiredMarker>
       <mat-label>Database</mat-label>
-      <mat-select [(value)]="selectedDatabase" required>
+      <mat-select (selectionChange)="change($event)" [(value)]="selectedDatabase" required>
         <mat-option *ngFor="let game of games" [value]="game">{{game}}</mat-option>
       </mat-select>
     </mat-form-field>
@@ -34,26 +34,19 @@
       </mat-select>
     </mat-form-field>
     <br>
-    <button mat-raised-button>fetch</button>
-  </form>
-  <form *ngIf="showingVersions" (ngSubmit)="fetchData()">
-    <mat-form-field hideRequiredMarker>
+    <mat-form-field *ngIf="showingVersions" >
       <mat-label>App versions</mat-label>
-      <mat-select [(value)]="selectedVersions" required multiple>
+      <mat-select [(value)]="selectedVersions" multiple>
         <mat-option *ngFor="let version of appVersions" [value]="version">{{version}}</mat-option>
       </mat-select>
     </mat-form-field>
     <br>
-    <button mat-raised-button>fetch again</button>
+    <button mat-raised-button>fetch</button>
   </form>
 </div>
 
 <br>
 
-<!--<h3>from {{this.lastNDaysTime}} to {{this.currentTime}}</h3>-->
-<!--<h3>from {{this.previousNdaysTime}} to {{this.lastNDaysTime}}</h3>-->
-
-<!--<ng-template *ngIf="isShown">-->
 <div *ngIf="isShown[0]">
 
   <app-average-bucks [selectedDatabase]="selectedDatabase"

@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, Directive, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {SourceSinkService} from '../services/source-sink.service';
 import {AverageBucksComponent} from './average-bucks/average-bucks.component';
 import {BucksSpendAndEarningComponent} from './bucks-spend-and-earning/bucks-spend-and-earning.component';
@@ -93,8 +93,8 @@ export class BucksStatusComponent implements OnInit {
   numericalValuesOfTimeSpans = [
     10000000, 24, 48, 168, 672
   ];
-  selectedVersions = 0;
-  selectedAppVersions = 0;
+  selectedVersions = [];
+  selectedAppVersions: any;
 
   constructor(public loaderService: LoaderService, public sourceSinkService: SourceSinkService) {
   }
@@ -119,12 +119,14 @@ export class BucksStatusComponent implements OnInit {
   }
 
   fetchVersions(): any {
+    this.appVersions = [];
     this.sourceSinkService.getVersions(this.selectedDatabase).subscribe(
       (param) => {
         // @ts-ignore
         for (const version of param) {
           this.appVersions.push(version);
         }
+        this.showingVersions = true;
       });
   }
 
@@ -140,19 +142,23 @@ export class BucksStatusComponent implements OnInit {
     if (this.seletedTimeSpan === undefined || this.seletedTimeSpan === 0) {
       return alert(`time span must be selected`);
     }
-    this.selectedAppVersions = this.selectedVersions;
+    this.selectedAppVersions = (this.selectedVersions.length === 0) ? 0 : this.selectedVersions;
+    this.previouslySelectedDatabase = this.selectedDatabase;
 
     this.chartsArray.forEach((item, key) => {
       this.isShown[key] = false;
     });
-
-    this.showingVersions = true;
 
     for (let i = 0; i < this.chartsArray.length; i++) {
       if (this.selectedCharts.includes(this.chartsArray[i])) {
         this.isShown[i] = true;
       }
     }
+  }
+
+
+  change(event: any): void {
+    this.showingVersions = false;
     this.fetchVersions();
   }
 }
