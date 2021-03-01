@@ -109,15 +109,17 @@ export class SourceSinkService {
     let isPending = true;
 
     while (isPending) {
-      await this.http.post(this.url + '/result/data', {
-        sessionID
-      }).toPromise()
-        .then((result: any) => {
-          if (result.STATUS !== 'PENDING'){
-            data = result.data;
-            isPending = false;
-          }
-        });
+      setTimeout(async () => {
+        await this.http.post(this.url + '/result/data', {
+          sessionID
+        }).toPromise()
+          .then((result: any) => {
+            if (result.STATUS !== 'PENDING'){
+              data = result.data;
+              isPending = false;
+            }
+          });
+      }, 30000);
     }
 
     return data;
