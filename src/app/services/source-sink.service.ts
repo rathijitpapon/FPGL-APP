@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -10,10 +10,12 @@ export class SourceSinkService {
   url = 'https://cross-promo-analytics-api.herokuapp.com';
   // url = 'http://localhost:5000';
 
+  headers = new HttpHeaders();
+
   constructor(private http: HttpClient) {
+    this.headers.set('Content-Type', 'application/json; charset=utf-8');
+    this.headers.set('access-control-allow-origin', '*');
   }
-
-
 
   getTotalBucksSpendAndEarning(selectedDatabase: string, upperLimitOfBucks: number, lowerLimitOfBucks: number,
                                minTimeSpan: number, maxTimeSpan: number, appVersion: number): any {
@@ -24,7 +26,7 @@ export class SourceSinkService {
       minTimeSpan,
       maxTimeSpan,
       appVersion
-    });
+    }, {headers: this.headers});
   }
 
   getBucksStatus(database: string, upperLimitOfBucks: number, lowerLimitOfBucks: number,
@@ -36,7 +38,7 @@ export class SourceSinkService {
       minTimeSpan,
       maxTimeSpan,
       appVersion
-    });
+    }, {headers: this.headers});
   }
 
   getBucksSpendAndEarning(selectedDatabase: string , upperLimitOfBucks: number,
@@ -49,11 +51,11 @@ export class SourceSinkService {
       minTimeSpan,
       maxTimeSpan,
       appVersion
-    });
+    }, {headers: this.headers});
   }
 
   getBucksColumns(database: string): any {
-    return this.http.get(this.url + '/sourceSink/columns/' + database);
+    return this.http.get(this.url + '/sourceSink/columns/' + database, {headers: this.headers});
   }
 
   getAverageCumulativeBucksSpendAndEarn(database: string, upperLimit: number, lowerLimit: number,
@@ -65,7 +67,7 @@ export class SourceSinkService {
       minTimeSpan,
       maxTimeSpan,
       appVersion
-    });
+    }, {headers: this.headers});
   }
 
   async getAverageAdShowPerSource(database: string, reqType: string, hoursMin: number, hoursMax: number): Promise<any> {
@@ -74,7 +76,7 @@ export class SourceSinkService {
       reqType,
       hoursMin,
       hoursMax
-    }).toPromise()
+    }, {headers: this.headers}).toPromise()
       .then((result: any) => {
         if (result.statusCode === 200) {
           sessionID = result.sessionID;
@@ -90,7 +92,7 @@ export class SourceSinkService {
       reqType,
       hoursMin,
       hoursMax
-    }).toPromise()
+    }, {headers: this.headers}).toPromise()
       .then((result: any) => {
         if (result.statusCode === 200) {
           sessionID = result.sessionID;
