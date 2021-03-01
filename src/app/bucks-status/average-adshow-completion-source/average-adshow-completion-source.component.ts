@@ -58,59 +58,41 @@ export class AverageAdshowCompletionSourceComponent implements OnInit, OnChanges
 
     this.isLoading = true;
 
-    // await this.sourceSinkService.sendMessage('Hello From Frontend')
-    //   .subscribe((data: any) => {
-    //     console.log(data);
-    //   });
+    const data = await this.sourceSinkService.getAdRejectionData(
+      this.selectedDatabase,
+      this.reqType,
+      this.selectedMinTimeSpan,
+      this.selectedMaxTimeSpan,
+    );
 
-    const dataId = this.selectedDatabase
-      + this.reqType
-      + this.selectedMaxTimeSpan
-      + this.selectedMinTimeSpan
-      + 'completion'
-      + (new Date()).getTime();
+    this.isShown = true;
+    this.labels = data.userLevel;
+    const sourcesValue: any = {};
 
-    await this.sourceSinkService.sendAdCompletionData({
-      id: dataId,
-      database: this.selectedDatabase,
-      reqType: this.reqType,
-      hoursMin: this.selectedMinTimeSpan,
-      hoursMax: this.selectedMaxTimeSpan,
-      appVersion: this.selectedAppVersion
-    });
+    for (const adData of data.averageAdShowPerSource) {
+      if (adData.source.length <= 1) { continue; }
+      const source = adData.source;
+      sourcesValue[source] = [];
+      for (const level of this.labels) {
+        sourcesValue[source].push(0);
+      }
+    }
 
-    await this.sourceSinkService.getAdCompletionData(dataId
-      )
-      .subscribe((data: any) => {
-        this.isShown = true;
-        this.labels = data.userLevel;
-        const sourcesValue: any = {};
+    for (const adData of data.averageAdShowPerSource) {
+      if (adData.source.length <= 1) { continue; }
+      const source = adData.source;
 
-        for (const adData of data.averageAdShowPerSource) {
-          if (adData.source.length <= 1) { continue; }
-          const source = adData.source;
-          sourcesValue[source] = [];
-          for (const level of this.labels) {
-            sourcesValue[source].push(0);
-          }
-        }
+      sourcesValue[source][adData.level - 1] = adData.value;
+    }
 
-        for (const adData of data.averageAdShowPerSource) {
-          if (adData.source.length <= 1) { continue; }
-          const source = adData.source;
-
-          sourcesValue[source][adData.level - 1] = adData.value;
-        }
-
-        Object.keys(sourcesValue).map((key: string
-          ) => {
-          this.datasets.push({
-            data: sourcesValue[key],
-            label: key,
-          });
-        });
-        this.isLoading = false;
+    Object.keys(sourcesValue).map((key: string
+      ) => {
+      this.datasets.push({
+        data: sourcesValue[key],
+        label: key,
       });
+    });
+    this.isLoading = false;
 
     this.chartType = 'bar';
     this.options = {

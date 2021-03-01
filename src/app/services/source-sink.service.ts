@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { Observable } from 'rxjs';
-import * as io from 'socket.io-client';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +9,8 @@ export class SourceSinkService {
 
   url = 'https://cross-promo-analytics-api.herokuapp.com';
   // url = 'http://localhost:5000';
-  socket: any;
 
   constructor(private http: HttpClient) {
-    this.socket = io(this.url);
   }
 
 
@@ -71,45 +68,58 @@ export class SourceSinkService {
     });
   }
 
-  getAverageAdShowPerSource(database: string, timeSpan: number, reqType: string): any {
-    this.sendData({
-        database,
-        reqType,
-        hoursBefore: timeSpan,
+  async getAverageAdShowPerSource(database: string, reqType: string, hoursMin: number, hoursMax: number): Promise<any> {
+    let sessionID = '';
+    await this.http.post(this.url + '/prepare/sourceSink/averageAdShowPerSource/' + database, {
+      reqType,
+      hoursMin,
+      hoursMax
+    }).toPromise()
+      .then((result: any) => {
+        if (result.statusCode === 200) {
+          sessionID = result.sessionID;
+        }
       });
-    // return this.http.post(this.url + '/sourceSink/averageAdShowPerSource/' + database, {
-    //   reqType,
-    //   hoursBefore: timeSpan,
-    // });
+
+    return this.getData(sessionID);
   }
 
-  sendData(data: any): any {
-    this.socket.emit('join', data);
-    this.socket.emit('sendData', data);
-  }
-
-  getData(dataId: string): any{
-    return new Observable(observer => {
-      this.socket.on(dataId, (data: any) => {
-        observer.next(data);
+  async getAdRejectionData(database: string, reqType: string, hoursMin: number, hoursMax: number): Promise<any>{
+    let sessionID = '';
+    await this.http.post(this.url + '/prepare/sourceSink/averageAdRejectionPerSource/' + database, {
+      reqType,
+      hoursMin,
+      hoursMax
+    }).toPromise()
+      .then((result: any) => {
+        if (result.statusCode === 200) {
+          sessionID = result.sessionID;
+        }
       });
-    });
+
+    return this.getData(sessionID);
   }
 
-  sendAdCompletionData(data: any): any {
-    this.socket.emit('join', data);
-    this.socket.emit('sendCompletedAdData', data);
-  }
-
-  getAdCompletionData(dataId: string): any{
-    return new Observable(observer => {
-      this.socket.on(dataId, (data: any) => {
-        observer.next(data);
-      });
-    });
-  }
-
-  getVersions(selectedDatabase: string | undefined) {
+  getVersions(selectedDatabase: string | undefined): any {
     return this.http.get(this.url + '/sourceSink/bucksStatus/getVersions/' + selectedDatabase);
+  }
+
+  async getData(sessionID: string): Promise<any> {
+    let data = {};
+    let isPending = true;
+
+    while (isPending) {
+      await this.http.post(this.url + '/result/data', {
+        sessionID
+      }).toPromise()
+        .then((result: any) => {
+          if (result.STATUS !== 'PENDING'){
+            data = result.data;
+            isPending = false;
+          }
+        });
+    }
+
+    return data;
   }
 }

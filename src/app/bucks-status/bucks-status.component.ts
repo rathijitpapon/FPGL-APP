@@ -121,7 +121,7 @@ export class BucksStatusComponent implements OnInit {
   fetchVersions(): any {
     this.appVersions = [];
     this.sourceSinkService.getVersions(this.selectedDatabase).subscribe(
-      (param) => {
+      (param: any) => {
         // @ts-ignore
         for (const version of param) {
           this.appVersions.push(version);
