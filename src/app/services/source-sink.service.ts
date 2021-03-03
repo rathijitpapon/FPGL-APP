@@ -173,7 +173,7 @@ export class SourceSinkService {
     let isPending = true;
 
     while (isPending) {
-      await this.delay(3000);
+      let waitingTime = 2000;
       await this.http.post(this.url + '/result/data', {
         sessionID
       }).toPromise()
@@ -183,6 +183,9 @@ export class SourceSinkService {
             isPending = false;
           }
         });
+      await this.delay(waitingTime);
+      waitingTime *= 2;
+      waitingTime = Math.max(waitingTime, 30000);
     }
 
     return data;
