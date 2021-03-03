@@ -17,57 +17,111 @@ export class SourceSinkService {
     this.headers.set('access-control-allow-origin', '*');
   }
 
-  getTotalBucksSpendAndEarning(selectedDatabase: string, upperLimitOfBucks: number, lowerLimitOfBucks: number,
-                               minTimeSpan: number, maxTimeSpan: number, appVersion: number): any {
-    return this.http.post(this.url + '/sourceSink/bucksStatus/totalSpendAndEarning', {
-      db: selectedDatabase,
+  async getTotalBucksSpendAndEarning(selectedDatabase: string,
+                                     upperLimitOfBucks: number,
+                                     lowerLimitOfBucks: number,
+                                     minTimeSpan: number,
+                                     maxTimeSpan: number,
+                                     appVersion: number): Promise<any> {
+    let sessionID = '';
+    await this.http.post(this.url + '/prepare/sourceSink/bucksStatus/totalSpendAndEarning', {
+      database: selectedDatabase,
       upperLimit: upperLimitOfBucks,
       lowerLimit: lowerLimitOfBucks,
       minTimeSpan,
       maxTimeSpan,
       appVersion
-    }, {headers: this.headers});
+    }, {headers: this.headers}).toPromise()
+    .then((result: any) => {
+      if (result.statusCode === 200) {
+        sessionID = result.sessionID;
+      }
+    });
+
+    return this.getData(sessionID);
   }
 
-  getBucksStatus(database: string, upperLimitOfBucks: number, lowerLimitOfBucks: number,
-                 minTimeSpan: number, maxTimeSpan: number, appVersion: number): any {
-    return this.http.post(this.url + '/sourceSink/bucksStatus', {
-      db: database,
+  async getBucksStatus(database: string,
+                       upperLimitOfBucks: number,
+                       lowerLimitOfBucks: number,
+                       minTimeSpan: number,
+                       maxTimeSpan: number,
+                       appVersion: number): Promise<any> {
+    let sessionID = '';
+    await this.http.post(this.url + '/prepare/sourceSink/bucksStatus', {
+      database,
       upperLimit: upperLimitOfBucks,
       lowerLimit: lowerLimitOfBucks,
       minTimeSpan,
       maxTimeSpan,
       appVersion
-    }, {headers: this.headers});
+    }, {headers: this.headers}).toPromise()
+    .then((result: any) => {
+      if (result.statusCode === 200) {
+        sessionID = result.sessionID;
+      }
+    });
+
+    return this.getData(sessionID);
   }
 
-  getBucksSpendAndEarning(selectedDatabase: string , upperLimitOfBucks: number,
-                          lowerLimitOfBucks: number, minTimeSpan: number, maxTimeSpan: number,
-                          appVersion: number): any {
-    return this.http.post(this.url + '/sourceSink/bucksStatus/bucksSpendAndEarning', {
-      db: selectedDatabase,
+  async getBucksSpendAndEarning(selectedDatabase: string ,
+                                upperLimitOfBucks: number,
+                                lowerLimitOfBucks: number,
+                                minTimeSpan: number,
+                                maxTimeSpan: number,
+                                appVersion: number): Promise<any> {
+    let sessionID = '';
+    await this.http.post(this.url + '/prepare/sourceSink/bucksStatus/bucksSpendAndEarning', {
+      database: selectedDatabase,
       upperLimit: upperLimitOfBucks,
       lowerLimit: lowerLimitOfBucks,
       minTimeSpan,
       maxTimeSpan,
       appVersion
-    }, {headers: this.headers});
+    }, {headers: this.headers}).toPromise()
+    .then((result: any) => {
+      if (result.statusCode === 200) {
+        sessionID = result.sessionID;
+      }
+    });
+
+    return this.getData(sessionID);
   }
 
-  getBucksColumns(database: string): any {
-    return this.http.get(this.url + '/sourceSink/columns/' + database, {headers: this.headers});
+  async getBucksColumns(database: string): Promise<any> {
+    let sessionID = '';
+    await this.http.get(this.url + '/prepare/sourceSink/columns/' + database, {headers: this.headers}).toPromise()
+    .then((result: any) => {
+      if (result.statusCode === 200) {
+        sessionID = result.sessionID;
+      }
+    });
+
+    return this.getData(sessionID);
   }
 
-  getAverageCumulativeBucksSpendAndEarn(database: string, upperLimit: number, lowerLimit: number,
-                                        minTimeSpan: number, maxTimeSpan: number,
-                                        appVersion: number): any {
-    return this.http.post(this.url + '/sourceSink/averageBucksSpendAndEarning/' + database, {
+  async getAverageCumulativeBucksSpendAndEarn(database: string,
+                                              upperLimit: number,
+                                              lowerLimit: number,
+                                              minTimeSpan: number,
+                                              maxTimeSpan: number,
+                                              appVersion: number): Promise<any> {
+    let sessionID = '';
+    await this.http.post(this.url + '/prepare/sourceSink/averageBucksSpendAndEarning/' + database, {
       upperLimit,
       lowerLimit,
       minTimeSpan,
       maxTimeSpan,
       appVersion
-    }, {headers: this.headers});
+    }, {headers: this.headers}).toPromise()
+    .then((result: any) => {
+      if (result.statusCode === 200) {
+        sessionID = result.sessionID;
+      }
+    });
+
+    return this.getData(sessionID);
   }
 
   async getAverageAdShowPerSource(database: string, reqType: string, hoursMin: number, hoursMax: number): Promise<any> {
@@ -102,8 +156,16 @@ export class SourceSinkService {
     return this.getData(sessionID);
   }
 
-  getVersions(selectedDatabase: string | undefined): any {
-    return this.http.get(this.url + '/sourceSink/bucksStatus/getVersions/' + selectedDatabase);
+  async getVersions(selectedDatabase: string | undefined): Promise<any> {
+    let sessionID = '';
+    await this.http.get(this.url + '/prepare/sourceSink/bucksStatus/getVersions/' + selectedDatabase).toPromise()
+    .then((result: any) => {
+      if (result.statusCode === 200) {
+        sessionID = result.sessionID;
+      }
+    });
+
+    return this.getData(sessionID);
   }
 
   async getData(sessionID: string): Promise<any> {

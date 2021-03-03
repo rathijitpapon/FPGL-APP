@@ -45,7 +45,7 @@ export class SumOfBucksSpendEarningComponent implements OnInit, OnChanges {
     // this.fetchData();
   }
 
-  fetchData(): void {
+  async fetchData(): Promise<void> {
     this.fontSize = (window.innerWidth < 800) ? 7 : 12;
     this.fontWeight = (window.innerWidth < 800) ? 'normal' : 'bold';
     this.datasets = [];
@@ -53,34 +53,39 @@ export class SumOfBucksSpendEarningComponent implements OnInit, OnChanges {
     this.options = {};
     this.isShown = false;
     this.isLoading = true;
-    this.sourceSinkService.getTotalBucksSpendAndEarning(this.selectedDatabase, this.upperLimitOfBucks,
-      this.lowerLimitOfBucks, this.selectedMinTimeSpan, this.selectedMaxTimeSpan,
-      this.selectedAppVersion)
-      .subscribe((param: any) => {
-        this.isShown = true;
-        this.labels = param.userLevel;
-        this.datasets = [{
-          data: param.totalBucksEarn,
-          label: 'total Bucks Earn',
-          borderColor: 'rgba(0,0,0,0.8)',
-          fill: false,
-          datalabels: {
-            align: 'top',
-            anchor: 'end'
-          }
-        },
-          {
-            data: param.totalBucksSpend,
-            label: 'total Bucks Spend',
-            borderColor: 'rgba(0,0,0,0.8)',
-            datalabels: {
-              align: 'start',
-              anchor: 'start'
-            }
-          }
-        ];
-        this.isLoading = false;
-      });
+
+    const data = await this.sourceSinkService.getTotalBucksSpendAndEarning(
+      this.selectedDatabase,
+      this.upperLimitOfBucks,
+      this.lowerLimitOfBucks,
+      this.selectedMinTimeSpan,
+      this.selectedMaxTimeSpan,
+      this.selectedAppVersion);
+
+    this.isShown = true;
+    this.labels = data.userLevel;
+    this.datasets = [{
+      data: data.totalBucksEarn,
+      label: 'total Bucks Earn',
+      borderColor: 'rgba(0,0,0,0.8)',
+      fill: false,
+      datalabels: {
+        align: 'top',
+        anchor: 'end'
+      }
+    },
+      {
+        data: data.totalBucksSpend,
+        label: 'total Bucks Spend',
+        borderColor: 'rgba(0,0,0,0.8)',
+        datalabels: {
+          align: 'start',
+          anchor: 'start'
+        }
+      }
+    ];
+    this.isLoading = false;
+
     this.chartType = 'bar';
     this.options = {
       scaleShowVerticalLines: false,

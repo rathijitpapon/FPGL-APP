@@ -69,7 +69,7 @@ export class BucksSpendAndEarningComponent implements OnInit, OnChanges {
     this.fetchData();
   }
 
-  fetchData(): void {
+  async fetchData(): Promise<void> {
     this.width = window.innerWidth + ((window.innerWidth < 850) ? 600 : 0);
     this.height = 750;
     this.fontWeight = (window.innerWidth < 800) ? 'normal' : 'bold';
@@ -79,56 +79,56 @@ export class BucksSpendAndEarningComponent implements OnInit, OnChanges {
     this.options = {};
     this.isShown = false;
     this.isLoading = true;
-    this.sourceSinkService.getBucksSpendAndEarning(this.selectedDatabase, this.upperLimitOfBucks,
-      this.lowerLimitOfBucks, this.selectedMinTimeSpan, this.selectedMaxTimeSpan,
-      this.selectedAppVersion)
-      .subscribe((param: any) => {
-        this.isShown = true;
-        this.labels = param.userLevels;
-        Object.keys(param.averageEarns).forEach(item => {
-          this.datasets.push({
-            data: param.averageEarns[item],
-            label: item
-          });
-        });
-        Object.keys(param.averageSpends).forEach(item => {
-          this.datasets.push({
-            data: param.averageSpends[item],
-            label: item
-          });
-        });
-        const temp: any[] = [];
-        this.datasets.forEach((item: any) => {
-          let flag = true;
-          temp.push(item);
-          const precision = 0.01;
-          item.data.forEach((i: number) => {
-            if (Math.abs(i) >= precision) {
-              flag = false;
-            }
-          });
-          if (flag) {
-            temp.pop();
-          } else {
-            if (item.label.includes('Earn')) {
-              // @ts-ignore
-              this.legendDataforEarn.push(item.label);
-              item.label = item.label.slice(7, 11) + ': ' + item.label.slice(11);
-            } else {
-              // @ts-ignore
-              this.legendDataforSpend.push(item.label);
-              item.label = item.label.slice(7, 12) + ': ' + item.label.slice(12);
-            }
 
-          }
-        });
-        this.datasets = [];
-        temp.forEach((i) => {
-          this.datasets.push(i);
-          this.flagArray.push(true);
-        });
-        this.isLoading = false;
+    const data = await this.sourceSinkService.getBucksSpendAndEarning(this.selectedDatabase, this.upperLimitOfBucks,
+      this.lowerLimitOfBucks, this.selectedMinTimeSpan, this.selectedMaxTimeSpan,
+      this.selectedAppVersion);
+    this.isShown = true;
+    this.labels = data.userLevels;
+    Object.keys(data.averageEarns).forEach(item => {
+      this.datasets.push({
+        data: data.averageEarns[item],
+        label: item
       });
+    });
+    Object.keys(data.averageSpends).forEach(item => {
+      this.datasets.push({
+        data: data.averageSpends[item],
+        label: item
+      });
+    });
+    const temp: any[] = [];
+    this.datasets.forEach((item: any) => {
+      let flag = true;
+      temp.push(item);
+      const precision = 0.01;
+      item.data.forEach((i: number) => {
+        if (Math.abs(i) >= precision) {
+          flag = false;
+        }
+      });
+      if (flag) {
+        temp.pop();
+      } else {
+        if (item.label.includes('Earn')) {
+          // @ts-ignore
+          this.legendDataforEarn.push(item.label);
+          item.label = item.label.slice(7, 11) + ': ' + item.label.slice(11);
+        } else {
+          // @ts-ignore
+          this.legendDataforSpend.push(item.label);
+          item.label = item.label.slice(7, 12) + ': ' + item.label.slice(12);
+        }
+
+      }
+    });
+    this.datasets = [];
+    temp.forEach((i) => {
+      this.datasets.push(i);
+      this.flagArray.push(true);
+    });
+    this.isLoading = false;
+
     this.chartType = 'bar';
     this.options = {
       layout: {

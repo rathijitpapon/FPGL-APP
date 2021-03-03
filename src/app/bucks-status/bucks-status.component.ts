@@ -118,16 +118,15 @@ export class BucksStatusComponent implements OnInit {
     this.skillSel.close();
   }
 
-  fetchVersions(): any {
+  async fetchVersions(): Promise<any> {
     this.appVersions = [];
-    this.sourceSinkService.getVersions(this.selectedDatabase).subscribe(
-      (param: any) => {
-        // @ts-ignore
-        for (const version of param) {
-          this.appVersions.push(version);
-        }
-        this.showingVersions = true;
-      });
+
+    const data = await this.sourceSinkService.getVersions(this.selectedDatabase);
+
+    for (const version of data) {
+      this.appVersions.push(version);
+    }
+    this.showingVersions = true;
   }
 
 

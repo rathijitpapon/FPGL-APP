@@ -57,59 +57,56 @@ export class AverageCumulativeBucksComponent implements OnInit, OnChanges {
     this.isShown = false;
     this.isLoading = true;
 
-    await this.sourceSinkService.getAverageCumulativeBucksSpendAndEarn(
+    const data = await this.sourceSinkService.getAverageCumulativeBucksSpendAndEarn(
       this.selectedDatabase,
       this.upperLimitOfBucks,
       this.lowerLimitOfBucks,
       this.selectedMinTimeSpan,
       this.selectedMaxTimeSpan,
-      this.selectedAppVersion
-      )
-      .toPromise()
-      .then((data: any) => {
-        this.isShown = true;
-        this.labels = data.userLevel;
-        this.datasets = [
-          {
-            data: data.averageBucksSpend,
-            label: 'averageSpend'
-          },
-          {
-            data: data.averageBucksEarn,
-            label: 'averageEarn'
-          },
-        ];
+      this.selectedAppVersion);
 
-        const temp: any[] = [];
-        this.datasets.forEach((item: any) => {
-          let flag = true;
-          temp.push(item);
-          const precision = 0.01;
-          item.data.forEach((i: number) => {
-            if (Math.abs(i) >= precision) {
-              flag = false;
-            }
-          });
-          if (flag) {
-            temp.pop();
-          } else {
-            if (item.label.includes('Earn')) {
-              // @ts-ignore
-              this.legendDataforEarn.push(item.label);
-            } else {
-              // @ts-ignore
-              this.legendDataforSpend.push(item.label);
-            }
-          }
-        });
+    this.isShown = true;
+    this.labels = data.userLevel;
+    this.datasets = [
+      {
+        data: data.averageBucksSpend,
+        label: 'averageSpend'
+      },
+      {
+        data: data.averageBucksEarn,
+        label: 'averageEarn'
+      },
+    ];
 
-        this.datasets = [];
-        temp.forEach((i) => {
-          this.datasets.push(i);
-          this.flagArray.push(true);
-        });
-        this.isLoading = false;
+    const temp: any[] = [];
+    this.datasets.forEach((item: any) => {
+      let flag = true;
+      temp.push(item);
+      const precision = 0.01;
+      item.data.forEach((i: number) => {
+        if (Math.abs(i) >= precision) {
+          flag = false;
+        }
       });
+      if (flag) {
+        temp.pop();
+      } else {
+        if (item.label.includes('Earn')) {
+          // @ts-ignore
+          this.legendDataforEarn.push(item.label);
+        } else {
+          // @ts-ignore
+          this.legendDataforSpend.push(item.label);
+        }
+      }
+
+      this.datasets = [];
+      temp.forEach((i) => {
+        this.datasets.push(i);
+        this.flagArray.push(true);
+      });
+      this.isLoading = false;
+    });
 
     this.chartType = 'bar';
     this.options = {

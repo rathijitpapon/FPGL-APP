@@ -45,29 +45,35 @@ export class AverageBucksComponent implements OnInit, OnChanges {
     // this.fetchData();
   }
 
-  fetchData(): void {
+  async fetchData(): Promise<void> {
     this.datasets = [];
     this.labels = [];
     this.options = {};
     this.isShown = false;
     this.isLoading = true;
-    this.sourceSinkService.getBucksStatus(this.selectedDatabase, this.upperLimitOfBucks,
-      this.lowerLimitOfBucks, this.selectedMinTimeSpan, this.selectedMaxTimeSpan,
-      this.selectedAppVersion).subscribe((param: any) => {
-      this.isShown = true;
-      this.labels = param.userLevels;
-      this.datasets = [{
-        data: param.averageBucks,
-        label: 'average bucks',
-        borderColor: 'rgba(0,0,0,0.8)',
-        fill: false,
-        datalabels: {
-          align: 'center',
-          anchor: 'center'
-        }
-      }];
-      this.isLoading = false;
-    });
+
+    const data = await this.sourceSinkService.getBucksStatus(
+      this.selectedDatabase,
+      this.upperLimitOfBucks,
+      this.lowerLimitOfBucks,
+      this.selectedMinTimeSpan,
+      this.selectedMaxTimeSpan,
+      this.selectedAppVersion);
+
+    this.isShown = true;
+    this.labels = data.userLevels;
+    this.datasets = [{
+      data: data.averageBucks,
+      label: 'average bucks',
+      borderColor: 'rgba(0,0,0,0.8)',
+      fill: false,
+      datalabels: {
+        align: 'center',
+        anchor: 'center'
+      }
+    }];
+    this.isLoading = false;
+
     this.chartType = 'line';
     this.options = {
       scaleShowVerticalLines: false,
