@@ -7,14 +7,17 @@ import { Observable } from 'rxjs';
 })
 export class SourceSinkService {
 
-  url = 'https://cross-promo-analytics-api.herokuapp.com';
+  url = 'https://corsresolver.herokuapp.com/https://cross-promo-analytics-api.herokuapp.com';
   // url = 'http://localhost:5000';
 
   headers = new HttpHeaders();
 
   constructor(private http: HttpClient) {
+    // this.headers.set('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
     this.headers.set('Content-Type', 'application/json; charset=utf-8');
-    this.headers.set('access-control-allow-origin', '*');
+    this.headers.set('Access-Control-Allow-Origin', 'https://fpgl-app.herokuapp.com');
+    this.headers.set('Access-Control-Allow-Credentials', 'true');
+    this.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   }
 
   async getTotalBucksSpendAndEarning(selectedDatabase: string,
@@ -30,7 +33,6 @@ export class SourceSinkService {
       lowerLimit: lowerLimitOfBucks,
       minTimeSpan,
       maxTimeSpan,
-      appVersion
     }, {headers: this.headers}).toPromise()
     .then((result: any) => {
       if (result.statusCode === 200) {
@@ -53,8 +55,7 @@ export class SourceSinkService {
       upperLimit: upperLimitOfBucks,
       lowerLimit: lowerLimitOfBucks,
       minTimeSpan,
-      maxTimeSpan,
-      appVersion
+      maxTimeSpan
     }, {headers: this.headers}).toPromise()
     .then((result: any) => {
       if (result.statusCode === 200) {
@@ -77,8 +78,7 @@ export class SourceSinkService {
       upperLimit: upperLimitOfBucks,
       lowerLimit: lowerLimitOfBucks,
       minTimeSpan,
-      maxTimeSpan,
-      appVersion
+      maxTimeSpan
     }, {headers: this.headers}).toPromise()
     .then((result: any) => {
       if (result.statusCode === 200) {
@@ -112,8 +112,7 @@ export class SourceSinkService {
       upperLimit,
       lowerLimit,
       minTimeSpan,
-      maxTimeSpan,
-      appVersion
+      maxTimeSpan
     }, {headers: this.headers}).toPromise()
     .then((result: any) => {
       if (result.statusCode === 200) {
