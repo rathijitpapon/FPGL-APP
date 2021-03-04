@@ -7,8 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class SourceSinkService {
 
-  // url = 'https://corsresolver.herokuapp.com/https://cross-promo-analytics-api.herokuapp.com';
-  url = 'http://localhost:5000';
+  url = 'https://corsresolver.herokuapp.com/https://cross-promo-analytics-api.herokuapp.com';
+  // url = 'http://localhost:5000';
 
   headers = new HttpHeaders();
 
