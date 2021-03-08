@@ -1,0 +1,48 @@
+<div class="text-center">
+    <form (ngSubmit)="fetchData()">
+        <mat-form-field hideRequiredMarker>
+          <mat-label>select time span</mat-label>
+          <mat-select [(value)]="selectedEvent">
+          <mat-option *ngFor="let event of eventsArray" [value]="event">{{event}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <br>
+
+        <mat-form-field hideRequiredMarker>
+            <mat-label>select charts</mat-label>
+            <mat-select #mySel [(value)]="selectedCharts" multiple>
+            <mat-option [value]="0" (click)="toggleAllSelection()">All items</mat-option>
+            <mat-option *ngFor="let chart of chartsArray" [value]="chart">{{chart}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <br>
+
+        <mat-form-field hideRequiredMarker>
+            <mat-label>select time span</mat-label>
+            <mat-select [(value)]="selectedTimeSpan">
+            <mat-option *ngFor="let timeSpan of timeSpans; let i = index" [value]="numericalValuesOfTimeSpans[i]">{{timeSpan}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <br>
+
+        <button mat-raised-button>Fetch</button>
+    </form>
+</div>
+  
+<br>
+  
+<div *ngIf="isShown[0]">
+
+  <app-event-user-data
+                      [eventName]="selectedEvent"
+                      [startDate]="selectedTimeSpan[0]"
+                      [endDate]="selectedTimeSpan[1]"
+  >
+  </app-event-user-data>
+
+  <br>
+</div>
+  

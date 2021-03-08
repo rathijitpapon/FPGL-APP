@@ -34,6 +34,9 @@ import { AverageCumulativeBucksComponent } from './bucks-status/average-cumulati
 import { AverageAdshowSourceComponent } from './bucks-status/average-adshow-source/average-adshow-source.component';
 import {SumOfBucksSpendEarningComponent} from './bucks-status/sum-of-bucks-spend-earning/sum-of-bucks-spend-earning.component';
 import { AverageAdshowCompletionSourceComponent } from './bucks-status/average-adshow-completion-source/average-adshow-completion-source.component';
+import { FirebaseEventDataComponent } from './firebase-event-data/firebase-event-data.component';
+import { FirebaseDataServiceService } from './services/firebase-data-service.service';
+import { EventUserDataComponent } from './firebase-event-data/event-user-data/event-user-data.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +61,9 @@ import { AverageAdshowCompletionSourceComponent } from './bucks-status/average-a
     AverageCumulativeBucksComponent,
     AverageAdshowSourceComponent,
     SumOfBucksSpendEarningComponent,
-    AverageAdshowCompletionSourceComponent
+    AverageAdshowCompletionSourceComponent,
+    FirebaseEventDataComponent,
+    EventUserDataComponent
   ],
   imports: [
     BrowserModule,
@@ -73,6 +78,9 @@ import { AverageAdshowCompletionSourceComponent } from './bucks-status/average-a
     RouterModule.forRoot([
       {
         path: '', component: HomepageComponent
+      },
+      {
+        path: 'firebase', component: FirebaseEventDataComponent
       },
       {
         path: 'sourceSink', component: SourceSinkComponent
@@ -116,7 +124,7 @@ import { AverageAdshowCompletionSourceComponent } from './bucks-status/average-a
     {
       provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true
     },
-    CtrService, SourceSinkService
+    CtrService, SourceSinkService, FirebaseDataServiceService
   ],
   bootstrap: [AppComponent]
 })

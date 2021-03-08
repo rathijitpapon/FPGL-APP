@@ -1,0 +1,16 @@
+<div *ngIf="isLoading" class="loader-container col-md-12">
+    <mat-spinner diameter="50" style="top: 50%; left: 50%;" color="accent" mode="indeterminate"></mat-spinner>
+</div>
+
+<div *ngIf="isShown" >
+    <h3>User Count</h3>
+    <div *ngFor="let dataset of values; let i = index">
+        <h3 style="text-align: center;">{{ games[i] }}</h3>
+        <app-drawing-chart  [options]="options" [legend]="legend"
+                            [datasets]="dataset" [chartType]="chartType"
+                            [labels]="labels[i]" [barChartPlugins]="barChartPlugins"
+                            [width]="width" [height]="700"
+        ></app-drawing-chart>
+    </div>
+
+</div>
