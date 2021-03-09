@@ -48,6 +48,7 @@
 
   <div *ngFor="let game of selectedGames">
     <app-event-user-data
+                        *ngIf="game != 0"
                         [eventName]="selectedEvent"
                         [startDate]="selectedTimeSpan[0]"
                         [endDate]="selectedTimeSpan[1]"
