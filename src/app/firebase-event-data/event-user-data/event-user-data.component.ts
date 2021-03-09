@@ -15,14 +15,13 @@ export class EventUserDataComponent implements OnInit, OnChanges {
   @Input() public eventName: any;
   @Input() public startDate: any;
   @Input() public endDate: any;
+  @Input() public game: any;
 
   options: any;
   legend: any = true;
   chartType: any;
   datasets: any;
-  values: any;
   labels: any;
-  games: any;
   isShown: any = false;
   barChartPlugins: any = [ChartDataLabels];
   width: any;
@@ -46,8 +45,6 @@ export class EventUserDataComponent implements OnInit, OnChanges {
   async fetchData(): Promise<void> {
     this.datasets = [];
     this.labels = [];
-    this.values = [];
-    this.games = [];
     this.options = {};
     this.isShown = false;
     this.isLoading = true;
@@ -62,33 +59,27 @@ export class EventUserDataComponent implements OnInit, OnChanges {
 
     const data = await this.firebaseService.getEventUserData(
       this.eventName,
+      this.game,
       minDate,
       maxDate,
     );
 
-    for (const eventData of data) {
-      const userCount = [];
-      const dates = [];
-      for (const value of eventData.data) {
-        dates.push(value.date);
-        userCount.push(value.newUsers);
-      }
-
-      this.values.push([{
-        data: userCount,
-        label: 'User Count',
-        borderColor: 'rgba(0,0,0,0.8)',
-        fill: false,
-        datalabels: {
-          align: 'center',
-          anchor: 'center'
-        }
-      }]);
-      this.labels.push(dates);
-      this.games.push(eventData.game);
+    const userCount = [];
+    for (const value of data) {
+      this.labels.push(value.date);
+      userCount.push(value.newUsers);
     }
 
-    console.log(this.labels);
+    this.datasets = [{
+      data: userCount,
+      label: 'User Count',
+      borderColor: 'rgba(0,0,0,0.8)',
+      fill: false,
+      datalabels: {
+        align: 'center',
+        anchor: 'center'
+      }
+    }];
 
     this.isShown = true;
     this.isLoading = false;

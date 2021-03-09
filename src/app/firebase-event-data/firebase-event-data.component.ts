@@ -21,8 +21,11 @@ export class FirebaseEventDataComponent implements OnInit {
   chartType: any;
   labels: any;
   isShown: any[] = [];
-  selectedCharts: any;
+  selectedCharts: any[] = [];
   selectedEvent = 'first_open';
+  selectedGames: any[] = [];
+
+  gamesArray: any[] = [];
 
   chartsArray: any[] = [
     'User Data',
@@ -32,17 +35,18 @@ export class FirebaseEventDataComponent implements OnInit {
     'first_open',
   ];
 
-  allSelected = false;
+  allChartSelected = false;
+  allGameSelected = false;
 
-  @ViewChild('mySel') skillSel!: MatSelect;
+  @ViewChild('chartSel') chartSel!: MatSelect;
+  @ViewChild('gameSel') gameSel!: MatSelect;
 
-  selectedTimeSpan = [1, 0];
+  selectedTimeSpan: any[] = [];
   timeSpans = [
     'Today',
     'Yesterday',
     'This Week',
     'Last Week',
-    'Last 7 days',
     'Last 28 days',
     'Last 30 days',
     'Last 90 days',
@@ -52,8 +56,6 @@ export class FirebaseEventDataComponent implements OnInit {
   numericalValuesOfTimeSpans = [
     [1, 0], [2, 1], [7, 0], [14, 7], [28, 0], [30, 0], [90, 0], [365, 0]
   ];
-  selectedVersions = [];
-  selectedAppVersions: any;
 
   constructor(public firebaseService: FirebaseDataServiceService) {
   }
@@ -62,27 +64,53 @@ export class FirebaseEventDataComponent implements OnInit {
     this.chartsArray.forEach((item, key) => {
       this.isShown[key] = false;
     });
+
+    this.fetchGames();
   }
 
-  toggleAllSelection(): void {
-    this.allSelected = !this.allSelected;  // to control select-unselect
+  async fetchGames(): Promise<void> {
+    this.gamesArray = await this.firebaseService.getGames();
+  }
 
-    if (this.allSelected) {
-      this.skillSel.options.forEach((item: MatOption) => item.select());
+  toggleAllChartSelection(): void {
+    this.allChartSelected = !this.allChartSelected;  // to control select-unselect
+
+    if (this.allChartSelected) {
+      this.chartSel.options.forEach((item: MatOption) => item.select());
     } else {
-      this.skillSel.options.forEach((item: MatOption) => {
+      this.chartSel.options.forEach((item: MatOption) => {
         item.deselect();
       });
     }
-    this.skillSel.close();
+    this.chartSel.close();
+  }
+
+  toggleAllGameSelection(): void {
+    this.allGameSelected = !this.allGameSelected;  // to control select-unselect
+
+    if (this.allGameSelected) {
+      this.gameSel.options.forEach((item: MatOption) => item.select());
+    } else {
+      this.gameSel.options.forEach((item: MatOption) => {
+        item.deselect();
+      });
+    }
+    this.gameSel.close();
   }
 
 
   fetchData(): any {
-    if (this.selectedTimeSpan === undefined) {
+    if (this.selectedTimeSpan.length !== 2) {
       return alert(`time span must be selected`);
     }
-    this.selectedAppVersions = (this.selectedVersions.length === 0) ? 0 : this.selectedVersions;
+
+    if (this.selectedGames.length === 0) {
+      return alert(`at least one game must be selected`);
+    }
+
+    if (this.selectedCharts.length === 0) {
+      return alert(`at least one chart must be selected`);
+    }
 
     this.chartsArray.forEach((item, key) => {
       this.isShown[key] = false;

@@ -18,14 +18,27 @@ export class FirebaseDataServiceService {
     this.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   }
 
-  async getEventUserData(eventName: string, startDate: string, endDate: string): Promise<any>{
+  async getEventUserData(eventName: string, game: string, startDate: string, endDate: string): Promise<any>{
 
     let sessionID = '';
     await this.http.post(this.url + '/prepare/event/userData', {
       eventName,
+      game,
       startDate,
       endDate
     }, {headers: this.headers}).toPromise()
+      .then((result: any) => {
+        if (result.statusCode === 200) {
+          sessionID = result.sessionID;
+        }
+      });
+
+    return this.getData(sessionID);
+  }
+
+  async getGames(): Promise<any>{
+    let sessionID = '';
+    await this.http.get(this.url + '/prepare/games', {headers: this.headers}).toPromise()
       .then((result: any) => {
         if (result.statusCode === 200) {
           sessionID = result.sessionID;

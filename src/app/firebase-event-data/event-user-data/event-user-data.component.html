@@ -4,13 +4,10 @@
 
 <div *ngIf="isShown" >
     <h3>User Count</h3>
-    <div *ngFor="let dataset of values; let i = index">
-        <h3 style="text-align: center;">{{ games[i] }}</h3>
-        <app-drawing-chart  [options]="options" [legend]="legend"
-                            [datasets]="dataset" [chartType]="chartType"
-                            [labels]="labels[i]" [barChartPlugins]="barChartPlugins"
-                            [width]="width" [height]="700"
-        ></app-drawing-chart>
-    </div>
-
+    <h3 style="text-align: center;">{{ game }}</h3>
+    <app-drawing-chart  [options]="options" [legend]="legend"
+                        [datasets]="datasets" [chartType]="chartType"
+                        [labels]="labels" [barChartPlugins]="barChartPlugins"
+                        [width]="width" [height]="700"
+    ></app-drawing-chart>
 </div>

@@ -10,9 +10,19 @@
         <br>
 
         <mat-form-field hideRequiredMarker>
-            <mat-label>select charts</mat-label>
-            <mat-select #mySel [(value)]="selectedCharts" multiple>
-            <mat-option [value]="0" (click)="toggleAllSelection()">All items</mat-option>
+          <mat-label>Select Games</mat-label>
+          <mat-select #gameSel [(value)]="selectedGames" multiple>
+          <mat-option [value]="0" (click)="toggleAllGameSelection()">All Games</mat-option>
+          <mat-option *ngFor="let game of gamesArray" [value]="game">{{game}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <br>
+
+        <mat-form-field hideRequiredMarker>
+            <mat-label>Select Charts</mat-label>
+            <mat-select #chartSel [(value)]="selectedCharts" multiple>
+            <mat-option [value]="0" (click)="toggleAllChartSelection()">All Charts</mat-option>
             <mat-option *ngFor="let chart of chartsArray" [value]="chart">{{chart}}</mat-option>
             </mat-select>
         </mat-form-field>
@@ -36,13 +46,16 @@
   
 <div *ngIf="isShown[0]">
 
-  <app-event-user-data
-                      [eventName]="selectedEvent"
-                      [startDate]="selectedTimeSpan[0]"
-                      [endDate]="selectedTimeSpan[1]"
-  >
-  </app-event-user-data>
+  <div *ngFor="let game of selectedGames">
+    <app-event-user-data
+                        [eventName]="selectedEvent"
+                        [startDate]="selectedTimeSpan[0]"
+                        [endDate]="selectedTimeSpan[1]"
+                        [game]="game"
+    >
+    </app-event-user-data>
 
-  <br>
+    <br>
+  </div>
 </div>
   
