@@ -27,6 +27,8 @@ export class EventUserDataComponent implements OnInit, OnChanges {
   width: any;
   minTime: any;
   maxTime: any;
+  userCount = 0;
+  eventCount = 0;
 
   isLoading = false;
 
@@ -48,6 +50,8 @@ export class EventUserDataComponent implements OnInit, OnChanges {
     this.options = {};
     this.isShown = false;
     this.isLoading = true;
+    this.userCount = 0;
+    this.eventCount = 0;
 
     let timestamp = new Date();
     timestamp.setDate(timestamp.getDate() - this.startDate);
@@ -68,18 +72,22 @@ export class EventUserDataComponent implements OnInit, OnChanges {
     for (const value of data) {
       this.labels.push(value.date);
       userCount.push(value.newUsers);
+
+      this.userCount += +value.newUsers;
     }
 
-    this.datasets = [{
-      data: userCount,
-      label: 'User Count',
-      borderColor: 'rgba(0,0,0,0.8)',
-      fill: false,
-      datalabels: {
-        align: 'center',
-        anchor: 'center'
+    this.datasets = [
+      {
+        data: userCount,
+        label: 'User Count',
+        borderColor: 'rgba(0,0,0,0.8)',
+        fill: false,
+        datalabels: {
+          align: 'center',
+          anchor: 'center'
+        }
       }
-    }];
+    ];
 
     this.isShown = true;
     this.isLoading = false;

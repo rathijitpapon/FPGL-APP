@@ -5,6 +5,9 @@
 <div *ngIf="isShown" >
     <h3>User Count</h3>
     <h3 style="text-align: center;">{{ game }}</h3>
+    <h4 style="text-align: center;">
+        User Count: {{ userCount }}
+    </h4>
     <app-drawing-chart  [options]="options" [legend]="legend"
                         [datasets]="datasets" [chartType]="chartType"
                         [labels]="labels" [barChartPlugins]="barChartPlugins"
