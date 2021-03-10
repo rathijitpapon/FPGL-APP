@@ -1,20 +1,20 @@
 import {Component, OnInit, SimpleChanges, ViewChild} from '@angular/core';
-import {FirebaseDataServiceService} from '../services/firebase-data-service.service';
+import {FirebaseIphoneDataServiceService} from '../services/firebase-iphone-data-service.service';
 import {MatSelect} from '@angular/material/select';
 import {MatOption} from '@angular/material/core';
-import {EventUserDataComponent} from './event-user-data/event-user-data.component';
+import {IphoneEventDataComponent} from './iphone-event-data/iphone-event-data.component';
 
 @Component({
   providers: [
-    EventUserDataComponent,
+    IphoneEventDataComponent,
   ],
-  selector: 'app-firebase-event-data',
-  templateUrl: './firebase-event-data.component.html',
-  styleUrls: ['./firebase-event-data.component.css']
+  selector: 'app-firebase-iphone-event-data',
+  templateUrl: './firebase-iphone-event-data.component.html',
+  styleUrls: ['./firebase-iphone-event-data.component.css']
 })
-export class FirebaseEventDataComponent implements OnInit {
+export class FirebaseIphoneEventDataComponent implements OnInit {
 
-  @ViewChild(EventUserDataComponent) eventUserData!: EventUserDataComponent;
+  @ViewChild(IphoneEventDataComponent) iphoneEventUserData!: IphoneEventDataComponent;
 
   options: any;
   legend: any = true;
@@ -59,7 +59,7 @@ export class FirebaseEventDataComponent implements OnInit {
     [1, 0], [2, 1], [7, 0], [14, 7], [28, 0], [30, 0], [90, 0], [365, 0]
   ];
 
-  constructor(public firebaseService: FirebaseDataServiceService) {
+  constructor(public firebaseService: FirebaseIphoneDataServiceService) {
   }
 
   ngOnInit(): void {
@@ -124,5 +124,6 @@ export class FirebaseEventDataComponent implements OnInit {
       }
     }
   }
+
 
 }

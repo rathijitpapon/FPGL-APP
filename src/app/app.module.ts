@@ -37,6 +37,9 @@ import { AverageAdshowCompletionSourceComponent } from './bucks-status/average-a
 import { FirebaseEventDataComponent } from './firebase-event-data/firebase-event-data.component';
 import { FirebaseDataServiceService } from './services/firebase-data-service.service';
 import { EventUserDataComponent } from './firebase-event-data/event-user-data/event-user-data.component';
+import { FirebaseIphoneEventDataComponent } from './firebase-iphone-event-data/firebase-iphone-event-data.component';
+import { IphoneEventDataComponent } from './firebase-iphone-event-data/iphone-event-data/iphone-event-data.component';
+import { FirebaseIphoneDataServiceService } from './services/firebase-iphone-data-service.service';
 
 @NgModule({
   declarations: [
@@ -63,7 +66,9 @@ import { EventUserDataComponent } from './firebase-event-data/event-user-data/ev
     SumOfBucksSpendEarningComponent,
     AverageAdshowCompletionSourceComponent,
     FirebaseEventDataComponent,
-    EventUserDataComponent
+    EventUserDataComponent,
+    FirebaseIphoneEventDataComponent,
+    IphoneEventDataComponent
   ],
   imports: [
     BrowserModule,
@@ -80,7 +85,10 @@ import { EventUserDataComponent } from './firebase-event-data/event-user-data/ev
         path: '', component: HomepageComponent
       },
       {
-        path: 'firebase', component: FirebaseEventDataComponent
+        path: 'firebase/funvai', component: FirebaseEventDataComponent
+      },
+      {
+        path: 'firebase/iphone', component: FirebaseIphoneEventDataComponent
       },
       {
         path: 'sourceSink', component: SourceSinkComponent
@@ -124,7 +132,10 @@ import { EventUserDataComponent } from './firebase-event-data/event-user-data/ev
     {
       provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true
     },
-    CtrService, SourceSinkService, FirebaseDataServiceService
+    CtrService,
+    SourceSinkService,
+    FirebaseDataServiceService,
+    FirebaseIphoneDataServiceService
   ],
   bootstrap: [AppComponent]
 })

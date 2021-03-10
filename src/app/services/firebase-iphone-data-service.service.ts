@@ -4,9 +4,9 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class FirebaseDataServiceService {
+export class FirebaseIphoneDataServiceService {
 
-  url = 'https://corsresolver.herokuapp.com/https://firebase-da-api.herokuapp.com/';
+  url = 'https://corsresolver.herokuapp.com/https://firebase-iphone-da-api.herokuapp.com/';
   // url = 'http://localhost:5000';
 
   headers = new HttpHeaders();

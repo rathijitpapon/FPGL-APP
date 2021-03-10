@@ -3,14 +3,14 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import {Chart} from 'chart.js';
 import { SimpleChanges } from '@angular/core';
 import { OnChanges } from '@angular/core';
-import { FirebaseDataServiceService } from 'src/app/services/firebase-data-service.service';
+import { FirebaseIphoneDataServiceService } from 'src/app/services/firebase-iphone-data-service.service';
 
 @Component({
-  selector: 'app-event-user-data',
-  templateUrl: './event-user-data.component.html',
-  styleUrls: ['./event-user-data.component.css']
+  selector: 'app-iphone-event-data',
+  templateUrl: './iphone-event-data.component.html',
+  styleUrls: ['./iphone-event-data.component.css']
 })
-export class EventUserDataComponent implements OnInit, OnChanges {
+export class IphoneEventDataComponent implements OnInit, OnChanges {
 
   @Input() public eventName: any;
   @Input() public startDate: any;
@@ -34,7 +34,7 @@ export class EventUserDataComponent implements OnInit, OnChanges {
   isLoading = false;
 
 
-  constructor(private firebaseService: FirebaseDataServiceService) {
+  constructor(private firebaseService: FirebaseIphoneDataServiceService) {
     Chart.plugins.unregister(ChartDataLabels);
   }
 
