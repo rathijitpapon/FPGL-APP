@@ -70,17 +70,29 @@ export class IphoneEventDataComponent implements OnInit, OnChanges {
       maxDate,
     );
 
-    const userCount = [];
+    const streamData: any = {};
     for (const value of data) {
-      this.labels.push(value.date);
-      userCount.push(value.newUsers);
-
-      this.userCount += +value.newUsers;
+      streamData[value.streamId] = {
+        userCount: [],
+        labels: [],
+        totalUsers: 0,
+      };
     }
 
-    this.datasets = [
-      {
-        data: userCount,
+    for (const value of data) {
+      streamData[value.streamId].labels.push(value.date);
+      streamData[value.streamId].userCount.push(value.newUsers);
+      streamData[value.streamId].totalUsers += +value.newUsers;
+
+      this.userCount += +value.newUsers;
+      this.labels = streamData[value.streamId].labels;
+    }
+
+    for (const key of Object.keys(streamData)) {
+      this.datasets.push([{
+        key,
+        totalUsers: streamData[key].totalUsers,
+        data: streamData[key].userCount,
         label: 'User Count',
         borderColor: 'rgba(0,0,0,0.8)',
         fill: false,
@@ -88,8 +100,8 @@ export class IphoneEventDataComponent implements OnInit, OnChanges {
           align: 'center',
           anchor: 'center'
         }
-      }
-    ];
+      }]);
+    }
 
     this.isShown = true;
     this.isLoading = false;
