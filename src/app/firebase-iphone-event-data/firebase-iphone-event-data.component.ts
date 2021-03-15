@@ -21,7 +21,7 @@ export class FirebaseIphoneEventDataComponent implements OnInit {
   chartType: any;
   labels: any;
   isShown: any[] = [];
-  selectedCharts: any[] = [];
+  selectedCharts = ['New User Data'];
   selectedEvent = 'first_open';
   selectedGames: any[] = [];
 
@@ -43,12 +43,12 @@ export class FirebaseIphoneEventDataComponent implements OnInit {
   @ViewChild('chartSel') chartSel!: MatSelect;
   @ViewChild('gameSel') gameSel!: MatSelect;
 
-  selectedTimeSpan: any[] = [];
+  selectedTimeSpan = 4;
   timeSpans = [
     'Today',
     'Yesterday',
-    'This Week',
-    'Last Week',
+    'Last 7 Days',
+    'Previous 7 Days',
     'Last 28 days',
     'Last 30 days',
     'Last 90 days',
@@ -62,12 +62,16 @@ export class FirebaseIphoneEventDataComponent implements OnInit {
   constructor(public firebaseService: FirebaseIphoneDataServiceService) {
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.chartsArray.forEach((item, key) => {
       this.isShown[key] = false;
     });
 
-    this.fetchGames();
+    await this.fetchGames();
+
+    this.selectedGames = [0, ...this.gamesArray];
+    this.allGameSelected = true;
+    this.fetchData();
   }
 
   async fetchGames(): Promise<void> {
@@ -102,9 +106,9 @@ export class FirebaseIphoneEventDataComponent implements OnInit {
 
 
   fetchData(): any {
-    if (this.selectedTimeSpan.length !== 2) {
-      return alert(`time span must be selected`);
-    }
+    // if (this.selectedTimeSpan.length !== 2) {
+    //   return alert(`time span must be selected`);
+    // }
 
     if (this.selectedGames.length === 0) {
       return alert(`at least one game must be selected`);

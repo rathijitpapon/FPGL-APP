@@ -33,7 +33,7 @@
         <mat-form-field hideRequiredMarker>
             <mat-label>select time span</mat-label>
             <mat-select [(value)]="selectedTimeSpan">
-            <mat-option *ngFor="let timeSpan of timeSpans; let i = index" [value]="numericalValuesOfTimeSpans[i]">{{timeSpan}}</mat-option>
+            <mat-option *ngFor="let timeSpan of timeSpans; let i = index" [value]="i">{{timeSpan}}</mat-option>
             </mat-select>
         </mat-form-field>
 
@@ -54,8 +54,8 @@
                         *ngIf="game != 0"
                         [eventName]="selectedEvent"
                         [metricName]="'newUsers'"
-                        [startDate]="selectedTimeSpan[0]"
-                        [endDate]="selectedTimeSpan[1]"
+                        [startDate]="numericalValuesOfTimeSpans[selectedTimeSpan][0]"
+                        [endDate]="numericalValuesOfTimeSpans[selectedTimeSpan][1]"
                         [game]="game"
     >
     </app-event-user-data>
@@ -73,8 +73,8 @@
                         *ngIf="game != 0"
                         [eventName]="selectedEvent"
                         [metricName]="'activeUsers'"
-                        [startDate]="selectedTimeSpan[0]"
-                        [endDate]="selectedTimeSpan[1]"
+                        [startDate]="numericalValuesOfTimeSpans[selectedTimeSpan][0]"
+                        [endDate]="numericalValuesOfTimeSpans[selectedTimeSpan][1]"
                         [game]="game"
     >
     </app-event-user-data>

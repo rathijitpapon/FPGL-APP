@@ -33,6 +33,15 @@ export class IphoneEventDataComponent implements OnInit, OnChanges {
 
   isLoading = false;
 
+  targetStreamName: any = {
+    1603593222: 'Dragon Battle Info GP',
+    1425592070: 'Sea Monster City GP',
+    1425652333: 'Sea Jurassic Craft IOS',
+    1430416034: 'Shark World GP',
+    1208333242: 'Dino Battle Gp',
+    1424447206: 'Jurassic Pixel Dinosaur Craft',
+    1596135788: 'Jurassic Pixel Craft GP'
+  };
 
   constructor(private firebaseService: FirebaseIphoneDataServiceService) {
     Chart.plugins.unregister(ChartDataLabels);
@@ -72,6 +81,9 @@ export class IphoneEventDataComponent implements OnInit, OnChanges {
 
     const streamData: any = {};
     for (const value of data) {
+      if (value.streamId in this.targetStreamName) {
+        value.streamId = this.targetStreamName[value.streamId];
+      }
       streamData[value.streamId] = {
         userCount: [],
         labels: [],

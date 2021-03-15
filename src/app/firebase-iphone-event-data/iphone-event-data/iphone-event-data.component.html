@@ -12,7 +12,9 @@
     
     <div *ngFor="let dataset of datasets">
         <h4 style="text-align: center;">
-            Stream Id: {{ dataset[0].key }}
+            Stream Name: {{ dataset[0].key }}
+        </h4>
+        <h4 style="text-align: center;">
             {{metricName}} Count: {{ dataset[0].totalUsers }}
         </h4>
         <app-drawing-chart  [options]="options" [legend]="legend"
