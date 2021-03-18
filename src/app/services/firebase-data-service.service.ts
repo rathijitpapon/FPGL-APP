@@ -37,6 +37,23 @@ export class FirebaseDataServiceService {
     return this.getData(sessionID);
   }
 
+  async getRevenueData(game: string, startDate: string, endDate: string): Promise<any>{
+
+    let sessionID = '';
+    await this.http.post(this.url + '/prepare/event/campaignData', {
+      game,
+      startDate,
+      endDate
+    }, {headers: this.headers}).toPromise()
+      .then((result: any) => {
+        if (result.statusCode === 200) {
+          sessionID = result.sessionID;
+        }
+      });
+
+    return this.getData(sessionID);
+  }
+
   async getGames(): Promise<any>{
     let sessionID = '';
     await this.http.get(this.url + '/prepare/games', {headers: this.headers}).toPromise()

@@ -40,7 +40,10 @@ export class IphoneEventDataComponent implements OnInit, OnChanges {
     1430416034: 'Shark World GP',
     1208333242: 'Dino Battle Gp',
     1424447206: 'Jurassic Pixel Craft GP',
-    1596135788: 'Jurassic Pixel Dinosaur Craft'
+    1596135788: 'Jurassic Pixel Dinosaur Craft',
+    2025177194: 'jurassic-sea',
+    1734492307: 'shark-attack-gp',
+    1734485705: 'shark-attack-ios'
   };
 
   constructor(private firebaseService: FirebaseIphoneDataServiceService) {

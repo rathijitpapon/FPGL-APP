@@ -1,0 +1,60 @@
+<div class="text-center">
+    <form (ngSubmit)="fetchData()">
+        <h1 style="text-align: center;">Funvai Revenue Data</h1>
+
+        <br>
+
+        <mat-form-field hideRequiredMarker>
+          <mat-label>Select Games</mat-label>
+          <mat-select #gameSel [(value)]="selectedGames" multiple>
+          <mat-option [value]="0" (click)="toggleAllGameSelection()">All Games</mat-option>
+          <mat-option *ngFor="let game of gamesArray" [value]="game">{{game}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <br>
+
+        <br>
+
+        <mat-form-field hideRequiredMarker>
+            <mat-label>select time span</mat-label>
+            <mat-select [(value)]="selectedTimeSpan">
+            <mat-option *ngFor="let timeSpan of timeSpans; let i = index" [value]="i">{{timeSpan}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <br>
+
+        <button mat-raised-button>Fetch</button>
+    </form>
+</div>
+  
+<br>
+
+<div *ngIf="isLoading" class="loader-container col-md-12">
+    <mat-spinner diameter="50" style="top: 50%; left: 50%;" color="accent" mode="indeterminate"></mat-spinner>
+</div>
+
+<div *ngFor="let revenue of revenueData">
+    <h1 style="text-align: center;">{{ revenue.game }}</h1>
+    <h3 style="text-align: center;">{{ revenue.minDate }} - {{ revenue.maxDate }}</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Event Name</th>
+                <th scope="col">Campaign Name</th>
+                <th scope="col">Ad Revenue</th>
+                <th scope="col">Purchase Revenue</th>
+            </tr>
+        </thead>
+        <tr *ngFor="let value of revenue.data">
+            <th scope="row">{{ value.eventName }}</th>
+            <td>{{ value.campaignName }}</td>
+            <td>${{ value.totalAdRevenue }}</td>
+            <td>${{ value.purchaseRevenue }}</td>
+        </tr>
+    </table>
+    <br>
+    <br>
+</div>
+  

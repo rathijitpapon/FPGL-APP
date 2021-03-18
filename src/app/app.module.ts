@@ -40,6 +40,7 @@ import { EventUserDataComponent } from './firebase-event-data/event-user-data/ev
 import { FirebaseIphoneEventDataComponent } from './firebase-iphone-event-data/firebase-iphone-event-data.component';
 import { IphoneEventDataComponent } from './firebase-iphone-event-data/iphone-event-data/iphone-event-data.component';
 import { FirebaseIphoneDataServiceService } from './services/firebase-iphone-data-service.service';
+import { FirebaseFunvaiRevenueComponent } from './firebase-funvai-revenue/firebase-funvai-revenue.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { FirebaseIphoneDataServiceService } from './services/firebase-iphone-dat
     FirebaseEventDataComponent,
     EventUserDataComponent,
     FirebaseIphoneEventDataComponent,
-    IphoneEventDataComponent
+    IphoneEventDataComponent,
+    FirebaseFunvaiRevenueComponent
   ],
   imports: [
     BrowserModule,
@@ -83,6 +85,9 @@ import { FirebaseIphoneDataServiceService } from './services/firebase-iphone-dat
     RouterModule.forRoot([
       {
         path: '', component: HomepageComponent
+      },
+      {
+        path: 'firebase/revenue/funvai', component: FirebaseFunvaiRevenueComponent,
       },
       {
         path: 'firebase/funvai', component: FirebaseEventDataComponent
